@@ -1,8 +1,24 @@
-# React + Vite
+## Descripción 
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+App final de la materia integración de sistemas
 
-Currently, two official plugins are available:
+## Autores -
+**Godoy Guillermo**
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+* [LinkedIn](https://www.linkedin.com/in/guillermogodoypro/)
+* [GitHub](https://github.com/GuillermoGodoyPro)
+* [Portfolio](https://guillermo-godoy-pro.netlify.app/)
+
+## Ver ejemplo en vivo
+(TODO: Añadir enlace acá, hay que elegir entre netlify, railway y vercel)
+
+### Instalación
+`npm install`
+If It doesn´t work in local, you can install all the dependencies with this comand, you need Node js to use it.
+
+### `npm run dev`
+Runs the app in the development mode.\
+Open [http://localhost:5173](http://localhost:5173) to view it in the browser.
+
+## Licencia
+No license
