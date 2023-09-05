@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom"
+import styles from '../SignUP/SignUp.module.css' 
 
 const SignUp = () => {
   return (
@@ -8,7 +9,7 @@ const SignUp = () => {
         <span>economid</span>
       </h1>
 
-      <form>
+      <form className={styles.colorDesdeSignup}>
         <p>Formulario</p>
         <p>Formulario</p>
         <p>Formulario</p>

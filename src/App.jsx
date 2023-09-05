@@ -1,11 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AuthLayout from "./layouts/AuthLayout"
 import Login from "./pages/Login"
-import SignUp from "./pages/SignUp"
+import SignUp from "./pages/SignUP/SignUp"
 import ForgotPassword from "./pages/ForgotPassword"
 import ConfirmAccount from "./pages/ConfirmAccount"
 import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard"
+import Perfil from "./pages/Perfil"
 
 function App() {
  
@@ -27,6 +28,7 @@ function App() {
           
           <Route path="/dashboard" element={ <ProtectedPath/> }>
             <Route index element={<Dashboard />}/>
+            <Route path="perfil" element={<Perfil />}/>
           </Route>
 
 
