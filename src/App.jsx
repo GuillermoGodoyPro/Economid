@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom"
 import AuthLayout from "./layouts/AuthLayout"
-import Login from "./pages/Login"
+import Login from "./pages/Login/Login"
 import SignUp from "./pages/SignUP/SignUp"
-import ForgotPassword from "./pages/ForgotPassword"
-import ConfirmAccount from "./pages/ConfirmAccount"
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
+import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount"
 import ProtectedPath from "./layouts/ProtectedPath"
-import Dashboard from "./pages/Dashboard"
-import Perfil from "./pages/Perfil"
+import Dashboard from "./pages/Dashboard/Dashboard"
+import Perfil from "./pages/Perfil/Perfil"
 
 function App() {
  
