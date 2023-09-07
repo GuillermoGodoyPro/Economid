@@ -11,9 +11,7 @@ const Login = () => {
 
       <form>
         <p>Formulario</p>
-        <p>Formulario</p>
-        <p>Formulario</p>
-        <p>Formulario</p>
+        
       </form>
 
       {/* se podría usar flex en el nav para ubicar uno de lado izq y otro a la derecha, en movil se ubicaría uno debajo del otro */}
