@@ -7,9 +7,7 @@ const AuthLayout = () => {
     <>
         <main className={styles.colorFondo}>
           {/* Outlet permite iyectar los componentes hijos, App.jsx -> Login dentro de AuthLayout */}
-          <Outlet />    
-
-        
+          <Outlet />            
         </main>
 
     </>

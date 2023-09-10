@@ -6,7 +6,6 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount"
 import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard/Dashboard"
-import Perfil from "./pages/Perfil/Perfil"
 
 function App() {
  
@@ -28,7 +27,6 @@ function App() {
           
           <Route path="/dashboard" element={ <ProtectedPath/> }>
             <Route index element={<Dashboard />}/>
-            <Route path="perfil" element={<Perfil />}/>
           </Route>
 
 
