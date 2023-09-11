@@ -1,3 +1,17 @@
-.colorFondo {
-    background-color: rgb(216, 241, 216);
-}
+.container {
+    display: flex;
+    justify-content: center;
+
+
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1.25rem;
+    margin-top: 5rem;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding: 1.25rem;
+
+
+  }
+  
