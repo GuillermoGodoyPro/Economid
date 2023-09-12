@@ -31,7 +31,8 @@
 .label{
     text-transform: capitalize;
     display: block;
-    
+    margin-top: 0.5rem;
+
     font-size: 1.25rem;     
     font-weight: bold;
 

@@ -43,6 +43,7 @@ const Login = () => {
             <input 
               className={styles.button}
               type="submit"
+              value="Enviar"
             />
           </div>
           

@@ -6,12 +6,14 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount"
 import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard/Dashboard"
+import { AuthProvider } from "./context/AuthProvider"
 
 function App() {
  
   return (
     <BrowserRouter>
-      <Routes>
+    <AuthProvider>
+        <Routes>
           {/* Dentro de la ruta pública, la página de inicio (path ="/"), va a empezar con iniciar sesión (AuthLayout) */}
           <Route path="/" element={<AuthLayout />}>
               <Route index element={ <Login />} />
@@ -30,7 +32,8 @@ function App() {
           </Route>
 
 
-      </Routes>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   )
 }
