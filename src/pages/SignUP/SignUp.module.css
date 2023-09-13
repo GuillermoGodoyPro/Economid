@@ -99,6 +99,7 @@
     border-radius: 0.5rem;
 }
 
+
 .nav .link:hover {
   color: var(--violetdark) ;
   display: flex;
