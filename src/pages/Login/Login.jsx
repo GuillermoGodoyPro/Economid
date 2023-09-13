@@ -92,12 +92,12 @@ const Login = () => {
         <div className={styles.nav}>
           <nav>           
             <Link className={styles.link} to="/signup">
-            Regístrate
+            Registrarse
             </Link>
             <Link 
              className={styles.link}  to="/forgotpassword"         
             >
-              Olvidé mi password
+             Recuperar contraseña
             </Link>
 
           </nav>

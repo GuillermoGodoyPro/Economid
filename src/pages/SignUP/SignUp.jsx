@@ -168,14 +168,14 @@ const SignUp = () => {
 
         <div className={styles.nav}>
           <nav>
-            <Link to="/">
-              ¿Ya tienes una cuenta? Inica Sesión
+            <Link className={styles.link} to="/">
+              Iniciar sesión
             </Link>
             
-            <Link 
+            <Link  className={styles.link}
               to="/forgotpassword"         
             >
-              Olvidé mi password
+              Recuperar contraseña
             </Link>
 
           </nav>

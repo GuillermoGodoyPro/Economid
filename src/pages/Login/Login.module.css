@@ -86,8 +86,6 @@
 .nav {
     display: flex;
     justify-content: center;
-    padding-top: 0.25rem;
-    padding-bottom: 0.25rem;
     color: var(--violetlight) ;
     background-color: white;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -100,8 +98,7 @@
 .nav .link:hover {
   color: var(--violetdark) ;
   display: flex;
-/*   background-color: var(--violetlight);
- */
+  background-color: var(--violethover);
   border-radius: 0.25rem;
   align-items: center;
   justify-content: center;

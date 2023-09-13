@@ -5,11 +5,14 @@
 
 /* Aquí definimos las Custom properties */
 :root {
+  
 
+ 
     --violetlight: #4f339ccb;
     --violetdark: #372174cb;
+    --violethover:#ae9cdfcb;
     --crema: #f5f5f3;
-        
+    --violethover: #8d72d8cb;
     --rojo: #e50914;
     --negro: #141414;
     --gris: #303030;
