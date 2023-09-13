@@ -1,15 +1,47 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import styles from './Login.module.css' 
+import Alerta from '../../components/Alerta'
 
 const Login = () => {
+
+  const [ email, setEmail] = useState('')
+  const [ password, setPassword] = useState('')
+
+  const [alerta, setAlerta ] = useState({})
+
+
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    console.log("Logeando")
+
+     /* Validación de campos */
+     if([ email, password ].includes('')){
+      setAlerta({
+        msg: 'Todos los campos son obligatorios',
+        error: true
+      })
+      return
+    }
+
+    setAlerta({})
+
+  }
+
+  const {msg} = alerta
+
   return (
     <>
       <div className={styles.container} >
         <span className={styles.span}> ¿Controlar tus finanzas? ¡fácil! </span>
         <h1 className={styles.title}>Inicia sesión</h1>
           
-        <form  className={styles.form}>
+        <form
+          className={styles.form}
+          onSubmit={handleSubmit}
+        >
           <div>
             <label className={styles.label}
               htmlFor='email'
@@ -19,6 +51,8 @@ const Login = () => {
                 type='email'
                 placeholder='Email'
                 className={styles.input}
+                value={email}
+                onChange={e => setEmail(e.target.value)}
             />
 
           </div>
@@ -33,6 +67,8 @@ const Login = () => {
                 type='password'
                 placeholder='Password'
                 className={styles.input}
+                value={password}
+                onChange={e => setPassword(e.target.value)}
             />
 
           </div>
@@ -46,6 +82,10 @@ const Login = () => {
               value="Enviar"
             />
           </div>
+
+
+          {/* Pasamos el estado de alerta por props */}
+          {msg && <Alerta alerta={alerta} /> }
           
         </form>
 
