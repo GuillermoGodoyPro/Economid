@@ -90,4 +90,13 @@
     display: flex;
     justify-content: center;
     color: var(--violetlight) ;
+    background-color: white;
+    padding: 0.25rem 2.5rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;
 }
+
+.nav .link:hover {
+  color: var(--violetdark) ;
+  }

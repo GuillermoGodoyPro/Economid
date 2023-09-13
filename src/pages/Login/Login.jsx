@@ -91,11 +91,11 @@ const Login = () => {
 
         <div className={styles.nav}>
           <nav>           
-            <Link to="/signup">
-              ¿No tienes una cuenta? Regístrate
+            <Link className={styles.link} to="/signup">
+            Regístrate
             </Link>
             <Link 
-              to="/forgotpassword"         
+             className={styles.link}  to="/forgotpassword"         
             >
               Olvidé mi password
             </Link>
