@@ -5,3 +5,10 @@
 .mainContainer{
     width: 100%;
 }
+
+.dashboard{
+    background-color: var(--white);
+    height: 100%;
+    width: 100%;
+
+}

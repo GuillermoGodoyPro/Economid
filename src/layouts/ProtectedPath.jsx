@@ -20,7 +20,7 @@ const ProtectedPath = () => {
             <div className={styles.mainContainer}>
               <Header />
 
-              <main>
+              <main className={styles.dashboard}>
                 <Outlet />
               </main>
             </div>

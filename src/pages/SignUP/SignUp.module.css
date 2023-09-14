@@ -93,7 +93,7 @@
     padding-top: 0.30rem;
     padding-bottom: 0.30rem;
     color: var(--violetlight) ;
-    background-color: white;
+    background-color: var(--white);
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-weight: bold;  
     text-align: center;
