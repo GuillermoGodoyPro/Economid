@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard"
 import { AuthProvider } from "./context/AuthProvider"
 
 function App() {
-  console.log('hola desde master')
+
   return (
     <BrowserRouter>
     <AuthProvider>
