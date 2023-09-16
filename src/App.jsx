@@ -9,7 +9,7 @@ import Dashboard from "./pages/Dashboard/Dashboard"
 import { AuthProvider } from "./context/AuthProvider"
 
 function App() {
- 
+  console.log('holaa')
   return (
     <BrowserRouter>
     <AuthProvider>
@@ -31,6 +31,7 @@ function App() {
             <Route index element={<Dashboard />}/>
           </Route>
 
+          
 
         </Routes>
       </AuthProvider>
