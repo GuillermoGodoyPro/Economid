@@ -2,7 +2,8 @@ import { Link } from "react-router-dom"
 import styles from '../SignUP/SignUp.module.css' 
 import { useState } from "react"
 import Alerta from "../../components/Alerta"
-import axios from "axios"
+import clienteAxios from "../../config/clienteAxios"
+
 
 
 const SignUp = () => {
@@ -48,8 +49,8 @@ const SignUp = () => {
     // Enviar datos del usuario a la API para crear cuenta
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/usuarios`, 
-      {nombre, email, password})
+      const { data } = await clienteAxios.post(`/usuarios`, 
+      {nombre, email, password} )
 
       setAlerta({
         msg: data.msg,
@@ -93,7 +94,7 @@ const SignUp = () => {
           <div>
             <label className={styles.label}
               htmlFor='nombre'
-            >Nombre</label>
+            >Nombre de usuario</label>
             <input
                 id='nombre'
                 type='nombre'
