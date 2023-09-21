@@ -6,6 +6,7 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount"
 import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard/Dashboard"
+import NewPassword from "./pages/NewPassword/NewPassword"
 import { AuthProvider } from "./context/AuthProvider"
 
 function App() {
@@ -20,8 +21,8 @@ function App() {
               <Route path="signup" element={ <SignUp/>} />
               {/* Según doc: si agregamos forgotpassword/:token o confirm/:id podemos hacerlo dinámico para que el usuario recupere contraseña o confirme */}
               <Route path="forgotpassword" element={ <ForgotPassword/>} />
-              <Route path="confirm/:id" element={ <ConfirmAccount/>} />        
-         
+              <Route path="forgotpassword/:token" element={ <NewPassword/>} />
+              <Route path="confirm/:id" element={ <ConfirmAccount/>} />                 
           </Route>
 
           {/* Dentro de la ruta privada, cuando el usuario esta autenticado, hay llamar a otro grupo de rutas */}

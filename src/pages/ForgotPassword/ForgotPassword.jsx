@@ -7,10 +7,7 @@ import clienteAxios from '../../config/clienteAxios'
 
 const ForgotPassword = () => {
 
-  const [ nombre, setNombre] = useState('')
   const [ email, setEmail] = useState('')
-  const [ password, setPassword] = useState('')
-  const [ repetirPassword, setRepetirPassword] = useState('')
 
   const [alerta, setAlerta ] = useState({})
 
