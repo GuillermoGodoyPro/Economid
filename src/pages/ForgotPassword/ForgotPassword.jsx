@@ -17,19 +17,33 @@ const ForgotPassword = () => {
   /* esta función tiene que ser asincrona para poder consultar al back */
   const handleSubmit = async e => {
     e.preventDefault();
-    
-    // Enviar datos del usuario a la API para RECUPERAR CONTRASEÑA O ENVIAR INSTRUCCIONES AL MAIL DEL USUARIO
+
+    /* Validación de campos */
+    if([email].includes('')){
+      setAlerta({
+        msg: 'INGRESAR EMAIL',
+        error: true
+      })
+      return
+    }    
+      
+    setAlerta({})
+
+    // Enviar datos del usuario a la API para crear cuenta
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
       const { data } = await clienteAxios.post(`/usuarios`, 
-      {email, password} )
+      {email} )
 
       setAlerta({
         msg: data.msg,
         error: false
       })
 
-    
+      /* Reseteo los state para que no se vea en formulario */      
+      setEmail('')     
+      
+
     } catch (error) {
         console.log(error.response.data.msg)
         /* si no hay mensaje, msg = "Error de conexión con la base de datos" */
@@ -49,7 +63,7 @@ const ForgotPassword = () => {
   return (
     <>
       <div className={styles.container} >
-        <h1 className={styles.title}> Recupera tu cuenta 
+        <h1 className={styles.title}> Recupera tu cuenta  
           <span className={styles.span}> Administra tus Finanzas</span>
         </h1>
         
