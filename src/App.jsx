@@ -8,8 +8,22 @@ import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard/Dashboard"
 import NewPassword from "./pages/NewPassword/NewPassword"
 import { AuthProvider } from "./context/AuthProvider"
+import useFetch from "./hooks/useFetch"
+import { useEffect } from "react"
 
 function App() {
+  // EJEMPLO de como usar el useFetch
+  // useEffect(() => {
+  //   const llamar = async () => {
+  //     const [data, error] = await useFetch('https://jsonplaceholder.typicode.com/todos/1');
+  //     if(data) {
+  //       console.log(data)
+  //     }else{
+  //       console.log(error)
+  //     }
+  //   };
+  //   llamar();
+  // }, []);
 
   return (
     <BrowserRouter>
