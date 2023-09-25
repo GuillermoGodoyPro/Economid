@@ -6,9 +6,24 @@ import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
 import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount"
 import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard/Dashboard"
+import NewPassword from "./pages/NewPassword/NewPassword"
 import { AuthProvider } from "./context/AuthProvider"
+import useFetch from "./hooks/useFetch"
+import { useEffect } from "react"
 
 function App() {
+  // EJEMPLO de como usar el useFetch
+  // useEffect(() => {
+  //   const llamar = async () => {
+  //     const [data, error] = await useFetch('https://jsonplaceholder.typicode.com/todos/1');
+  //     if(data) {
+  //       console.log(data)
+  //     }else{
+  //       console.log(error)
+  //     }
+  //   };
+  //   llamar();
+  // }, []);
 
   return (
     <BrowserRouter>
@@ -20,8 +35,8 @@ function App() {
               <Route path="signup" element={ <SignUp/>} />
               {/* Según doc: si agregamos forgotpassword/:token o confirm/:id podemos hacerlo dinámico para que el usuario recupere contraseña o confirme */}
               <Route path="forgotpassword" element={ <ForgotPassword/>} />
-              <Route path="confirm/:id" element={ <ConfirmAccount/>} />        
-         
+              <Route path="forgotpassword/:token" element={ <NewPassword/>} />
+              <Route path="confirm/:id" element={ <ConfirmAccount/>} />                 
           </Route>
 
           {/* Dentro de la ruta privada, cuando el usuario esta autenticado, hay llamar a otro grupo de rutas */}
@@ -31,6 +46,7 @@ function App() {
             <Route index element={<Dashboard />}/>
           </Route>
 
+          
 
         </Routes>
       </AuthProvider>
