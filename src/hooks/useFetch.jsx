@@ -31,7 +31,7 @@ const useFetch = async (
     if(url) {
         try {
             const response = await axios(config);
-            return [response, null];
+            return [response.data, null];
         } catch (error) {
             console.error('Request failed', error);
             return [null, error];
