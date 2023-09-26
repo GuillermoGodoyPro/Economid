@@ -69,7 +69,7 @@ const SignUp = () => {
 
     } catch (error) {
         console.log(error.response.data.msg)
-        /* si no hay mensaje, msg = "Error de conexión con la base de datos" */
+        /* si no hay mensaje, msg = "Error de conexión con la base de datos local" */
 
         /* 
           setAlerta({
@@ -153,7 +153,7 @@ const SignUp = () => {
             />
 
           </div>
-          
+           
           <div>
             <label className={styles.label}
               htmlFor='passwordRep'
