@@ -20,8 +20,8 @@ const Login = () => {
   const [alerta, setAlerta ] = useState({})
 
   // ** Llamamos a la funcion de useAuth() y va buscarla a useAuth.jsx 
-  const { auth } = useAuth();
-  console.log(auth)
+  const { setAuth } = useAuth();
+  
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -42,6 +42,8 @@ const Login = () => {
       setAlerta({})
 
       localStorage.setItem('token', data.token)
+
+      setAuth(data)
 
       console.log(data)
     } catch (error) {
