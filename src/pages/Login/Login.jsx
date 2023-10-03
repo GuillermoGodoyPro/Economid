@@ -1,34 +1,62 @@
 import React, { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
 import styles from './Login.module.css' 
 import Alerta from '../../components/Alerta'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
+
+import { Link, useNavigate } from 'react-router-dom'
+import clienteAxios from '../../config/clienteAxios';
+// Desde login importo hook de auth
+import useAuth from '../../hooks/useAuth'
+
 
 /* 
 import.meta.env.GOOGLE_CLIENT_ID */
 const Login = () => {
 
   const [ email, setEmail] = useState('')
-  const [ password, setPassword] = useState('')
+  const [ contraseña, setContraseña] = useState('')
 
   const [alerta, setAlerta ] = useState({})
 
+  // ** Llamamos a la funcion de useAuth() y va buscarla a useAuth.jsx 
+  const { auth } = useAuth();
+  console.log(auth)
 
-
-
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     console.log("Logeando")
 
      /* Validación de campos */
-     if([ email, password ].includes('')){
+     if([ email, contraseña ].includes('')){
       setAlerta({
         msg: 'Todos los campos son obligatorios',
         error: true
       })
       return
+    }
+
+    try {
+      const { data } = await clienteAxios.post('/usuario/login', { email, password})
+      setAlerta({})
+
+      localStorage.setItem('token', data.token)
+
+      console.log(data)
+    } catch (error) {
+      setAlerta({
+        msg: error.response.data.msg,
+        error: true
+      })
+      return
+    }
+
+    { 
+      email,
+      nombre,
+      token,
+      id
     }
 
     setAlerta({})
@@ -76,15 +104,15 @@ const Login = () => {
 
             <div>
               <label className={styles.label}
-                htmlFor='password'
+                htmlFor='contraseña'
               >Password</label>
               <input
-                  id='password'
+                  id='contraseña'
                   type='password'
                   placeholder='Password'
                   className={styles.input}
-                  value={password}
-                  onChange={e => setPassword(e.target.value)}
+                  value={contraseña}
+                  onChange={e => setContraseña(e.target.value)}
               />
 
             </div>
@@ -107,6 +135,7 @@ const Login = () => {
             <div className="mt-4">
               <GoogleLogin onSuccess={handleSuccessLogin} onError={handleErrorLogin}/>
             </div>
+
           </form>          
 
 

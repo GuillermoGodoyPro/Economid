@@ -4,7 +4,7 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = useState("holaaaaa")
 
     /* este useEffect se ejecuta una sola vez para comprobar si hay token*/
     useEffect(() => {
@@ -39,7 +39,7 @@ const AuthProvider = ({ children }) => {
     return(
         <AuthContext.Provider
             value={{
-                setAuth
+                auth
             }}
         >
 
