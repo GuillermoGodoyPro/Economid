@@ -4,30 +4,41 @@ import burger from '../assets/cerrar.svg'
 
 const Sidebar = () => {
   return (
-    <div className='h-screen border-r py-4 px-2 flex'>
-      <div>
+    <div class="w-1/6 bg-gray-800 h-screen">
+    <div class="p-4">
+    <div class="flex items-center mb-4">
+          
+            <div class="w-12 h-12 overflow-hidden">
+                <img src="src/assets/logoparaMF.png" alt="Logo"/>
+            </div>
 
-        {/* MVP de menú, despues buscamos otro ícono */}
-        <div className='flex justify-end'>
-          <img 
-            src={burger}
-            className='flex w-6 h-6 rounded-3xl'
-          />        
+            
+            <h1 class="ml-2 text-white text-2xl font-semibold">MyFinance</h1>
         </div>
 
-        {/* TODO: Ajustar logo */}
-        <img
-          src={logoparaMF}
-          alt='logoMF'
-          className='w-16 h-16 rounded-3xl m-auto'
-        />
-        <h2 className='text-3xl text-violet-950 font-black mt-2'>
-            MyFinance
-        </h2>
+        
 
-      </div>
+        
+        <ul class="mt-4">
+            <li class="mb-2">
+                <a href="#" class="text-xl  text-gray-300 hover:text-white ">Item</a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="text-xl text-gray-300 hover:text-white">Item</a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="text-xl text-gray-300 hover:text-white">Item</a>
+            </li>
+            <li class="mb-2">
+                <a href="#" class="text-xl text-gray-300 hover:text-white">Item</a>
+            </li>
+        </ul>
     </div>
+</div>
+    
   )
 }
 
 export default Sidebar
+
+// 
