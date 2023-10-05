@@ -14,6 +14,9 @@ App final de la materia integración de sistemas
 **Samuel David Penna Elneser**
 * [LinkedIn](https://www.linkedin.com/in/samuel-david-penna-elneser-aa6971241/)
 
+**Ignacio Rimasa**
+Documentación
+
 
 ## Ver ejemplo en vivo
 (TODO: Añadir enlace acá, hay que elegir entre netlify, railway y vercel)
