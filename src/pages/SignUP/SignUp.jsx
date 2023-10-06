@@ -9,8 +9,9 @@ import clienteAxios from "../../config/clienteAxios"
 const SignUp = () => {
 
   const [ nombre, setNombre] = useState('')
+  const [ apellido, setApellido] = useState('')
   const [ email, setEmail] = useState('')
-  const [ password, setPassword] = useState('')
+  const [ contraseña, setPassword] = useState('')
   const [ repetirPassword, setRepetirPassword] = useState('')
 
   const [alerta, setAlerta ] = useState({})
@@ -20,7 +21,7 @@ const SignUp = () => {
     e.preventDefault();
 
     /* Validación de campos */
-    if([nombre, email, password, repetirPassword].includes('')){
+    if([nombre, apellido, email, contraseña, repetirPassword].includes('')){
       setAlerta({
         msg: 'Todos los campos son obligatorios',
         error: true
@@ -28,7 +29,7 @@ const SignUp = () => {
       return
     }
 
-    if(password !== repetirPassword){
+    if(contraseña !== repetirPassword){
       setAlerta({
         msg: 'No coinciden los password',
         error: true
@@ -36,7 +37,7 @@ const SignUp = () => {
       return
     }
 
-    if(password.length < 6 ){
+    if(contraseña.length < 6 ){
       setAlerta({
         msg: 'El password debe tener al menos 6 caracteres',
         error: true
@@ -49,8 +50,10 @@ const SignUp = () => {
     // Enviar datos del usuario a la API para crear cuenta
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-      const { data } = await clienteAxios.post(`/usuarios`, 
-      {nombre, email, password} )
+      const { data } = await clienteAxios.post(`/usuario/registrousuario`, 
+      {nombre, apellido, email, contraseña} )
+
+      console.log("salio todo bien")
 
       setAlerta({
         msg: data.msg,
@@ -59,13 +62,14 @@ const SignUp = () => {
 
       /* Reseteo los state para que no se vea en formulario */
       setNombre('')
+      setApellido('')
       setEmail('')
       setPassword('')
       setRepetirPassword('')
 
     } catch (error) {
         console.log(error.response.data.msg)
-        /* si no hay mensaje, msg = "Error de conexión con la base de datos" */
+        /* si no hay mensaje, msg = "Error de conexión con la base de datos local" */
 
         /* 
           setAlerta({
@@ -94,7 +98,7 @@ const SignUp = () => {
           <div>
             <label className={styles.label}
               htmlFor='nombre'
-            >Nombre de usuario</label>
+            >Nombre</label>
             <input
                 id='nombre'
                 type='nombre'
@@ -102,6 +106,20 @@ const SignUp = () => {
                 className={styles.input}
                 value={nombre}
                 onChange={e => setNombre(e.target.value)}
+            />
+
+          </div>
+          <div>
+            <label className={styles.label}
+              htmlFor='apellido'
+            >Apellido</label>
+            <input
+                id='apellido'
+                type='apellido'
+                placeholder='Apellido'
+                className={styles.input}
+                value={apellido}
+                onChange={e => setApellido(e.target.value)}
             />
 
           </div>
@@ -123,26 +141,26 @@ const SignUp = () => {
 
           <div>
             <label className={styles.label}
-              htmlFor='password'
+              htmlFor='contraseña'
             >Password</label>
             <input
-                id='password'
+                id='contraseña'
                 type='password'
                 placeholder='Password'
                 className={styles.input}
-                value={password}
+                value={contraseña}
                 onChange={e => setPassword(e.target.value)}
             />
 
           </div>
-          
+           
           <div>
             <label className={styles.label}
               htmlFor='passwordRep'
             >Repetir Password</label>
             <input
                 id='passwordRep'
-                type='repetirPassword'
+                type='password'
                 placeholder='Repetir Password'
                 className={styles.input}
                 value={repetirPassword}
