@@ -16,7 +16,7 @@ const Sidebar = () => {
                         />        
                     </div>  
 
-                    <div class=" mr-2 mt-2 overflow-hidden flex justify-center">
+                    <div className=" mr-2 mt-2 overflow-hidden flex justify-center">
                         <img className='rounded-2xl w-12' src="src/assets/logoparaMF.png" alt="Logo"/>
                     </div>                   
                     <h2 className=" mt-2 flex ml-2 mr-4 text-white text-2xl font-semibold">MyFinance</h2>                        
