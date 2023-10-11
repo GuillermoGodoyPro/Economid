@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
-    <div className=" bg-violet-400 h-screen border-r px-2 flex">
+    <div className="bg-violet-400 h-screen border-r px-2 flex">
         <div className="px-2">
             <div className="flex items-center mb-4">
                 <div>
-                    <div className='flex justify-end bg-violet-400 rounded '>
+                    <div className='flex justify-end bg-violet-400 rounded  '>
                         <img 
                             src={burger}
-                            className='flex w-4 h-4 rounded-3xl mt-2'
+                            className=' w-4 h-4 rounded-3xl mt-2'
                         />        
                     </div>  
 
@@ -54,4 +54,3 @@ const Sidebar = () => {
 
 export default Sidebar
 
-// 

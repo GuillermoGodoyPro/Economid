@@ -1,14 +1,24 @@
 .container {
     display: flex;     
+    
 } 
 
 .mainContainer{
     width: 100%;
+    
 }
 
 .dashboard{
     background-color: var(--white);
+    
     height: 100%;
     width: 100%;
+
+}
+
+.menu{
+    height: 100%;
+    margin-bottom: 1000rem;
+
 
 }

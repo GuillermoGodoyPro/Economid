@@ -25,8 +25,10 @@ const ProtectedPath = () => {
     <>      
       { authId ?
         (
-        <div className={styles.container}>            
-            <Sidebar />
+        <div className={styles.container}>     
+            <div className={styles.menu}>
+              <Sidebar />
+            </div>       
             
             <div className={styles.mainContainer}>
               <Header />

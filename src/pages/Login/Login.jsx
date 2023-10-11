@@ -143,15 +143,20 @@ const Login = () => {
 
           <div className={styles.nav}>
             <nav>           
-              <Link className={styles.link} to="/signup">
-              Registrarse
+              <Link 
+                className={styles.link} to="/signup">
+                Registrarse
               </Link>
               <Link 
-              className={styles.link}  to="/forgotpassword"         
+                className={styles.link}  to="/forgotpassword"         
               >
-              Recuperar contraseña
+                Recuperar contraseña
               </Link>
 
+              <Link 
+                className={styles.link} to="/dashboard">
+                dasboard
+              </Link>
             </nav>
           </div>
 
