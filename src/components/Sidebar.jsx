@@ -1,5 +1,5 @@
 import React from 'react'
-import logoparaMF from '../assets/logoparaMF.png'
+//import logoparaMF from '../assets/logoparaMF.png'
 import burger from '../assets/cerrar.svg'
 import { Link } from 'react-router-dom'
 
