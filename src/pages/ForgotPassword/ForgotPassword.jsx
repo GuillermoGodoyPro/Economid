@@ -91,7 +91,7 @@ const ForgotPassword = () => {
             <input 
               className={styles.button}
               type="submit"
-              value="Recuperar contraseña"
+              value="Enviar instrucciones"
             />
           </div>
 
