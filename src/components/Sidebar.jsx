@@ -28,21 +28,23 @@ const Sidebar = () => {
                 <div className='mt-6 block'>                    
                     
                     <Link className="mb-6 ml-10">
-                        <a href="#" className="text-xl text-white hover:text-gray-200 font-bold">Item</a>
+                        <p className="text-xl text-white hover:text-gray-200 font-bold">Item</p>                        
                     </Link>
                     <Link className="mb-6 ml-10">
-                        <a href="#" className="text-xl text-white hover:text-gray-200 font-bold">Item</a>
+                        <p className="text-xl text-white hover:text-gray-200 font-bold">Item</p>                        
                     </Link>
                     <Link className="mb-6 ml-10">
-                        <a href="#" className="text-xl text-white hover:text-gray-200 font-bold">Item</a>
+                        <p className="text-xl text-white hover:text-gray-200 font-bold">Item</p>                        
                     </Link>
                     <Link className="mb-6 ml-10">
-                        <a href="#" className="text-xl text-white hover:text-gray-200 font-bold">Item</a>
+                        <p className="text-xl text-white hover:text-gray-200 font-bold">Item</p>                        
                     </Link>
                     <Link className="mb-6 ml-10">
-                        <a href="#" className="text-xl text-white hover:text-gray-200 font-bold">Item</a>
-                    </Link>           
-
+                        <p className="text-xl text-white hover:text-gray-200 font-bold">Item</p>                        
+                    </Link>
+                    <Link className="mb-6 ml-10">
+                        <p className="text-xl text-white hover:text-gray-200 font-bold">Item</p>                        
+                    </Link>
                 </div>
                 
 
