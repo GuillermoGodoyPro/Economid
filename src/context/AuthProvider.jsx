@@ -35,7 +35,7 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                const { data } = await clienteAxios('/usuario/perfil', config)                               
+                const { data } = await clienteAxios('/perfilEconomico/', config)
                 setAuth(data)
                 //TODO: Ruta a perfil económico
 
