@@ -38,7 +38,7 @@ const Login = () => {
     }
 
     try {
-      const { data } = await clienteAxios.post('/usuario/login', { email, password})
+      const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
       setAlerta({})
 
       localStorage.setItem('token', data.token)
