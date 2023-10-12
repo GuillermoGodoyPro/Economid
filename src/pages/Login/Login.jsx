@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './Login.module.css' 
 import Alerta from '../../components/Alerta'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import clienteAxios from '../../config/clienteAxios';
 // Desde login importo hook de auth
 import useAuth from '../../hooks/useAuth'
@@ -41,9 +41,15 @@ const Login = () => {
       const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
       setAlerta({})
 
+      console.log(data)
+
       localStorage.setItem('token', data.token)
 
       setAuth(data)
+
+      window.location.href="/dasboard"
+
+            
 
      // console.log(data)
     } catch (error) {
@@ -52,13 +58,6 @@ const Login = () => {
         error: true
       })
       return
-    }
-
-    { 
-      email,
-      nombre,
-      token,
-      id
     }
 
     setAlerta({})
@@ -127,6 +126,7 @@ const Login = () => {
                 type="submit"
                 value="Enviar"
               />
+              
             </div>
 
 

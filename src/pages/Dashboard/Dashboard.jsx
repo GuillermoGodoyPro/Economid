@@ -1,11 +1,15 @@
 import React from 'react'
 import styles from './Dashboard.module.css' 
 import Box from '@mui/material/Box'
+import useAuth from '../../hooks/useAuth'
 
 const Dashboard = () => {
+
+  const { auth, cargando } = useAuth()
+
   return (
     <div className={styles.container}>
-
+      {auth.id}
       <div className={styles.balance}>
         <Box sx={{ bgcolor: '#29212918', height: '14rem', width: '49.8%' }} >
         </Box>

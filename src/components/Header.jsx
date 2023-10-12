@@ -21,7 +21,7 @@ const Header = () => {
               to="perfil"
               className='text-violet-600 font-bold uppercase'
             >        
-              Perfil
+              Perfil Samuel
             </Link>
 
             <button

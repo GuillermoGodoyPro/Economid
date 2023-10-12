@@ -11,7 +11,6 @@ const ProtectedPath = () => {
 
 
   const { auth, cargando } = useAuth()
-  console.log(auth)
 
   // TODO: Crear el context de Auth o useAuth, supongo que quedará auth.Id
   const authId = true
@@ -23,7 +22,7 @@ const ProtectedPath = () => {
 
     // Si existe auth.id Ingresa a dashboard por medio de ProtectedPath (ver el navegate to Dashboard en App.jsx)
     <>      
-      { authId ?
+      { auth ?
         (
           
         <div className={styles.container}>     
