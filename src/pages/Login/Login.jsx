@@ -40,14 +40,11 @@ const Login = () => {
     try {
       const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
       setAlerta({})
-
-      console.log(data)
-
       localStorage.setItem('token', data.token)
 
       setAuth(data)
 
-      window.location.href="/dasboard"
+      // window.location.href="/dashboard"
 
             
 

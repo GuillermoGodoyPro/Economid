@@ -15,7 +15,6 @@ const AuthProvider = ({ children }) => {
 
     /* este useEffect se ejecuta una sola vez para comprobar si hay token*/
     useEffect(() => {
-        
         const autenticarUsuario = () => {
         //TODO: Preguntar a Emilio si aca tengo que invocar el useFetch para no hacer todo esto
 
@@ -35,7 +34,6 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                //const { data } =  clienteAxios('/usuario/login', config)
                 setAuth(token)
                 //TODO: Ruta a perfil económico
                 navigate('/dashboard')
@@ -45,7 +43,7 @@ const AuthProvider = ({ children }) => {
             }
 
             setCargando(false)
-        }        
+        }
         autenticarUsuario()
 
     }, [])
