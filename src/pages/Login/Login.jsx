@@ -6,8 +6,6 @@ import { GoogleLogin } from '@react-oauth/google';
 
 import { Link, Navigate, useNavigate } from 'react-router-dom'
 import clienteAxios from '../../config/clienteAxios';
-// Desde login importo hook de auth
-import useAuth from '../../hooks/useAuth'
 
 
 /* 
@@ -19,14 +17,11 @@ const Login = () => {
 
   const [alerta, setAlerta ] = useState({})
 
-  // ** Llamamos a la funcion de useAuth() y va buscarla a useAuth.jsx 
-  const { setAuth } = useAuth();
-  
+ 
 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    console.log("Logeando")
 
      /* Validación de campos */
      if([ email, contraseña ].includes('')){
@@ -42,9 +37,7 @@ const Login = () => {
       setAlerta({})
       localStorage.setItem('token', data.token)
 
-      setAuth(data)
-
-      // window.location.href="/dashboard"
+      window.location.href="/dashboard"
 
             
 

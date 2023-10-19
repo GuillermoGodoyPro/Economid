@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import styles from './Dashboard.module.css';
 import useAuth from '../../hooks/useAuth';
 import jwt_decode from "jwt-decode";
-import { GetBalanceByPEId } from '../../services/balance.service';
+import { GetBalanceByPEId } from '../../services/balance';
 
 const Dashboard = () => {
 
@@ -25,16 +25,16 @@ const Dashboard = () => {
         const res = await GetBalanceByPEId(usuario.P_E_Id, config);
         setData(res);
         setLoading(false);
+        console.log(res);
       } catch (error) {
         setError(error);
         setLoading(false);
       }
     }
-
+    
     fetchData();
   }, []);
-
-  console.log(data);
+  
   return (
     cargando
       ?

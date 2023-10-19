@@ -1,18 +1,16 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import Header from '../components/Header'
 import Sidebar from '../components/Sidebar'
 import { Navigate, Outlet } from 'react-router-dom'
 import styles from '../styles/ProtectedPath.module.css' 
 import useAuth from "../hooks/useAuth"
+import AuthContext from '../context/AuthProvider'
 
 
 const ProtectedPath = () => {
 
-
-  const { auth, cargando } = useAuth()
-
-  // TODO: Crear el context de Auth o useAuth, supongo que quedará auth.Id
-
+  
+  const { auth, cargando } = useContext(AuthContext)
   // TODO: usar un spinner
   if(cargando) return 'Cargando...'
 

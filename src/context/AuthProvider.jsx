@@ -22,6 +22,7 @@ const AuthProvider = ({ children }) => {
             
             if(!token){
                 setCargando(false)
+                setAuth(false)
                 return
             }
 
@@ -35,10 +36,11 @@ const AuthProvider = ({ children }) => {
 
             try {
                 setAuth(token)
-                //TODO: Ruta a perfil económico
+                //TODO: Ruta a perfil económico           
                 navigate('/dashboard')
 
             } catch (error) {
+                console.log(error)
                 setAuth({})
             }
 
