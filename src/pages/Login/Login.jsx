@@ -155,10 +155,10 @@ const Login = () => {
                 Recuperar contraseña
               </Link>
 
-              <Link 
+              {/* <Link 
                 className={styles.link} to="/dashboard">
                 dasboard
-              </Link>
+              </Link> */}
             </nav>
           </div>
 

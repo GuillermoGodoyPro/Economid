@@ -47,6 +47,7 @@ function App() {
             <Route index element={<Dashboard />} />
             <Route path="perfil" element={<Perfil />} />
 
+
           </Route>
 
           
