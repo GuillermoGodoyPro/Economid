@@ -1,14 +1,25 @@
 .container {
-    display: flex;     
+    display: flex;  
+    height:100%;
+    
 } 
 
 .mainContainer{
     width: 100%;
+
+    
 }
 
-.dashboard{
-    background-color: var(--white);
-    height: 100%;
-    width: 100%;
+
+.menu{
+    height:100em;
+    background-color: violet;
+
+}
+
+
+.headerContainer{
+    background-color: var(--crema);
+
 
 }

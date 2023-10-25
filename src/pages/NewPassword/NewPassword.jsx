@@ -8,7 +8,7 @@ import clienteAxios from '../../config/clienteAxios'
 
 const NewPassword = () => {
   
-  const [ password, setPassword] = useState('')
+  const [ contraseña, setContraseña] = useState('')
   const [alerta, setAlerta ] = useState({})
 
   /* esta función tiene que ser asincrona para poder consultar al back */
@@ -16,7 +16,7 @@ const NewPassword = () => {
     e.preventDefault();
 
     /* Validación de campos */
-    if([password].includes('')){
+    if([contraseña].includes('')){
       setAlerta({
         msg: 'Ingresar nueva contraseña',
         error: true
@@ -25,7 +25,7 @@ const NewPassword = () => {
     }
 
     
-    if(password.length < 6 ){
+    if(contraseña.length < 6 ){
       setAlerta({
         msg: 'El password debe tener al menos 6 caracteres',
         error: true
@@ -39,7 +39,7 @@ const NewPassword = () => {
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
       const { data } = await clienteAxios.post(`/usuarios`, 
-      {nombre, email, password} )
+      {nombre, email, contraseña} )
 
       setAlerta({
         msg: data.msg,
@@ -48,7 +48,7 @@ const NewPassword = () => {
 
       /* Reseteo los state para que no se vea en formulario */
       
-      setPassword('')
+      setContraseña('')
 
     } catch (error) {
         console.log(error.response.data.msg)
@@ -81,14 +81,14 @@ const NewPassword = () => {
           
           <div>
             <label className={styles.label}
-              htmlFor='password'
+              htmlFor='contraseña'
             >Nuevo Password</label>
             <input
-                id='password'
+                id='contraseña'
                 type='password'
                 placeholder='Escribe tu nuevo Password'
                 className={styles.input}
-                value={password}
+                value={contraseña}
                 onChange={e => setPassword(e.target.value)}
             />
 

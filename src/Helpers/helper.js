@@ -3,6 +3,6 @@
 /* TODO: Hacer los USER STORY de layouts e IDEX.css*/
 /* TODO: Arreglar mediaquerys*/
 /* TODO: Arreglar los states de "contraseña, setPassword y cambiar a setContraseña*/
-
+/* TODO: VER 488 para header, sidebar  y perfil */
 
 /* DOC GOOGLE LOGIN https://www.npmjs.com/package/@react-oauth/google */

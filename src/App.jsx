@@ -10,6 +10,7 @@ import NewPassword from "./pages/NewPassword/NewPassword"
 import { AuthProvider } from "./context/AuthProvider"
 import useFetch from "./hooks/useFetch"
 import { useEffect } from "react"
+import Perfil from "./pages/Dashboard/Perfil"
 
 function App() {
   // EJEMPLO de como usar el useFetch
@@ -43,7 +44,9 @@ function App() {
           {/* para invocar el dashboard, dentro de una ruta protegida (para proteger el resto de los componentes), todo lo que esté debajo de ruta protegida */}
           
           <Route path="/dashboard" element={ <ProtectedPath/> }>
-            <Route index element={<Dashboard />}/>
+            <Route index element={<Dashboard />} />
+            <Route path="perfil" element={<Perfil />} />
+
           </Route>
 
           

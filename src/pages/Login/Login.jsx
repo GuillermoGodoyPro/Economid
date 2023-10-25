@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './Login.module.css' 
 import Alerta from '../../components/Alerta'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, Navigate, useNavigate } from 'react-router-dom'
 import clienteAxios from '../../config/clienteAxios';
 // Desde login importo hook de auth
 import useAuth from '../../hooks/useAuth'
@@ -38,27 +38,23 @@ const Login = () => {
     }
 
     try {
-      const { data } = await clienteAxios.post('/usuario/login', { email, password})
+      const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
       setAlerta({})
-
       localStorage.setItem('token', data.token)
 
       setAuth(data)
 
-      console.log(data)
+      // window.location.href="/dashboard"
+
+            
+
+     // console.log(data)
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
         error: true
       })
       return
-    }
-
-    { 
-      email,
-      nombre,
-      token,
-      id
     }
 
     setAlerta({})
@@ -127,6 +123,7 @@ const Login = () => {
                 type="submit"
                 value="Enviar"
               />
+              
             </div>
 
 
@@ -143,15 +140,20 @@ const Login = () => {
 
           <div className={styles.nav}>
             <nav>           
-              <Link className={styles.link} to="/signup">
-              Registrarse
+              <Link 
+                className={styles.link} to="/signup">
+                Registrarse
               </Link>
               <Link 
-              className={styles.link}  to="/forgotpassword"         
+                className={styles.link}  to="/forgotpassword"         
               >
-              Recuperar contraseña
+                Recuperar contraseña
               </Link>
 
+              <Link 
+                className={styles.link} to="/dashboard">
+                dasboard
+              </Link>
             </nav>
           </div>
 

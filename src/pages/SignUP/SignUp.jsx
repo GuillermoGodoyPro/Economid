@@ -51,7 +51,7 @@ const SignUp = () => {
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
       const { data } = await clienteAxios.post(`/usuario/registrousuario`, 
-      {nombre, apellido, email, contraseña} )
+      {nombre, apellido, email, esAdmin: false /*valor por defecto*/, contraseña} )
 
       console.log("salio todo bien")
 
