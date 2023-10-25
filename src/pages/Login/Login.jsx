@@ -39,12 +39,16 @@ const Login = () => {
 
     try {
       const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
-      setAlerta({})
       localStorage.setItem('token', data.token)
-
+      
       setAuth(data)
-
+      
       // window.location.href="/dashboard"
+      setTimeout(() => {
+        setAlerta({})
+        navigate('/dashboard')
+        
+      }, 1500 )
 
             
 
@@ -68,6 +72,7 @@ const Login = () => {
     console.log(err)
   }
   
+  const navigate = useNavigate()
 
   const {msg} = alerta
 

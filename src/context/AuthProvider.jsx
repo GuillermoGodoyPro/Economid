@@ -36,7 +36,6 @@ const AuthProvider = ({ children }) => {
             try {
                 setAuth(token)
                 //TODO: Ruta a perfil económico
-                navigate('/dashboard')
 
             } catch (error) {
                 setAuth({})
