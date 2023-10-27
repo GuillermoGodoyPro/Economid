@@ -6,7 +6,7 @@
 
 .mainContainer{
     width: 100%;
-
+    
     
 }
 
@@ -14,9 +14,8 @@
 .menu{
     height:100em;
     background-color: violet;
-
+    
 }
-
 
 .headerContainer{
     background-color: var(--crema);

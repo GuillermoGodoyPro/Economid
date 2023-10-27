@@ -3,6 +3,8 @@ import styles from './Dashboard.module.css';
 import useAuth from '../../hooks/useAuth';
 import jwt_decode from "jwt-decode";
 import { GetBalanceByPEId } from '../../services/balance';
+import graficoPrueba from '../../assets/graficoPrueba.png'
+
 
 const Dashboard = () => {
 
@@ -40,59 +42,189 @@ const Dashboard = () => {
       ?
       <h3>Loading...</h3>
       :
-      <div className={styles.container}>
-        <div className={styles.balance}>
-          <div className={styles.elemento}>
-            <h3>
-            {data.data.saldo_Inicial}
-          </h3>
-          <h3>
-          {data.data.saldo_Total}
-          </h3>
+      
+      <div>
+        <h1
+          className='text-violet-800 font-bold uppercase mx-5 mt-6'
+        >
+            Bienvenido: User Persona
+        </h1>
+        {/* Cabecera */}
+        <div className=" bg-inherit rounded p-4 m-4 mb-0 flex justify-between">
+          {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
+          <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1 ">
+              <div>
+                <h2 className='p-1 justify-around mb-4 text-violet-600'>
+                  Saldos:
+                </h2>
+                <h2 className='p-1 justify-around mb-6 text-violet-600'>
+                  Total:               
+                </h2>
+
+              </div>
+              
+              <div className='p-2 flex justify-around bottom-1'>
+
+                <button
+                  type="button"
+                  className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
+                >
+                  Perfil Económico
+                </button>
+              
+              </div>
+
+          </div>
+          <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 ">
+              <div>
+                  <h2 className='p-1 text-violet-600 justify-around mb-4'>
+                    Statics:
+                  </h2>
+
+                  <div>
+                    <img
+                      src={graficoPrueba}
+                      className=' w-90 h-[11rem] rounded'
+                    />
+                  </div>
+
+
+              </div>
+
           </div>
         </div>
 
-        <div className={styles.carrousel}>
-          <div className={styles.elemento}></div>
-          <div className={styles.elemento}></div>
-          <div className={styles.elemento}></div>
-          <div className={styles.elemento}></div>
-          <div className={styles.elemento}></div>
-          <div className={styles.elemento}></div>
+        {/* fin Cabecer */}        
 
+        {/* Lista de gastos */}
+
+        <div class="bg-inherit p-10">
+          <div class="bg-inherit p-4 rounded-lg shadow-md border">
+            <table class="w-full border-collapse">
+              <thead>
+                <tr>
+                  <th class="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
+                  <th class="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
+                  <th class="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="border-b border-gray-200">
+                  <td class="py-2 px-4">Panaderia</td>
+                  <td class="py-2 px-4">$ 700</td>
+                  <td class="py-2 px-4">05/06/2023</td>
+                </tr>
+                <tr class="border-b border-gray-200">
+                  <td class="py-2 px-4">Alquiler</td>
+                  <td class="py-2 px-4">$ 75000</td>
+                  <td class="py-2 px-4">10/06/2023</td>
+                </tr>
+                
+              
+              </tbody>
+            </table>
+          </div>
         </div>
 
-        <div className={styles.transferencias}>
-          <div className={styles.transferencias}>tr1</div>
-          <div className={styles.transferencias}>tr2</div>
-          <div className={styles.transferencias}>tr3</div>
-          <div className={styles.transferencias}>tr4</div>
+        {/* Fin de lista de gastos */}
 
+        {/* Balance */}
+        <div className=" bg-inherit rounded p-4 m-4 mb-0 flex justify-between">
+          {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
+          <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
+            <div>
+                <h2 className='p-1 justify-around text-violet-600'>
+                  Activos:
+                </h2> 
+
+                <div class="bg-inherit rounded-lg  border">
+                  <table class="w-full border-collapse">
+                    <thead>
+                      <tr>
+                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
+                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-b border-gray-300">
+                        <td class="py-2 px-4">Salario</td>
+                        <td class="py-2 px-4">$ 400000</td>
+
+                      </tr>
+                      <tr class="border-b border-gray-300">
+                        <td class="py-2 px-4">Alquiler</td>
+                        <td class="py-2 px-4">$ 75000</td>
+
+                      </tr>
+                      
+                    
+                    </tbody>
+                  </table>
+                </div>             
+
+            </div>    
+
+          </div>
+          <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full mx-1 w-min-6 ">
+          <div>
+                <h2 className='p-1 justify-around text-violet-600'>
+                  Pasivos:
+                </h2> 
+
+                <div class="bg-inherit rounded-lg  border">
+                  <table class="w-full border-collapse">
+                    <thead>
+                      <tr>
+                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Transascción</th>
+                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
+                        
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr class="border-b border-gray-300">
+                        <td class="py-2 px-4">Salario</td>
+                        <td class="py-2 px-4">$ 400000</td>                        
+                      </tr>
+                      <tr class="border-b border-gray-300">
+                        <td class="py-2 px-4">Alquiler</td>
+                        <td class="py-2 px-4">$ 75000</td>                        
+                      </tr>                      
+                    
+                    </tbody>
+                  </table>
+                </div>             
+
+            </div>       
+
+          </div>
+
+          
         </div>
 
-        <div className={styles.tarjetas}>
+        <div className="bg-gray-200 p-4 mx-40 rounded-lg shadow-sm ">
+              <div>
+                <h2 className='p-1 justify-around mb-4 text-violet-600 text-center'>
+                  Patrimonio Neto: 
+                </h2>              
 
-          <div>
-            <div className={styles.elemento}></div>
-            <div className={styles.elemento}></div>
+                <div className='flex justify-center'>
+                  <h2 className='p-1 justify-around text-violet-600'>
+                    Cálculo Patrimonio Neto:                
+                    
+                  </h2>              
+                  <h2 className='p-1 justify-around text-violet-800 font-bold uppercase'>
+                    Pasivos - Activos                  
+                  </h2>              
+
+                </div>
+
+              </div>            
+            
+
           </div>
-          <div>
-            <div className={styles.elemento}></div>
-            <div className={styles.elemento}></div>
-          </div>
-          <div>
-            <div className={styles.elemento}></div>
-            <div className={styles.elemento}></div>
-          </div>
-          <div>
-            <div className={styles.elemento}></div>
-            <div className={styles.elemento}></div>
-          </div>
+        
+        {/* Fin de balance */}
 
-
-
-
-        </div>
       </div>
   )
 }

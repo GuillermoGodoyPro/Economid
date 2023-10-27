@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import burger from '../assets/cerrar.svg'
+import logoparaMF from '../assets/logoparaMF.png'
 
 
 const Header = () => {
@@ -10,12 +10,18 @@ const Header = () => {
         
           <div className='mt-1 px-4 py-5  flex items-center gap-3 justify-between'>
 
-            <div className=" mr-2 mt-1 overflow-hidden flex justify-center">
-              <a href='/dashboard'>
-                <img className='rounded-2xl w-12' src="src/assets/logoparaMF.png" alt="Logo"/>                
-              </a>                 
+            <Link
+                to=""
+                className=" mr-2 mt-1 overflow-hidden flex justify-center"
+            >
+              <img 
+                src={logoparaMF}
+                className='rounded-2xl w-12'
+                alt="Logo"
+              />
+              
              
-            </div>                 
+            </Link>                 
 
             <Link 
               to="perfil"

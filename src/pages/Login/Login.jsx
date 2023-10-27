@@ -9,7 +9,9 @@ import clienteAxios from '../../config/clienteAxios';
 
 
 /* 
-import.meta.env.GOOGLE_CLIENT_ID */
+import.meta.env.GOOGLE_CLIENT_ID 
+*/
+
 const Login = () => {
 
   const [ email, setEmail] = useState('')
@@ -34,13 +36,7 @@ const Login = () => {
 
     try {
       const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
-      localStorage.setItem('token', data.token)
-<<<<<<< HEAD
-
-      window.location.href="/dashboard"
-=======
-      
-      setAuth(data)
+      localStorage.setItem('token', data.token)          
       
       // window.location.href="/dashboard"
       setTimeout(() => {
@@ -48,8 +44,6 @@ const Login = () => {
         navigate('/dashboard')
         
       }, 1500 )
->>>>>>> 3c8cc4c27f653d5d75f20b1bf8172eedfe55d220
-
             
 
      // console.log(data)

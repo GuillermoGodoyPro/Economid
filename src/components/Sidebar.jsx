@@ -5,7 +5,8 @@ import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
-    <div className="bg-violet-400 h-full px-2 flex border-t">
+    <div className="bg-violet-400 h-full px-2 flex border-t ">
+      
         <div className="px-2">
             <div className="flex items-center mb-4">
                 <div>
@@ -23,9 +24,18 @@ const Sidebar = () => {
                 </div>
                 
             </div>
-                <div className='mt-6 block'>                    
+                <div className='mt-6 block fixed'>                    
                     
-                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        Perfil Económico                        
+                    </Link>
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        Transacciones                        
+                    </Link>
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        Balance                        
+                    </Link>
+                    {/* <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
                         Item                        
                     </Link>
                     <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
@@ -33,13 +43,7 @@ const Sidebar = () => {
                     </Link>
                     <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
                         Item                        
-                    </Link>
-                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
-                        Item                        
-                    </Link>
-                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
-                        Item                        
-                    </Link>
+                    </Link> */}
                 </div>
                 
 
