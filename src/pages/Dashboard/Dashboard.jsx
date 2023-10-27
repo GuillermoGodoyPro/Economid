@@ -98,26 +98,26 @@ const Dashboard = () => {
 
         {/* Lista de gastos */}
 
-        <div class="bg-inherit p-10">
-          <div class="bg-inherit p-4 rounded-lg shadow-md border">
-            <table class="w-full border-collapse">
+        <div className="bg-inherit p-10">
+          <div className="bg-inherit p-4 rounded-lg shadow-md border">
+            <table className="w-full border-collapse">
               <thead>
                 <tr>
-                  <th class="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
-                  <th class="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                  <th class="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
+                  <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
+                  <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
+                  <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="border-b border-gray-200">
-                  <td class="py-2 px-4">Panaderia</td>
-                  <td class="py-2 px-4">$ 700</td>
-                  <td class="py-2 px-4">05/06/2023</td>
+                <tr className="border-b border-gray-200">
+                  <td className="py-2 px-4">Panaderia</td>
+                  <td className="py-2 px-4">$ 700</td>
+                  <td className="py-2 px-4">05/06/2023</td>
                 </tr>
-                <tr class="border-b border-gray-200">
-                  <td class="py-2 px-4">Alquiler</td>
-                  <td class="py-2 px-4">$ 75000</td>
-                  <td class="py-2 px-4">10/06/2023</td>
+                <tr className="border-b border-gray-200">
+                  <td className="py-2 px-4">Alquiler</td>
+                  <td className="py-2 px-4">$ 75000</td>
+                  <td className="py-2 px-4">10/06/2023</td>
                 </tr>
                 
               
@@ -129,7 +129,7 @@ const Dashboard = () => {
         {/* Fin de lista de gastos */}
 
         {/* Balance */}
-        <div className=" bg-inherit rounded p-4 m-4 mb-0 flex justify-between">
+        <div className=" bg-inherit rounded p-4 m-1 mx-8 mb-0 flex justify-between">
           {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
           <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
             <div>
@@ -137,23 +137,23 @@ const Dashboard = () => {
                   Activos:
                 </h2> 
 
-                <div class="bg-inherit rounded-lg  border">
-                  <table class="w-full border-collapse">
+                <div className="bg-inherit rounded-lg  border">
+                  <table className="w-full border-collapse">
                     <thead>
                       <tr>
-                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
-                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
+                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
+                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="border-b border-gray-300">
-                        <td class="py-2 px-4">Salario</td>
-                        <td class="py-2 px-4">$ 400000</td>
+                      <tr className="border-b border-gray-300">
+                        <td className="py-2 px-4">Salario</td>
+                        <td className="py-2 px-4">$ 400000</td>
 
                       </tr>
-                      <tr class="border-b border-gray-300">
-                        <td class="py-2 px-4">Alquiler</td>
-                        <td class="py-2 px-4">$ 75000</td>
+                      <tr className="border-b border-gray-300">
+                        <td className="py-2 px-4">Alquiler</td>
+                        <td className="py-2 px-4">$ 75000</td>
 
                       </tr>
                       
@@ -171,23 +171,23 @@ const Dashboard = () => {
                   Pasivos:
                 </h2> 
 
-                <div class="bg-inherit rounded-lg  border">
-                  <table class="w-full border-collapse">
+                <div className="bg-inherit rounded-lg  border">
+                  <table className="w-full border-collapse">
                     <thead>
                       <tr>
-                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Transascción</th>
-                        <th class="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
+                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Transascción</th>
+                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                         
                       </tr>
                     </thead>
                     <tbody>
-                      <tr class="border-b border-gray-300">
-                        <td class="py-2 px-4">Salario</td>
-                        <td class="py-2 px-4">$ 400000</td>                        
+                      <tr className="border-b border-gray-300">
+                        <td className="py-2 px-4">Salario</td>
+                        <td className="py-2 px-4">$ 400000</td>                        
                       </tr>
-                      <tr class="border-b border-gray-300">
-                        <td class="py-2 px-4">Alquiler</td>
-                        <td class="py-2 px-4">$ 75000</td>                        
+                      <tr className="border-b border-gray-300">
+                        <td className="py-2 px-4">Alquiler</td>
+                        <td className="py-2 px-4">$ 75000</td>                        
                       </tr>                      
                     
                     </tbody>

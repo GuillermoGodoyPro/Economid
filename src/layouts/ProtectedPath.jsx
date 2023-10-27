@@ -20,7 +20,7 @@ const ProtectedPath = () => {
     // Si existe auth.id Ingresa a dashboard por medio de ProtectedPath (ver el navegate to Dashboard en App.jsx)
     <>  
         {
-        authid ?
+        auth ?
         (
           <div className={styles.container}>     
                    
