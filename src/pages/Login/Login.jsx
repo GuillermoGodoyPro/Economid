@@ -34,10 +34,21 @@ const Login = () => {
 
     try {
       const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
-      setAlerta({})
       localStorage.setItem('token', data.token)
+<<<<<<< HEAD
 
       window.location.href="/dashboard"
+=======
+      
+      setAuth(data)
+      
+      // window.location.href="/dashboard"
+      setTimeout(() => {
+        setAlerta({})
+        navigate('/dashboard')
+        
+      }, 1500 )
+>>>>>>> 3c8cc4c27f653d5d75f20b1bf8172eedfe55d220
 
             
 
@@ -61,6 +72,7 @@ const Login = () => {
     console.log(err)
   }
   
+  const navigate = useNavigate()
 
   const {msg} = alerta
 
@@ -143,10 +155,10 @@ const Login = () => {
                 Recuperar contraseña
               </Link>
 
-              <Link 
+              {/* <Link 
                 className={styles.link} to="/dashboard">
                 dasboard
-              </Link>
+              </Link> */}
             </nav>
           </div>
 
