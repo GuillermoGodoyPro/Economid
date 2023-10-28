@@ -1,8 +1,6 @@
 import React, { useState } from 'react'
 import styles from './Login.module.css' 
 import Alerta from '../../components/Alerta'
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleLogin } from '@react-oauth/google';
 
 import { Link, useNavigate } from 'react-router-dom'
 import clienteAxios from '../../config/clienteAxios';
@@ -41,7 +39,7 @@ const Login = () => {
       localStorage.setItem('token', data.token)       
       setAuth(data.token)   
       
-      // window.location.href="/dashboard"
+      //TODO: Poner spinner
       setTimeout(() => {
         
         navigate('/dashboard')
@@ -63,22 +61,10 @@ const Login = () => {
 
   }
 
-  const handleSuccessLogin = (res) => {
-    console.log(res)
-  }
-  const handleErrorLogin = (err) => {
-    console.log(err)
-  }
-  
-
   const {msg} = alerta
 
   return (
-    
-    <GoogleOAuthProvider 
-      clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-    > 
-        <div className={styles.container} >
+       <div className={styles.container} >
           <span className={styles.span}> ¿Controlar tus finanzas? ¡fácil! </span>
           <h1 className={styles.title}>Inicia sesión</h1>
             
@@ -131,11 +117,7 @@ const Login = () => {
 
             {/* Pasamos el estado de alerta por props */}
             {msg && <Alerta alerta={alerta} /> }
-            
-            {/* TODO: hacer un estyles para centrar google login */}
-            <div className="mt-4">
-              <GoogleLogin onSuccess={handleSuccessLogin} onError={handleErrorLogin}/>
-            </div>
+                     
 
           </form>          
 
@@ -160,9 +142,7 @@ const Login = () => {
           </div>
 
         </div>     
-
-    
-    </GoogleOAuthProvider>
+  
     
   )
 }

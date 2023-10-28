@@ -1,9 +1,14 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import logoparaMF from '../assets/logoparaMF.png'
+import useAuth from '../hooks/useAuth'
+import jwt_decode from "jwt-decode";
 
 
 const Header = () => {
+  const { auth } = useAuth()
+  const usuario = jwt_decode(auth);
+
   return (
     <>
       <header className='border border-t md:justify-between '>        
@@ -27,7 +32,7 @@ const Header = () => {
               to="perfil"
               className='text-violet-600 font-bold uppercase'
             >        
-              Perfil Samuel
+             Ver Perfil {usuario.Nombre}
             </Link>
 
             <button

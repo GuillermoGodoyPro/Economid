@@ -22,8 +22,7 @@ const Dashboard = () => {
       Authorization: `Bearer ${auth}`
     }
   }
-  console.log(usuario)
-
+    
   useEffect(() => {
     async function fetchData() {
       try {
