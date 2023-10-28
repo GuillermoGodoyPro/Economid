@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import logoparaMF from '../assets/logoparaMF.png'
 import useAuth from '../hooks/useAuth'
 import jwt_decode from "jwt-decode";
@@ -8,6 +8,12 @@ import jwt_decode from "jwt-decode";
 const Header = () => {
   const { auth } = useAuth()
   const usuario = jwt_decode(auth);
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    localStorage.clear(); 
+    navigate('/');
+  }
 
   return (
     <>
@@ -32,12 +38,13 @@ const Header = () => {
               to="perfil"
               className='text-violet-600 font-bold uppercase'
             >        
-             Ver Perfil {usuario.Nombre}
+             Ver Perfil ({usuario.Nombre})
             </Link>
 
             <button
               type="button"
               className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold'
+              onClick={handleClick}
             >
               Cerrar Sesión
             </button>

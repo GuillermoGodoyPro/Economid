@@ -12,16 +12,14 @@ const ProtectedPath = () => {
   const { auth, cargando } = useAuth(); 
   
   // TODO: usar un spinner
-  if(cargando) return 'Cargando...'
-  const token = localStorage.getItem('token')
- 
+  if(cargando) return 'Cargando...' 
 
   return (
 
     // Si existe auth.id Ingresa a dashboard por medio de ProtectedPath (ver el navegate to Dashboard en App.jsx)
     <>  
         {
-        token ?
+        auth ?
         (
           <div className={styles.container}>     
                    
