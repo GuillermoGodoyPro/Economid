@@ -4,8 +4,9 @@ import Alerta from '../../components/Alerta'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { GoogleLogin } from '@react-oauth/google';
 
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import clienteAxios from '../../config/clienteAxios';
+import useAuth from '../../hooks/useAuth';
 
 
 /* 
@@ -18,8 +19,9 @@ const Login = () => {
   const [ contraseña, setContraseña] = useState('')
 
   const [alerta, setAlerta ] = useState({})
+  const { setAuth } = useAuth();
 
- 
+  const navigate = useNavigate()
 
   const handleSubmit = async e => {
     e.preventDefault();
@@ -36,15 +38,17 @@ const Login = () => {
 
     try {
       const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
-      localStorage.setItem('token', data.token)          
+      localStorage.setItem('token', data.token)       
+      setAuth(data.token)   
       
       // window.location.href="/dashboard"
       setTimeout(() => {
-        setAlerta({})
+        
         navigate('/dashboard')
+        setAlerta({})
         
       }, 1500 )
-            
+      
 
      // console.log(data)
     } catch (error) {
@@ -66,7 +70,6 @@ const Login = () => {
     console.log(err)
   }
   
-  const navigate = useNavigate()
 
   const {msg} = alerta
 

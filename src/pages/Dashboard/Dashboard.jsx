@@ -13,6 +13,8 @@ const Dashboard = () => {
   const [cargando, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  console.log(auth)
+
   const usuario = jwt_decode(auth);
   const config = {
     headers: {
@@ -40,6 +42,7 @@ const Dashboard = () => {
   return (
     cargando
       ?
+      /* TODO: PONER SPINNER ACA */
       <h3>Loading...</h3>
       :
       
@@ -47,7 +50,7 @@ const Dashboard = () => {
         <h1
           className='text-violet-800 font-bold uppercase mx-5 mt-6'
         >
-            Bienvenido: User Persona
+            Bienvenido: {usuario.nombre}
         </h1>
         {/* Cabecera */}
         <div className=" bg-inherit rounded p-4 m-4 mb-0 flex justify-between">

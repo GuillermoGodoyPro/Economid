@@ -8,21 +8,21 @@ const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
 
-    const [auth, setAuth] = useState({})
+    const [auth, setAuth] = useState("")
     const [cargando, setCargando] = useState(true)
 
     const navigate = useNavigate()
 
     /* este useEffect se ejecuta una sola vez para comprobar si hay token*/
     useEffect(() => {
-        const autenticarUsuario = () => {
+        const autenticarUsuario = async() => {
         //TODO: Preguntar a Emilio si aca tengo que invocar el useFetch para no hacer todo esto
 
             const token = localStorage.getItem('token')
             
             if(!token){
                 setCargando(false)
-                setAuth(false)
+                /* setAuth(false) */
                 return
             }
 
@@ -35,9 +35,9 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                setAuth(token)
+                await setAuth(token)
                 //TODO: Ruta a perfil económico           
-                navigate('/dashboard')
+                /* navigate('/dashboard') */
 
             } catch (error) {
                 console.log(error)
