@@ -1,5 +1,42 @@
 .container{
     padding: 0.5em 0.5em 0.5em 1em; 
     display: flex;
+    flex-direction: column;
+    background-color: white;
+}
+
+.balance{
+    display: flex;
+    margin: 2rem 0 1rem;
+    justify-content: space-between;
+    
+}
+
+.carrousel{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: scroll;
+    margin: 2rem 0 2rem;
+}
+
+.elemento {
+    flex: 1 0 auto;
+    margin: 0 10px;
+    background-color: #29212918;
+    width: 8rem;
+    height: 8rem;
+    border-radius: 20%;
+}
+
+.transferencias{
+    background-color: #29212918;
+    margin-bottom: 1rem;    
+    border: 10%;
+}
+
+.tarjetas{
+    display: flex;
+    background-color: #29212918;
+    margin-bottom: 1rem;
 }
 

@@ -8,22 +8,11 @@ import ProtectedPath from "./layouts/ProtectedPath"
 import Dashboard from "./pages/Dashboard/Dashboard"
 import NewPassword from "./pages/NewPassword/NewPassword"
 import { AuthProvider } from "./context/AuthProvider"
-import useFetch from "./hooks/useFetch"
-import { useEffect } from "react"
+
+import Perfil from "./pages/Dashboard/Perfil"
 
 function App() {
-  // EJEMPLO de como usar el useFetch
-  // useEffect(() => {
-  //   const llamar = async () => {
-  //     const [data, error] = await useFetch('https://jsonplaceholder.typicode.com/todos/1');
-  //     if(data) {
-  //       console.log(data)
-  //     }else{
-  //       console.log(error)
-  //     }
-  //   };
-  //   llamar();
-  // }, []);
+
 
   return (
     <BrowserRouter>
@@ -43,7 +32,10 @@ function App() {
           {/* para invocar el dashboard, dentro de una ruta protegida (para proteger el resto de los componentes), todo lo que esté debajo de ruta protegida */}
           
           <Route path="/dashboard" element={ <ProtectedPath/> }>
-            <Route index element={<Dashboard />}/>
+            <Route index element={<Dashboard />} />
+            <Route path="perfil" element={<Perfil />} />
+
+
           </Route>
 
           

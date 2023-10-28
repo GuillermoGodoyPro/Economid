@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styles from './Login.module.css' 
 import Alerta from '../../components/Alerta'
 import { GoogleOAuthProvider } from '@react-oauth/google';
@@ -6,27 +6,26 @@ import { GoogleLogin } from '@react-oauth/google';
 
 import { Link, useNavigate } from 'react-router-dom'
 import clienteAxios from '../../config/clienteAxios';
-// Desde login importo hook de auth
-import useAuth from '../../hooks/useAuth'
+import useAuth from '../../hooks/useAuth';
 
 
 /* 
-import.meta.env.GOOGLE_CLIENT_ID */
+import.meta.env.GOOGLE_CLIENT_ID 
+*/
+
 const Login = () => {
 
   const [ email, setEmail] = useState('')
   const [ contraseña, setContraseña] = useState('')
 
   const [alerta, setAlerta ] = useState({})
-
-  // ** Llamamos a la funcion de useAuth() y va buscarla a useAuth.jsx 
   const { setAuth } = useAuth();
-  
+
+  const navigate = useNavigate()
 
   const handleSubmit = async e => {
     e.preventDefault();
 
-    console.log("Logeando")
 
      /* Validación de campos */
      if([ email, contraseña ].includes('')){
@@ -38,27 +37,26 @@ const Login = () => {
     }
 
     try {
-      const { data } = await clienteAxios.post('/usuario/login', { email, password})
-      setAlerta({})
+      const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
+      localStorage.setItem('token', data.token)       
+      setAuth(data.token)   
+      
+      // window.location.href="/dashboard"
+      setTimeout(() => {
+        
+        navigate('/dashboard')
+        setAlerta({})
+        
+      }, 1500 )
+      
 
-      localStorage.setItem('token', data.token)
-
-      setAuth(data)
-
-      console.log(data)
+     // console.log(data)
     } catch (error) {
       setAlerta({
         msg: error.response.data.msg,
         error: true
       })
       return
-    }
-
-    { 
-      email,
-      nombre,
-      token,
-      id
     }
 
     setAlerta({})
@@ -127,6 +125,7 @@ const Login = () => {
                 type="submit"
                 value="Enviar"
               />
+              
             </div>
 
 
@@ -143,15 +142,20 @@ const Login = () => {
 
           <div className={styles.nav}>
             <nav>           
-              <Link className={styles.link} to="/signup">
-              Registrarse
+              <Link 
+                className={styles.link} to="/signup">
+                Registrarse
               </Link>
               <Link 
-              className={styles.link}  to="/forgotpassword"         
+                className={styles.link}  to="/forgotpassword"         
               >
-              Recuperar contraseña
+                Recuperar contraseña
               </Link>
 
+              {/* <Link 
+                className={styles.link} to="/dashboard">
+                dasboard
+              </Link> */}
             </nav>
           </div>
 

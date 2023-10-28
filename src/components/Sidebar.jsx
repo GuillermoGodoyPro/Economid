@@ -1,33 +1,58 @@
 import React from 'react'
-import logoparaMF from '../assets/logoparaMF.png'
+//import logoparaMF from '../assets/logoparaMF.png'
 import burger from '../assets/cerrar.svg'
+import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
-    <div className='h-screen border-r py-4 px-2 flex'>
-      <div>
+    <div className="bg-violet-400 h-full px-2 flex border-t ">
+      
+        <div className="px-2">
+            <div className="flex items-center mb-4">
+                <div>
+                    <div className=' flex justify-end rounded  '>
+                        <img 
+                            src={burger}
+                            className=' p-2 bg-violet-400 w-8 h-8 rounded-3xl mt-2'
+                        />        
+                    </div>  
 
-        {/* MVP de menú, despues buscamos otro ícono */}
-        <div className='flex justify-end'>
-          <img 
-            src={burger}
-            className='flex w-6 h-6 rounded-3xl'
-          />        
+                      
+                    <h2 className="mt-1 flex ml-2 mr-4 text-white  hover:text-violet-800 text-3xl font-bold">MyFinance</h2>                        
+
+
+                </div>
+                
+            </div>
+                <div className='mt-6 block fixed'>                    
+                    
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        Perfil Económico                        
+                    </Link>
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        Transacciones                        
+                    </Link>
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        Balance                        
+                    </Link>
+                    {/* <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
+                        Item                        
+                    </Link>
+                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
+                        Item                        
+                    </Link>
+                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
+                        Item                        
+                    </Link> */}
+                </div>
+                
+
         </div>
 
-        {/* TODO: Ajustar logo */}
-        <img
-          src={logoparaMF}
-          alt='logoMF'
-          className='w-16 h-16 rounded-3xl m-auto'
-        />
-        <h2 className='text-3xl text-violet-950 font-black mt-2'>
-            MyFinance
-        </h2>
-
-      </div>
     </div>
+    
   )
 }
 
 export default Sidebar
+
