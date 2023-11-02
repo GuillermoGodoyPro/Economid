@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import styles from './Dashboard.module.css';
-import useAuth from '../../hooks/useAuth';
 import jwt_decode from "jwt-decode";
+import useAuth from '../../hooks/useAuth';
 import { GetBalanceByPEId } from '../../services/balance';
-import graficoPrueba from '../../assets/graficoPrueba.png'
+import Chart from "chart.js/auto";
+import { CategoryScale } from "chart.js";
+import { Data } from '../../utils/Data';
+import DoughnutChart from '../../components/DoughnutChart';
 
 
 const Dashboard = () => {
@@ -38,6 +40,26 @@ const Dashboard = () => {
     fetchData();
   }, []);
 
+  Chart.register(CategoryScale);
+  const [chartData, setChartData] = useState({
+    labels: Data.map((data) => data.category),
+    datasets: [
+      {        
+        labels: "",
+        data: Data.map((data) => data.monto),
+        backgroundColor: [
+          "violet",
+          "green",
+          "purple",
+          "red",
+          "purple"
+        ],
+        borderColor: "none",
+        borderWidth: 0
+      }
+    ]
+  });
+
   return (
     cargando
       ?
@@ -57,7 +79,7 @@ const Dashboard = () => {
           <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1 ">
             <div>
               <h2 className='p-1 justify-around mb-4 text-violet-600'>
-              <span className='font-bold'>
+                <span className='font-bold'>
                   Saldo Inicial: {data.data.saldo_Inicial}
                 </span>
               </h2>
@@ -88,10 +110,11 @@ const Dashboard = () => {
               </h2>
 
               <div>
-                <img
+                {/* <img
                   src={graficoPrueba}
                   className=' w-90 h-[11rem] rounded'
-                />
+                /> */}
+              <DoughnutChart chartData={chartData}/>
               </div>
 
 
