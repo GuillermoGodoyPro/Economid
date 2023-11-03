@@ -3,13 +3,14 @@ import jwt_decode from "jwt-decode";
 import useAuth from '../../hooks/useAuth';
 import { GetBalanceByPEId } from '../../services/balance';
 import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
+import { CategoryScale, defaults } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
 
 
 const Dashboard = () => {
 
+ 
   const { auth } = useAuth()
   const [data, setData] = useState(null);
   const [cargando, setLoading] = useState(true);
@@ -55,9 +56,13 @@ const Dashboard = () => {
           "purple"
         ],
         borderColor: "none",
-        borderWidth: 0
+        borderWidth: 0,
+        hoverOffset: 5,  
+           
       }
-    ]
+    ],
+   
+
   });
 
   return (
@@ -74,7 +79,7 @@ const Dashboard = () => {
           Bienvenido: {usuario.Nombre}
         </h1>
         {/* Cabecera */}
-        <div className=" bg-inherit rounded p-4 m-4 mb-0 flex justify-between">
+        <div className=" bg-inherit rounded p-2 m-4 mb-0 flex justify-between">
           {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
           <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1 ">
             <div>
@@ -91,7 +96,7 @@ const Dashboard = () => {
 
             </div>
 
-            <div className='p-2 flex justify-around bottom-1'>
+            <div className='p-2 pt-8 flex justify-around bottom-1'>
 
               <button
                 type="button"
@@ -103,22 +108,22 @@ const Dashboard = () => {
             </div>
 
           </div>
-          <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 ">
-            <div>
-              <h2 className='p-1 text-violet-600 justify-around mb-4'>
-                Statics:
+          <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
+              <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
+                Transacciones:
               </h2>
 
-              <div>
+              
+
+              <div className='min-h-[5rem]'>
                 {/* <img
                   src={graficoPrueba}
                   className=' w-90 h-[11rem] rounded'
                 /> */}
-              <DoughnutChart chartData={chartData}/>
+               <DoughnutChart chartData={chartData}/>
               </div>
-
-
-            </div>
+            
+           
 
           </div>
         </div>
