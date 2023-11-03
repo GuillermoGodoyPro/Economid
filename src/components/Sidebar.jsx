@@ -18,7 +18,9 @@ const Sidebar = () => {
                     </div>  
 
                       
-                    <h2 className="mt-1 flex ml-2 mr-4 text-white  hover:text-violet-800 text-3xl font-bold">MyFinance</h2>                        
+                    <h2 className="mt-1 flex ml-2 mr-4 text-white  hover:text-violet-800 text-3xl font-bold">
+                        MyFinances
+                    </h2>                        
 
 
                 </div>
@@ -34,6 +36,9 @@ const Sidebar = () => {
                     </Link>
                     <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
                         Balance                        
+                    </Link>
+                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                        FAQ                        
                     </Link>
                     {/* <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
                         Item                        
