@@ -16,9 +16,7 @@ function DoughnutChart({ chartData }) {
             }, */
             legend: {
               display: true,
-              position: 'left',     
-              fullSize: false,
-                           
+              position: 'left',                               
 
             }
 
