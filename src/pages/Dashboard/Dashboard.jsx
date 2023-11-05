@@ -10,7 +10,7 @@ import DoughnutChart from '../../components/DoughnutChart';
 
 const Dashboard = () => {
 
- 
+
   const { auth } = useAuth()
   const [data, setData] = useState(null);
   const [cargando, setLoading] = useState(true);
@@ -29,7 +29,7 @@ const Dashboard = () => {
   useEffect(() => {
     async function fetchData() {
       try {
-        const res = await GetBalanceByPEId(usuario.P_E_Id, config);
+        const res = await GetBalanceByPEId(usuario.p_e_id, config);
         setData(res);
         setLoading(false);
       } catch (error) {
@@ -45,7 +45,7 @@ const Dashboard = () => {
   const [chartData, setChartData] = useState({
     labels: Data.map((data) => data.category),
     datasets: [
-      {        
+      {
         labels: "",
         data: Data.map((data) => data.monto),
         backgroundColor: [
@@ -57,11 +57,11 @@ const Dashboard = () => {
         ],
         borderColor: "none",
         borderWidth: 0,
-        hoverOffset: 5,  
-           
+        hoverOffset: 5,
+
       }
     ],
-   
+
 
   });
 
@@ -76,26 +76,28 @@ const Dashboard = () => {
         <h1
           className='text-violet-800 font-bold uppercase mx-5 mt-6'
         >
-          Bienvenido: {usuario.Nombre}
+          Bienvenido: {usuario.nombre}
         </h1>
         {/* Cabecera */}
         <div className=" bg-inherit rounded p-2 m-4 mb-0 flex justify-between">
           {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
           <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1 ">
-            <div>
-              <h2 className='p-1 justify-around mb-4 text-violet-600'>
-                <span className='font-bold'>
-                  Saldo Inicial: {data.data.saldo_Inicial}
-                </span>
-              </h2>
-              <h2 className='p-1 justify-around mb-6 text-violet-600'>
-                <span className='font-bold'>
-                  Saldo Total: {data.data.saldo_Total}
-                </span>
-              </h2>
-
-            </div>
-
+            {data ?
+              <div>
+                <h2 className='p-1 justify-around mb-4 text-violet-600'>
+                  <span className='font-bold'>
+                    Saldo Inicial: {data.data.saldo_Inicial}
+                  </span>
+                </h2>
+                <h2 className='p-1 justify-around mb-6 text-violet-600'>
+                  <span className='font-bold'>
+                    Saldo Total: {data.data.saldo_Total}
+                  </span>
+                </h2>
+              </div> :
+              <div>
+              </div>
+            }
             <div className='p-2 pt-8 flex justify-around bottom-1'>
 
               <button
@@ -109,21 +111,19 @@ const Dashboard = () => {
 
           </div>
           <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
-              <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
-                Transacciones:
-              </h2>
+            <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
+              Transacciones:
+            </h2>
 
-              
 
-              <div className='min-h-[5rem]'>
-                {/* <img
+
+            <div className='min-h-[5rem]'>
+              {/* <img
                   src={graficoPrueba}
                   className=' w-90 h-[11rem] rounded'
                 /> */}
-               <DoughnutChart chartData={chartData}/>
-              </div>
-            
-           
+              <DoughnutChart chartData={chartData} />
+            </div>
 
           </div>
         </div>
