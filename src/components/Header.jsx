@@ -9,7 +9,6 @@ const Header = () => {
   const { auth } = useAuth()
   const usuario = jwt_decode(auth);
   const navigate = useNavigate();
-
   const handleClick = () => {
     localStorage.clear(); 
     navigate('/');
@@ -38,7 +37,7 @@ const Header = () => {
               to="perfil"
               className='text-violet-600 font-bold uppercase'
             >        
-             Ver Perfil ({usuario.Nombre})
+             Ver Perfil ({usuario.nombre})
             </Link>
 
             <button
