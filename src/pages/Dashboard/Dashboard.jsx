@@ -6,6 +6,8 @@ import Chart from "chart.js/auto";
 import { CategoryScale, defaults } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
+import Modal from '../../components/Modal';
+import { generarId } from '../../Helpers/helper';
 
 
 const Dashboard = () => {
@@ -16,7 +18,35 @@ const Dashboard = () => {
   const [cargando, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const [modal, setModal] = useState(false)
+  const [ animarModal, setAnimarModal ] = useState(false)
+  const [transaction, saveTransaction] =useState([])
 
+// Inicio de Transacciones y PE -- conexión con Modal
+
+  const handlePerfilEcon = () => {
+    setModal(true)
+
+    setTimeout(() => {
+
+      setAnimarModal(true)
+    }, 400)
+  }
+  const guardarTransaccion = t => {
+
+    // TODO: Agregar id único (supongo desde el back), mientras tanto harcodeo el id
+    t.id = generarId();
+    
+    saveTransaction([...transaction, t])
+  }
+
+  console.log(transaction)
+
+
+  // Fin de Transacciones y PE -- conexión con Modal
+
+
+  //---------- Inicio de Conexiones JWT y Auth ----------
 
   const usuario = jwt_decode(auth);
   const config = {
@@ -65,6 +95,8 @@ const Dashboard = () => {
 
 
   });
+  //---------- Fin de Conexiones JWT y Auth ----------
+
 
   return (
     /* TODO: PONER SPINNER ACA */
@@ -95,24 +127,49 @@ const Dashboard = () => {
               <h3>Informacion de Saldos no disponible, empiece a crear transacciones...</h3>
             </div>}
 
-          <div className='p-2 pt-8 flex justify-around bottom-1'>
+            { 
+            !modal ?
+              <div className='p-2 pt-8 flex justify-around bottom-1'>
 
-            <button
-              type="button"
-              className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
-            >
-              Perfil Económico
-            </button>
+              <button
+                type="button"
+                className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
+                onClick={handlePerfilEcon}
+              >
+                Perfil Económico
+              </button>
 
-          </div>
+            </div>
 
+            :
+            <div>
+              <button
+                type="button"
+                className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
+                onClick={handlePerfilEcon}
+              >
+                Agregar Transacción
+              </button>
+              
+              { modal &&
+                <Modal 
+                  setModal = {setModal}  
+                  animarModal={animarModal}
+                  setAnimarModal={setAnimarModal}
+                  guardarTransaccion={guardarTransaccion}
+                /> 
+              }
+              
+
+            </div>
+           
+            }
+          
         </div>
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
           <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
             Transacciones:
           </h2>
-
-
 
           <div className='min-h-[5rem]'>
             {/* <img
@@ -125,7 +182,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* fin Cabecer */}
+      {/* fin Cabecera */}
 
       {/* Lista de gastos */}
 

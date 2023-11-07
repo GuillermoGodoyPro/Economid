@@ -8,6 +8,8 @@ const AuthProvider = ({ children }) => {
     const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
+
+        // En el código original, si había un async también existía un await... Puede que esto genere problemas
         const autenticarUsuario = async () => {
             const token = localStorage.getItem('token');
             if (!token) {

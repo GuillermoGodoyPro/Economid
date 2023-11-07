@@ -13,7 +13,8 @@ const ProtectedPath = () => {
   
   // TODO: usar un spinner
   if(cargando) return 'Cargando...' 
-
+/*   const autid = true
+ */
   return (
 
     // Si existe auth.id Ingresa a dashboard por medio de ProtectedPath (ver el navegate to Dashboard en App.jsx)
