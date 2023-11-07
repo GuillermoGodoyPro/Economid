@@ -1,6 +1,4 @@
-import axios from "axios";
 import clienteAxios from "../config/clienteAxios"
-import { useState } from "react";
 
 const useFetch = async (
     url = null,
@@ -30,7 +28,7 @@ const useFetch = async (
 
     if(url) {
         try {
-            const response = await axios(config);
+            const response = await clienteAxios(config);
             return [response.data, null];
         } catch (error) {
             console.error('Request failed', error);

@@ -1,25 +1,30 @@
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 import styles from '../SignUP/SignUp.module.css' 
 import { useState } from "react"
 import Alerta from "../../components/Alerta"
 import clienteAxios from "../../config/clienteAxios"
-
-
+import useFetch from "../../hooks/useFetch"
+import { useAuthContext } from "../../context/AuthProvider"
+import jwtDecode from "jwt-decode"
 
 const SignUp = () => {
-
-  const [ nombre, setNombre] = useState('')
-  const [ apellido, setApellido] = useState('')
-  const [ email, setEmail] = useState('')
-  const [ contraseña, setPassword] = useState('')
-  const [ repetirPassword, setRepetirPassword] = useState('')
-
+  const [loading, setLoading] = useState(false);
+  const [signUpData, setSignUpData] = useState({
+    nombre: '',
+    apellido: '',
+    email: '',
+    contraseña: '',
+    repetirPassword: '',
+    esAdmin: true,
+  });
   const [alerta, setAlerta ] = useState({})
+  const { setUser } = useAuthContext();
+  const navigate = useNavigate();
 
-  /* esta función tiene que ser asincrona para poder consultar al back */
   const handleSubmit = async e => {
     e.preventDefault();
-
+    setLoading(true)
+    const {nombre, apellido, email, contraseña, repetirPassword} = signUpData;
     /* Validación de campos */
     if([nombre, apellido, email, contraseña, repetirPassword].includes('')){
       setAlerta({
@@ -45,40 +50,28 @@ const SignUp = () => {
       return
     }
 
-    setAlerta({})
-
-    // Enviar datos del usuario a la API para crear cuenta
-    try {
-      /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-      const { data } = await clienteAxios.post(`/usuario/registrousuario`, 
-      {nombre, apellido, email, esAdmin: false /*valor por defecto*/, contraseña} )
-
-      console.log("salio todo bien")
-
+    const  [data, error] = await useFetch('/Usuario/RegistroUsuario', 'POST', signUpData);
+    if (data) {
+      localStorage.setItem('token', data.token);
+      setUser(jwtDecode(data.token))
+      navigate('/')
+      setLoading(false)
+    }else {
       setAlerta({
-        msg: data.msg,
-        error: false
+        msg: error.message,
+        error: true,
       })
-
-      /* Reseteo los state para que no se vea en formulario */
-      setNombre('')
-      setApellido('')
-      setEmail('')
-      setPassword('')
-      setRepetirPassword('')
-
-    } catch (error) {
-        console.log(error.response.data.msg)
-        /* si no hay mensaje, msg = "Error de conexión con la base de datos local" */
-
-        /* 
-          setAlerta({
-            msg: error.response.data.msg,
-            error: false
-          })
-        */
+      setLoading(false)
     }
-
+  }
+  
+  const handleChange = (e) => {
+    const field = event.target.name;
+    const value = event.target.value;
+    setSignUpData({
+      ...signUpData,
+      [field]: value,
+    })
   }
 
   const { msg } = alerta
@@ -101,11 +94,12 @@ const SignUp = () => {
             >Nombre</label>
             <input
                 id='nombre'
+                name='nombre'
                 type='nombre'
                 placeholder='Nombre'
                 className={styles.input}
-                value={nombre}
-                onChange={e => setNombre(e.target.value)}
+                value={signUpData.nombre}
+                onChange={handleChange}
             />
 
           </div>
@@ -115,11 +109,12 @@ const SignUp = () => {
             >Apellido</label>
             <input
                 id='apellido'
+                name='apellido'
                 type='apellido'
                 placeholder='Apellido'
                 className={styles.input}
-                value={apellido}
-                onChange={e => setApellido(e.target.value)}
+                value={signUpData.apellido}
+                onChange={handleChange}
             />
 
           </div>
@@ -129,11 +124,12 @@ const SignUp = () => {
             >Email</label>
             <input
                 id='email'
+                name='email'
                 type='email'
                 placeholder='Email'
                 className={styles.input}
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+                value={signUpData.email}
+                onChange={handleChange}
             />
 
           </div>
@@ -145,11 +141,12 @@ const SignUp = () => {
             >Password</label>
             <input
                 id='contraseña'
+                name='contraseña'
                 type='password'
                 placeholder='Password'
                 className={styles.input}
-                value={contraseña}
-                onChange={e => setPassword(e.target.value)}
+                value={signUpData.contraseña}
+                onChange={handleChange}
             />
 
           </div>
@@ -160,11 +157,12 @@ const SignUp = () => {
             >Repetir Password</label>
             <input
                 id='passwordRep'
+                name='repetirPassword'
                 type='password'
                 placeholder='Repetir Password'
                 className={styles.input}
-                value={repetirPassword}
-                onChange={e => setRepetirPassword(e.target.value)}
+                value={signUpData.repetirPassword}
+                onChange={handleChange}
             />
 
           </div>
@@ -175,7 +173,7 @@ const SignUp = () => {
             <input 
               className={styles.button}
               type="submit"
-              value="Crear Cuenta"
+              value={loading ? "Cargando..." : "Crear Cuenta"}
             />
           </div>
 

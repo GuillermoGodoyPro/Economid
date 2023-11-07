@@ -6,41 +6,33 @@ import Chart from "chart.js/auto";
 import { CategoryScale, defaults } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
+import { useAuthContext } from '../../context/AuthProvider';
+import useFetch from '../../hooks/useFetch'
+import { CircularProgress } from '@mui/material';
+import { GeneralError } from '../../components/GeneralError';
 
 
 const Dashboard = () => {
-
-
-  const { auth } = useAuth()
+  const { usuario } = useAuthContext()
   const [balance, setBalance] = useState(null);
-  const [cargando, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-
-
-  const usuario = jwt_decode(auth);
-  const config = {
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${auth}`
-    }
-  }
-
+  useEffect(() => {
   if (usuario.p_e_id) {
-    useEffect(() => {
-      async function fetchData() {
-        try {
-          const res = await GetBalanceByPEId(usuario.p_e_id, config);
-          setBalance(res);
-          setLoading(false);
-        } catch (error) {
-          setError(error);
-          setLoading(false);
-        }
+    async function fetchData() {
+      const [data, error] = await useFetch(`/balance/GetBalanceByPEId/${usuario.p_e_id}`, 'GET', null, true)
+      if (data) {
+        setBalance(data)
+        setLoading(false)
+      }else {
+        setError(error)
+        setLoading(false)
       }
-      fetchData();
-    }, []);
+    }
+    fetchData();
   }
+  }, [usuario]);
 
   Chart.register(CategoryScale);
   const [chartData, setChartData] = useState({
@@ -59,15 +51,14 @@ const Dashboard = () => {
         borderColor: "none",
         borderWidth: 0,
         hoverOffset: 5,
-
       }
     ],
-
-
   });
 
+  if (loading) return <CircularProgress />
+  if (error) return <GeneralError error={error} />
+
   return (
-    /* TODO: PONER SPINNER ACA */
     <div>
       <h1
         className='text-violet-800 font-bold uppercase mx-5 mt-6'
@@ -94,26 +85,19 @@ const Dashboard = () => {
             <div className='flex justify-center'>
               <h3>Informacion de Saldos no disponible, empiece a crear transacciones...</h3>
             </div>}
-
           <div className='p-2 pt-8 flex justify-around bottom-1'>
-
             <button
               type="button"
               className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
             >
               Perfil Económico
             </button>
-
           </div>
-
         </div>
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
           <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
             Transacciones:
           </h2>
-
-
-
           <div className='min-h-[5rem]'>
             {/* <img
                   src={graficoPrueba}
@@ -121,7 +105,6 @@ const Dashboard = () => {
                 /> */}
             <DoughnutChart chartData={chartData} />
           </div>
-
         </div>
       </div>
 
@@ -150,8 +133,6 @@ const Dashboard = () => {
                 <td className="py-2 px-4">$ 75000</td>
                 <td className="py-2 px-4">10/06/2023</td>
               </tr>
-
-
             </tbody>
           </table>
         </div>
@@ -160,6 +141,7 @@ const Dashboard = () => {
       {/* Fin de lista de gastos */}
 
       {/* Balance */}
+
       <div className=" bg-inherit rounded p-4 m-1 mx-8 mb-0 flex justify-between">
         {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
         <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
@@ -167,7 +149,6 @@ const Dashboard = () => {
             <h2 className='p-1 justify-around text-violet-600'>
               Activos:
             </h2>
-
             <div className="bg-inherit rounded-lg  border">
               <table className="w-full border-collapse">
                 <thead>
@@ -180,35 +161,27 @@ const Dashboard = () => {
                   <tr className="border-b border-gray-300">
                     <td className="py-2 px-4">Salario</td>
                     <td className="py-2 px-4">$ 400000</td>
-
                   </tr>
                   <tr className="border-b border-gray-300">
                     <td className="py-2 px-4">Alquiler</td>
                     <td className="py-2 px-4">$ 75000</td>
-
                   </tr>
-
-
                 </tbody>
               </table>
             </div>
-
           </div>
-
         </div>
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full mx-1 w-min-6 ">
           <div>
             <h2 className='p-1 justify-around text-violet-600'>
               Pasivos:
             </h2>
-
             <div className="bg-inherit rounded-lg  border">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Transascción</th>
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-
                   </tr>
                 </thead>
                 <tbody>
@@ -220,38 +193,26 @@ const Dashboard = () => {
                     <td className="py-2 px-4">Alquiler</td>
                     <td className="py-2 px-4">$ 75000</td>
                   </tr>
-
                 </tbody>
               </table>
             </div>
-
           </div>
-
         </div>
-
-
       </div>
-
       <div className="bg-gray-200 p-4 mx-40 rounded-lg shadow-sm ">
         <div>
           <h2 className='p-1 justify-around mb-4 text-violet-600 text-center'>
             Patrimonio Neto:
           </h2>
-
           <div className='flex justify-center'>
             <h2 className='p-1 justify-around text-violet-600'>
               Cálculo Patrimonio Neto:
-
             </h2>
             <h2 className='p-1 justify-around text-violet-800 font-bold uppercase'>
               Pasivos - Activos
             </h2>
-
           </div>
-
         </div>
-
-
       </div>
 
       {/* Fin de balance */}
@@ -261,3 +222,4 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
