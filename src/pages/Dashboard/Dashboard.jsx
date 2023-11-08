@@ -19,10 +19,10 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   const [modal, setModal] = useState(false)
-  const [ animarModal, setAnimarModal ] = useState(false)
-  const [transaction, saveTransaction] =useState([])
+  const [animarModal, setAnimarModal] = useState(false)
+  const [transaction, saveTransaction] = useState([])
 
-// Inicio de Transacciones y PE -- conexión con Modal
+  // Inicio de Transacciones y PE -- conexión con Modal
 
   const handlePerfilEcon = () => {
     setModal(true)
@@ -36,7 +36,7 @@ const Dashboard = () => {
 
     // TODO: Agregar id único (supongo desde el back), mientras tanto harcodeo el id
     t.id = generarId();
-    
+
     saveTransaction([...transaction, t])
   }
 
@@ -127,44 +127,44 @@ const Dashboard = () => {
               <h3>Informacion de Saldos no disponible, empiece a crear transacciones...</h3>
             </div>}
 
-            { 
+          {
             !modal ?
               <div className='p-2 pt-8 flex justify-around bottom-1'>
 
-              <button
-                type="button"
-                className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
-                onClick={handlePerfilEcon}
-              >
-                Perfil Económico
-              </button>
+                <button
+                  type="button"
+                  className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold'
+                  onClick={handlePerfilEcon}
+                >
+                  Perfil Económico
+                </button>
 
-            </div>
+              </div>
 
-            :
-            <div>
-              <button
-                type="button"
-                className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
-                onClick={handlePerfilEcon}
-              >
-                Agregar Transacción
-              </button>
-              
-              { modal &&
-                <Modal 
-                  setModal = {setModal}  
-                  animarModal={animarModal}
-                  setAnimarModal={setAnimarModal}
-                  guardarTransaccion={guardarTransaccion}
-                /> 
-              }
-              
+              :
+              <div>
+                <button
+                  type="button"
+                  className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute'
+                  onClick={handlePerfilEcon}
+                >
+                  Agregar Transacción
+                </button>
 
-            </div>
-           
-            }
-          
+                {modal &&
+                  <Modal
+                    setModal={setModal}
+                    animarModal={animarModal}
+                    setAnimarModal={setAnimarModal}
+                    guardarTransaccion={guardarTransaccion}
+                  />
+                }
+
+
+              </div>
+
+          }
+
         </div>
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
           <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
@@ -187,30 +187,7 @@ const Dashboard = () => {
       {/* Lista de gastos */}
 
       <div className="bg-inherit p-10">
-        <div className="bg-inherit p-4 rounded-lg shadow-md border">
-          <table className="w-full border-collapse">
-            <thead>
-              <tr>
-                <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
-                <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr className="border-b border-gray-200">
-                <td className="py-2 px-4">Panaderia</td>
-                <td className="py-2 px-4">$ 700</td>
-                <td className="py-2 px-4">05/06/2023</td>
-              </tr>
-              <tr className="border-b border-gray-200">
-                <td className="py-2 px-4">Alquiler</td>
-                <td className="py-2 px-4">$ 75000</td>
-                <td className="py-2 px-4">10/06/2023</td>
-              </tr>
-
-
-            </tbody>
-          </table>
+        <div className="">
         </div>
       </div>
 
