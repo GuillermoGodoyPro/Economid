@@ -297,13 +297,16 @@ const Dashboard = () => {
             Patrimonio Neto:
           </h2>
 
-          <div className='flex justify-center'>
-            <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
-              ${parseFloat(balance.data.saldo_Total).toFixed(2)}
-            </h1>
-
-          </div>
-
+          {balance
+            ?
+            <div className='flex justify-center'>
+              <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
+                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
+              </h1>
+            </div>
+            :
+            <div></div>
+          }
         </div>
 
 
