@@ -1,49 +1,62 @@
 import { useState } from 'react'
 import CerrarBtn from '../assets/btnCierre.jfif'
 import Alerta from '../components/Alerta'
+import { AltaPerfilEconomico } from '../services/perfilEconomico';
+import useAuth from '../hooks/useAuth';
+import jwt_decode from "jwt-decode";
 
-const Modal = ({ setModal, animarModal, setAnimarModal, guardarTransaccion }) => {
+const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     const [alerta, setAlerta] = useState({});
-
-    const [presupuesto, setPresupuesto] = useState(null)
-    const [metaFinanciera, setMetaFinanciera] = useState(null)
-
+    const { auth } = useAuth();
+    const [presupuesto, setPresupuesto] = useState(0)
+    const [metaFinanciera, setMetaFinanciera] = useState(0)
 
     const ocultarModal = () => {
         setAnimarModal(false)
-        
         setTimeout(() => {
 
             setModal(false)
         }, 200)
-   
     }
 
-    const handleSubmit = e => {
+    const handleSubmit = async e => {
         e.preventDefault();
 
-        if([ presupuesto, metaFinanciera].includes('') || [ presupuesto, metaFinanciera].includes(null) ){
+        if ([presupuesto, metaFinanciera].includes('')) {
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
                 error: true
             })
-            
             setTimeout(() => {
                 setAlerta({})
             }, 3000)
 
             return;
-        }else{
+        } else {
             setAlerta({
                 msg: 'Transacción realizada',
                 error: false
             })
-
-            // Aca se guardan los datos
-            guardarTransaccion({presupuesto, metaFinanciera})    
         }
-        
-        ocultarModal()         
+
+        /* Implementación temporal (sucia). A mejorar */
+        const { id } = jwt_decode(auth);
+        const usuarioId = parseInt(id);
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth}`
+            }
+        }
+
+        try {
+            const { data } = await AltaPerfilEconomico({ presupuesto, metaFinanciera, usuarioId }, config);
+            console.log(data);
+        } catch (error) {
+            setError(error);
+        }
+
+        ocultarModal();
     }
 
     const { msg } = alerta
@@ -52,27 +65,27 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarTransaccion }) =>
         <div className="modal">
 
             <div className='modalContainer'>
-                <form 
+                <form
                     onSubmit={handleSubmit}
-                    className={`formulario ${animarModal ? "animar" : 'cerrar' }`}
+                    className={`formulario ${animarModal ? "animar" : 'cerrar'}`}
                 >
                     <div className="cerrar-modal">
                         <img
                             src={CerrarBtn}
                             alt='cerrar modal'
                             onClick={ocultarModal}
-                        />            
+                        />
 
                     </div>
 
                     <div className='campo'>
                         <label htmlFor="presupuesto">Presupuesto</label>
-                        <input 
+                        <input
                             id="presupuesto"
                             type="number"
                             placeholder="Presupuesto: ej. 50000"
                             value={presupuesto}
-                            onChange={ e => setPresupuesto( e.target.value ) }
+                            onChange={e => setPresupuesto(e.target.value)}
 
                         />
 
@@ -80,14 +93,14 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarTransaccion }) =>
 
                     <div className='campo'>
                         <label htmlFor="metaFinanciera">Meta Financiera</label>
-                            <input 
-                                id="metaFinanciera"
-                                type="number"
-                                placeholder="Meta financiera"
-                                value={metaFinanciera}
-                                onChange={ e => setMetaFinanciera( e.target.value ) }
+                        <input
+                            id="metaFinanciera"
+                            type="number"
+                            placeholder="Meta financiera"
+                            value={metaFinanciera}
+                            onChange={e => setMetaFinanciera(e.target.value)}
 
-                            />
+                        />
 
                     </div>
 
@@ -107,23 +120,23 @@ const Modal = ({ setModal, animarModal, setAnimarModal, guardarTransaccion }) =>
 
                     </div> */}
 
-                    <input 
+                    <input
                         type="submit"
                         value="Enviar"
                     />
 
-                {msg && <Alerta alerta={alerta} />}
+                    {msg && <Alerta alerta={alerta} />}
 
                 </form>
 
 
             </div>
-            
-            
-            
-            
+
+
+
+
         </div>
-  )
+    )
 }
 
 export default Modal

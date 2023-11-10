@@ -7,7 +7,7 @@ import { CategoryScale, defaults } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
 import Modal from '../../components/Modal';
-import { generarId } from '../../Helpers/helper';
+// import { generarId } from '../../Helpers/helper';
 
 
 const Dashboard = () => {
@@ -20,7 +20,6 @@ const Dashboard = () => {
 
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false);
-  const [transaction, saveTransaction] = useState([]);
 
 
   // Inicio de Transacciones y PE -- conexión con Modal
@@ -33,16 +32,6 @@ const Dashboard = () => {
       setAnimarModal(true)
     }, 400);
   }
-  const guardarTransaccion = t => {
-
-    // TODO: Agregar id único (supongo desde el back), mientras tanto harcodeo el id
-    t.id = generarId();
-
-    saveTransaction([...transaction, t])
-  }
-
-  console.log(transaction);
-
 
   // Fin de Transacciones y PE -- conexión con Modal
 
@@ -162,7 +151,6 @@ const Dashboard = () => {
                     setModal={setModal}
                     animarModal={animarModal}
                     setAnimarModal={setAnimarModal}
-                    guardarTransaccion={guardarTransaccion}
                   />
                 }
 
