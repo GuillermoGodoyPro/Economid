@@ -22,6 +22,7 @@ const Dashboard = () => {
   const [animarModal, setAnimarModal] = useState(false);
   const [transaction, saveTransaction] = useState([]);
 
+
   // Inicio de Transacciones y PE -- conexión con Modal
 
   const handlePerfilEcon = () => {
@@ -45,6 +46,8 @@ const Dashboard = () => {
 
   // Fin de Transacciones y PE -- conexión con Modal
 
+  
+
 
   //---------- Inicio de Conexiones JWT y Auth ----------
 
@@ -55,6 +58,7 @@ const Dashboard = () => {
       Authorization: `Bearer ${auth}`
     }
   }
+  
 
   if (usuario.p_e_id) {
     useEffect(() => {
@@ -144,7 +148,7 @@ const Dashboard = () => {
               </div>
 
               :
-              <div>
+              <div className='p-2 pt-8 flex justify-around bottom-1' >
                 <button
                   type="button"
                   className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute'

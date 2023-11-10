@@ -1,162 +1,129 @@
 import { useState } from 'react'
-import CerrarBtn from '../assets/cerrarBt.svg'
+import CerrarBtn from '../assets/btnCierre.jfif'
 import Alerta from '../components/Alerta'
 
 const Modal = ({ setModal, animarModal, setAnimarModal, guardarTransaccion }) => {
     const [alerta, setAlerta] = useState({});
 
-    const [saldoInicial, setSaldoInicial] = useState(0)
-    const [perfilEc, setPerfilEc] = useState("")
+    const [presupuesto, setPresupuesto] = useState(null)
+    const [metaFinanciera, setMetaFinanciera] = useState(null)
 
 
     const ocultarModal = () => {
         setAnimarModal(false)
-        setModal(false)
+        
+        setTimeout(() => {
+
+            setModal(false)
+        }, 200)
+   
     }
 
     const handleSubmit = e => {
         e.preventDefault();
 
-        if ([saldoInicial, perfilEc].includes('')) {
+        if([ presupuesto, metaFinanciera].includes('') || [ presupuesto, metaFinanciera].includes(null) ){
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
                 error: true
             })
-
+            
             setTimeout(() => {
                 setAlerta({})
-            }, 6000)
+            }, 3000)
 
             return;
-        } else {
+        }else{
             setAlerta({
                 msg: 'Transacción realizada',
                 error: false
             })
 
             // Aca se guardan los datos
-            guardarTransaccion({ saldoInicial, perfilEc })
+            guardarTransaccion({presupuesto, metaFinanciera})    
         }
-
-        ocultarModal()
+        
+        ocultarModal()         
     }
 
     const { msg } = alerta
 
     return (
-        // <div className="modal">
+        <div className="modal">
 
-
-
-        //     <form 
-        //         onSubmit={handleSubmit}
-        //         className={`formulario ${animarModal ? "animar" : 'cerrar' }`}
-        //     >
-        //         <div className="cerrar-modal">
-        //             <img
-        //                 src={CerrarBtn}
-        //                 alt='cerrar modal'
-        //                 onClick={ocultarModal}
-        //             />
-        //         </div>
-
-        //         <legend>Perfil Económico</legend>
-
-        //         <div className='campo'>
-        //             <label htmlFor="sinicial">Saldo Inicial</label>
-        //             <input 
-        //                 id="sinicial"
-        //                 type="number"
-        //                 placeholder="Añade tu saldo inicial: ej. 50000"
-        //                 value={saldoInicial}
-        //                 onChange={ e => setSaldoInicial( e.target.value ) }
-
-        //             />
-
-        //         </div>
-
-        //         <div className='campo'>
-        //             <label htmlFor="perfil">Tipo de inversor</label>
-
-        //             <select
-        //                 id="perfil"
-        //                 value={perfilEc}
-        //                 onChange={ e => setPerfilEc( e.target.value ) }
-        //             >
-        //                 <option value="">-- Seleccione --</option>
-        //                 <option value="moderado">Moderado</option>
-        //                 <option value="emprendedor">Emprendedor</option>
-
-        //             </select>                    
-
-        //         </div>
-
-        //         <input 
-        //             type="submit"
-        //             value="Añadir Transacción"
-        //         />
-
-        //     {msg && <Alerta alerta={alerta} />}
-
-        //     </form>
-
-        // </div>
-        <div className='modal'>
-            <div className="cerrar-modal">
-                <img
-                    src={CerrarBtn}
-                    alt='cerrar modal'
-                    onClick={ocultarModal}
-                />
-            </div>
-            <legend>Creá tu Perfil Económico</legend>
-            <form
-                className={`formulario ${animarModal ? "animar" : 'cerrar'}`}
-                onSubmit={handleSubmit}
-            >
-                <div className='campo'>
-                    <label
-                        htmlFor='presupuesto'
-                    >Presupuesto</label>
-                    <input
-                        id='presupuesto'
-                        type='number'
-                        placeholder='Presupuesto'
-                    />
-
-                </div>
-
-
-                <div className='campo'>
-                    <label
-                        htmlFor='metaFinanciera'
-                    >Meta Financiera</label>
-                    <input
-                        id='metaFinanciera'
-                        type='number'
-                        placeholder='Meta financiera'
-                    />
-
-                </div>
-
-                <div
-                    className='submit-container'
+            <div className='modalContainer'>
+                <form 
+                    onSubmit={handleSubmit}
+                    className={`formulario ${animarModal ? "animar" : 'cerrar' }`}
                 >
-                    <input
+                    <div className="cerrar-modal">
+                        <img
+                            src={CerrarBtn}
+                            alt='cerrar modal'
+                            onClick={ocultarModal}
+                        />            
+
+                    </div>
+
+                    <div className='campo'>
+                        <label htmlFor="presupuesto">Presupuesto</label>
+                        <input 
+                            id="presupuesto"
+                            type="number"
+                            placeholder="Presupuesto: ej. 50000"
+                            value={presupuesto}
+                            onChange={ e => setPresupuesto( e.target.value ) }
+
+                        />
+
+                    </div>
+
+                    <div className='campo'>
+                        <label htmlFor="metaFinanciera">Meta Financiera</label>
+                            <input 
+                                id="metaFinanciera"
+                                type="number"
+                                placeholder="Meta financiera"
+                                value={metaFinanciera}
+                                onChange={ e => setMetaFinanciera( e.target.value ) }
+
+                            />
+
+                    </div>
+
+                    {/* <div className='campo'>
+                        <label htmlFor="metaFinanciera">Meta Financiera</label>
+
+                        <select
+                            id="metaFinanciera"
+                            value={perfilEc}
+                            onChange={ e => setPerfilEc( e.target.value ) }
+                        >
+                            <option value="">-- Seleccione --</option>
+                            <option value="moderado">Moderado</option>
+                            <option value="emprendedor">Emprendedor</option>
+
+                        </select>                    
+
+                    </div> */}
+
+                    <input 
                         type="submit"
-                        className='bg-violet-400'
-                        value={"Crear"}
+                        value="Enviar"
                     />
 
-                </div>
-
-
-                {/* Pasamos el estado de alerta por props */}
                 {msg && <Alerta alerta={alerta} />}
 
-            </form>
+                </form>
+
+
+            </div>
+            
+            
+            
+            
         </div>
-    )
+  )
 }
 
 export default Modal
