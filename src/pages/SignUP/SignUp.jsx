@@ -26,7 +26,7 @@ const SignUp = () => {
     setLoading(true)
     const {nombre, apellido, email, contraseña, repetirPassword} = signUpData;
     /* Validación de campos */
-    if([nombre, apellido, email, contraseña, repetirPassword].includes('')){
+    if ([nombre, apellido, email, contraseña, repetirPassword].includes('')) {
       setAlerta({
         msg: 'Todos los campos son obligatorios',
         error: true
@@ -34,7 +34,7 @@ const SignUp = () => {
       return
     }
 
-    if(contraseña !== repetirPassword){
+    if (contraseña !== repetirPassword) {
       setAlerta({
         msg: 'No coinciden los password',
         error: true
@@ -82,9 +82,9 @@ const SignUp = () => {
         <h1 className={styles.title}> Bienvenido a
           <span className={styles.span}> MyFinance</span>
         </h1>
-        
-          
-        <form 
+
+
+        <form
           className={styles.form}
           onSubmit={handleSubmit}
         >
@@ -121,7 +121,7 @@ const SignUp = () => {
           <div>
             <label className={styles.label}
               htmlFor='email'
-            >Email</label>
+            >Correo Electrónico</label>
             <input
                 id='email'
                 name='email'
@@ -138,7 +138,7 @@ const SignUp = () => {
           <div>
             <label className={styles.label}
               htmlFor='contraseña'
-            >Password</label>
+            >Contraseña</label>
             <input
                 id='contraseña'
                 name='contraseña'
@@ -150,11 +150,11 @@ const SignUp = () => {
             />
 
           </div>
-           
+
           <div>
             <label className={styles.label}
               htmlFor='passwordRep'
-            >Repetir Password</label>
+            >Repetir Contraseña</label>
             <input
                 id='passwordRep'
                 name='repetirPassword'
@@ -166,11 +166,11 @@ const SignUp = () => {
             />
 
           </div>
-          
+
           <div
-             className={styles.submit}
+            className={styles.submit}
           >
-            <input 
+            <input
               className={styles.button}
               type="submit"
               value={loading ? "Cargando..." : "Crear Cuenta"}
@@ -178,9 +178,9 @@ const SignUp = () => {
           </div>
 
           {/* Pasamos el estado de alerta por props */}
-          {msg && <Alerta alerta={alerta} /> }
-          
-          
+          {msg && <Alerta alerta={alerta} />}
+
+
         </form>
 
         <div className={styles.nav}>
@@ -188,9 +188,9 @@ const SignUp = () => {
             <Link className={styles.link} to="/">
               Iniciar sesión
             </Link>
-            
-            <Link  className={styles.link}
-              to="/forgotpassword"         
+
+            <Link className={styles.link}
+              to="/forgotpassword"
             >
               Recuperar contraseña
             </Link>
@@ -201,8 +201,8 @@ const SignUp = () => {
       </div>
 
       {/* se podría usar flex en el nav para ubicar uno de lado izq y otro a la derecha, en movil se ubicaría uno debajo del otro */}
-      
-      
+
+
     </>
   )
 }

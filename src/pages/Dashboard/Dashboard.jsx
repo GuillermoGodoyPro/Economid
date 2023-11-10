@@ -7,6 +7,9 @@ import { useAuthContext } from '../../context/AuthProvider';
 import useFetch from '../../hooks/useFetch'
 import { CircularProgress } from '@mui/material';
 import { GeneralError } from '../../components/GeneralError';
+import Modal from '../../components/Modal';
+
+
 
 
 const Dashboard = () => {
@@ -51,6 +54,8 @@ const Dashboard = () => {
       }
     ],
   });
+  //---------- Fin de Conexiones JWT y Auth ----------
+
 
   if (loading) return <CircularProgress />
   if (error) return <GeneralError error={error} />
@@ -65,31 +70,63 @@ const Dashboard = () => {
       {/* Cabecera */}
       <div className=" bg-inherit rounded p-2 m-4 mb-0 flex justify-between">
         {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
-        <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1 ">
+        <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1">
           {balance ?
-            <div>
-              <h2 className='p-1 justify-around mb-4 text-violet-600'>
+            <div className='flex justify-around'>
+              <h2 className='p-1 mb-4 text-violet-600'>
                 <span className='font-bold'>
-                  Saldo Inicial: {balance.data.saldo_Inicial}
+                  Saldo Inicial: <br />
+                  ${parseFloat(balance.data.saldo_Inicial).toFixed(2)}
                 </span>
               </h2>
-              <h2 className='p-1 justify-around mb-6 text-violet-600'>
+              <h2 className='p-1 mb-4 text-violet-600'>
                 <span className='font-bold'>
-                  Saldo Total: {balance.data.saldo_Total}
+                  Saldo Total: <br />
+                  ${parseFloat(balance.data.saldo_Total).toFixed(2)}
                 </span>
               </h2>
             </div> :
             <div className='flex justify-center'>
               <h3>Informacion de Saldos no disponible, empiece a crear transacciones...</h3>
             </div>}
-          <div className='p-2 pt-8 flex justify-around bottom-1'>
-            <button
-              type="button"
-              className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold '
-            >
-              Perfil Económico
-            </button>
-          </div>
+
+          {
+            !modal ?
+              <div className='p-2 pt-8 flex justify-around bottom-1'>
+
+                <button
+                  type="button"
+                  className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold'
+                  onClick={handlePerfilEcon}
+                >
+                  Perfil Económico
+                </button>
+
+              </div>
+
+              :
+              <div className='p-2 pt-8 flex justify-around bottom-1' >
+                <button
+                  type="button"
+                  className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute'
+                  onClick={handlePerfilEcon}
+                >
+                  Agregar Transacción
+                </button>
+
+                {modal &&
+                  <Modal
+                    setModal={setModal}
+                    animarModal={animarModal}
+                    setAnimarModal={setAnimarModal}
+                  />
+                }
+
+
+              </div>
+
+          }
+
         </div>
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
           <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
@@ -105,7 +142,7 @@ const Dashboard = () => {
         </div>
       </div>
 
-      {/* fin Cabecer */}
+      {/* fin Cabecera */}
 
       {/* Lista de gastos */}
 
@@ -201,14 +238,16 @@ const Dashboard = () => {
           <h2 className='p-1 justify-around mb-4 text-violet-600 text-center'>
             Patrimonio Neto:
           </h2>
-          <div className='flex justify-center'>
-            <h2 className='p-1 justify-around text-violet-600'>
-              Cálculo Patrimonio Neto:
-            </h2>
-            <h2 className='p-1 justify-around text-violet-800 font-bold uppercase'>
-              Pasivos - Activos
-            </h2>
-          </div>
+          {balance
+            ?
+            <div className='flex justify-center'>
+              <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
+                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
+              </h1>
+            </div>
+            :
+            <div></div>
+          }
         </div>
       </div>
 

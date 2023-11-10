@@ -70,7 +70,7 @@ const Login = () => {
             id='email'
             name='email'
             type='email'
-            placeholder='Email'
+            placeholder='Correo Electrónico'
             className={styles.input}
             value={loginData.email}
             onChange={handleChange}
@@ -82,7 +82,7 @@ const Login = () => {
             id='contraseña'
             name='contraseña'
             type='password'
-            placeholder='Password'
+            placeholder='Contraseña'
             className={styles.input}
             value={loginData.contraseña}
             onChange={handleChange}
