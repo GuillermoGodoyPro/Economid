@@ -28,17 +28,20 @@ const Login = () => {
 
     try {
       const { data, status } = await UserLogin({ email, contraseña });
-      localStorage.setItem('token', data.token);
-      setAuth(data.token);       
       if (status === 200) {
+        localStorage.setItem('token', data.token);
+        setAuth(data.token);
         navigate('/dashboard');
       }
     } catch (error) {
       setAlerta({
-        msg: error.response.data.msg,
+        msg: error.response.data,
         error: true
       })
-      return;
+      setTimeout(() => {
+        setAlerta({});
+      }, 5000);
+      setCargando(true);
     }
   }
   const { msg } = alerta

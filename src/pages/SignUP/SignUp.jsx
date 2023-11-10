@@ -1,27 +1,28 @@
-import { Link } from "react-router-dom"
-import styles from '../SignUP/SignUp.module.css' 
+import { Link, useNavigate } from "react-router-dom"
+import styles from '../SignUP/SignUp.module.css'
 import { useState } from "react"
 import Alerta from "../../components/Alerta"
-import clienteAxios from "../../config/clienteAxios"
+import { UserRegister } from "../../services/usuario"
 
 
 
 const SignUp = () => {
 
-  const [ nombre, setNombre] = useState('')
-  const [ apellido, setApellido] = useState('')
-  const [ email, setEmail] = useState('')
-  const [ contraseña, setPassword] = useState('')
-  const [ repetirPassword, setRepetirPassword] = useState('')
+  const [nombre, setNombre] = useState('')
+  const [apellido, setApellido] = useState('')
+  const [email, setEmail] = useState('')
+  const [contraseña, setPassword] = useState('')
+  const [repetirPassword, setRepetirPassword] = useState('')
+  const navigate = useNavigate();
 
-  const [alerta, setAlerta ] = useState({})
+  const [alerta, setAlerta] = useState({})
 
   /* esta función tiene que ser asincrona para poder consultar al back */
   const handleSubmit = async e => {
     e.preventDefault();
 
     /* Validación de campos */
-    if([nombre, apellido, email, contraseña, repetirPassword].includes('')){
+    if ([nombre, apellido, email, contraseña, repetirPassword].includes('')) {
       setAlerta({
         msg: 'Todos los campos son obligatorios',
         error: true
@@ -29,36 +30,30 @@ const SignUp = () => {
       return
     }
 
-    if(contraseña !== repetirPassword){
+    if (contraseña !== repetirPassword) {
       setAlerta({
         msg: 'No coinciden los password',
         error: true
       })
       return
     }
-
-    if(contraseña.length < 6 ){
-      setAlerta({
-        msg: 'El password debe tener al menos 6 caracteres',
-        error: true
-      })
-      return
-    }
-
+    
     setAlerta({})
 
     // Enviar datos del usuario a la API para crear cuenta
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-      const { data } = await clienteAxios.post(`/usuario/registrousuario`, 
-      {nombre, apellido, email, esAdmin: false /*valor por defecto*/, contraseña} )
+      const { status } = await UserRegister({ nombre, apellido, email, esAdmin: false, contraseña });
+      if (status === 200) {                
+        setAlerta({
+          msg: "Usuario creado con éxito",
+          error: false
+        });
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      }
 
-      console.log("salio todo bien")
-
-      setAlerta({
-        msg: data.msg,
-        error: false
-      })
 
       /* Reseteo los state para que no se vea en formulario */
       setNombre('')
@@ -67,18 +62,23 @@ const SignUp = () => {
       setPassword('')
       setRepetirPassword('')
 
-    } catch (error) {
-        console.log(error.response.data.msg)
-        /* si no hay mensaje, msg = "Error de conexión con la base de datos local" */
-
-        /* 
+    } catch (error) {      
+      if (contraseña.length < 6){
+        setAlerta({
+            msg: error.response.data.errors.Contraseña[0],
+            error: true
+          });
+      }
+      else {          
           setAlerta({
-            msg: error.response.data.msg,
-            error: false
-          })
-        */
+            msg: error.response.data,
+            error: true
+          });
+      }
+      setTimeout(() => {
+        setAlerta({});
+      }, 5000);
     }
-
   }
 
   const { msg } = alerta
@@ -89,9 +89,9 @@ const SignUp = () => {
         <h1 className={styles.title}> Bienvenido a
           <span className={styles.span}> MyFinance</span>
         </h1>
-        
-          
-        <form 
+
+
+        <form
           className={styles.form}
           onSubmit={handleSubmit}
         >
@@ -100,12 +100,12 @@ const SignUp = () => {
               htmlFor='nombre'
             >Nombre</label>
             <input
-                id='nombre'
-                type='nombre'
-                placeholder='Nombre'
-                className={styles.input}
-                value={nombre}
-                onChange={e => setNombre(e.target.value)}
+              id='nombre'
+              type='nombre'
+              placeholder='Nombre'
+              className={styles.input}
+              value={nombre}
+              onChange={e => setNombre(e.target.value)}
             />
 
           </div>
@@ -114,26 +114,26 @@ const SignUp = () => {
               htmlFor='apellido'
             >Apellido</label>
             <input
-                id='apellido'
-                type='apellido'
-                placeholder='Apellido'
-                className={styles.input}
-                value={apellido}
-                onChange={e => setApellido(e.target.value)}
+              id='apellido'
+              type='apellido'
+              placeholder='Apellido'
+              className={styles.input}
+              value={apellido}
+              onChange={e => setApellido(e.target.value)}
             />
 
           </div>
           <div>
             <label className={styles.label}
               htmlFor='email'
-            >Email</label>
+            >Correo Electrónico</label>
             <input
-                id='email'
-                type='email'
-                placeholder='Email'
-                className={styles.input}
-                value={email}
-                onChange={e => setEmail(e.target.value)}
+              id='email'
+              type='email'
+              placeholder='Correo Electrónico'
+              className={styles.input}
+              value={email}
+              onChange={e => setEmail(e.target.value)}
             />
 
           </div>
@@ -142,37 +142,37 @@ const SignUp = () => {
           <div>
             <label className={styles.label}
               htmlFor='contraseña'
-            >Password</label>
+            >Contraseña</label>
             <input
-                id='contraseña'
-                type='password'
-                placeholder='Password'
-                className={styles.input}
-                value={contraseña}
-                onChange={e => setPassword(e.target.value)}
+              id='contraseña'
+              type='password'
+              placeholder='Contraseña'
+              className={styles.input}
+              value={contraseña}
+              onChange={e => setPassword(e.target.value)}
             />
 
           </div>
-           
+
           <div>
             <label className={styles.label}
               htmlFor='passwordRep'
-            >Repetir Password</label>
+            >Repetir Contraseña</label>
             <input
-                id='passwordRep'
-                type='password'
-                placeholder='Repetir Password'
-                className={styles.input}
-                value={repetirPassword}
-                onChange={e => setRepetirPassword(e.target.value)}
+              id='passwordRep'
+              type='password'
+              placeholder='Repetir Contraseña'
+              className={styles.input}
+              value={repetirPassword}
+              onChange={e => setRepetirPassword(e.target.value)}
             />
 
           </div>
-          
+
           <div
-             className={styles.submit}
+            className={styles.submit}
           >
-            <input 
+            <input
               className={styles.button}
               type="submit"
               value="Crear Cuenta"
@@ -180,9 +180,9 @@ const SignUp = () => {
           </div>
 
           {/* Pasamos el estado de alerta por props */}
-          {msg && <Alerta alerta={alerta} /> }
-          
-          
+          {msg && <Alerta alerta={alerta} />}
+
+
         </form>
 
         <div className={styles.nav}>
@@ -190,9 +190,9 @@ const SignUp = () => {
             <Link className={styles.link} to="/">
               Iniciar sesión
             </Link>
-            
-            <Link  className={styles.link}
-              to="/forgotpassword"         
+
+            <Link className={styles.link}
+              to="/forgotpassword"
             >
               Recuperar contraseña
             </Link>
@@ -203,8 +203,8 @@ const SignUp = () => {
       </div>
 
       {/* se podría usar flex en el nav para ubicar uno de lado izq y otro a la derecha, en movil se ubicaría uno debajo del otro */}
-      
-      
+
+
     </>
   )
 }
