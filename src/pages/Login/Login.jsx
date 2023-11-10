@@ -55,11 +55,11 @@ const Login = () => {
         <div>
           <label className={styles.label}
             htmlFor='email'
-          >Email</label>
+          >Correo Electrónico</label>
           <input
             id='email'
             type='email'
-            placeholder='Email'
+            placeholder='Correo Electrónico'
             className={styles.input}
             value={email}
             onChange={e => setEmail(e.target.value)}
@@ -71,11 +71,11 @@ const Login = () => {
         <div>
           <label className={styles.label}
             htmlFor='contraseña'
-          >Password</label>
+          >Contraseña</label>
           <input
             id='contraseña'
             type='password'
-            placeholder='Password'
+            placeholder='Contraseña'
             className={styles.input}
             value={contraseña}
             onChange={e => setContraseña(e.target.value)}
