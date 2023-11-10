@@ -40,3 +40,7 @@
     margin-bottom: 1rem;
 }
 
+.saldos{
+    display: flex;
+    flex-direction: row;
+}
