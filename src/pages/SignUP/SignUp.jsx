@@ -18,7 +18,7 @@ const SignUp = () => {
     esAdmin: true,
   });
   const [alerta, setAlerta ] = useState({})
-  const { setUser } = useAuthContext();
+  const { setUsuario } = useAuthContext();
   const navigate = useNavigate();
 
   const handleSubmit = async e => {
@@ -53,12 +53,12 @@ const SignUp = () => {
     const  [data, error] = await useFetch('/Usuario/RegistroUsuario', 'POST', signUpData);
     if (data) {
       localStorage.setItem('token', data.token);
-      setUser(jwtDecode(data.token))
+      setUsuario(jwtDecode(data.token))
       navigate('/')
       setLoading(false)
     }else {
       setAlerta({
-        msg: error.message,
+        msg: error.response.data,
         error: true,
       })
       setLoading(false)

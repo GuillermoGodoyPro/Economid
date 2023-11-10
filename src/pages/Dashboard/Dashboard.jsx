@@ -1,9 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import jwt_decode from "jwt-decode";
-import useAuth from '../../hooks/useAuth';
-import { GetBalanceByPEId } from '../../services/balance';
 import Chart from "chart.js/auto";
-import { CategoryScale, defaults } from "chart.js";
+import { CategoryScale } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
 import { useAuthContext } from '../../context/AuthProvider';
@@ -19,19 +16,19 @@ const Dashboard = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-  if (usuario.p_e_id) {
-    async function fetchData() {
-      const [data, error] = await useFetch(`/balance/GetBalanceByPEId/${usuario.p_e_id}`, 'GET', null, true)
-      if (data) {
-        setBalance(data)
-        setLoading(false)
-      }else {
-        setError(error)
-        setLoading(false)
+    if (usuario.p_e_id) {
+      async function fetchData() {
+        const [data, error] = await useFetch(`/balance/GetBalanceByPEId/${usuario.p_e_id}`, 'GET', null, true)
+        if (data) {
+          setBalance(data)
+          setLoading(false)
+        } else {
+          setError(error)
+          setLoading(false)
+        }
       }
+      fetchData();
     }
-    fetchData();
-  }
   }, [usuario]);
 
   Chart.register(CategoryScale);

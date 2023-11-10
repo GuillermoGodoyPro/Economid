@@ -8,7 +8,7 @@ import jwtDecode from 'jwt-decode'
 
 const Login = () => {
   const navigate = useNavigate();
-  const { setUser } = useAuthContext();
+  const { setUsuario } = useAuthContext();
   const [alerta, setAlerta] = useState({});
   const [cargando, setCargando] = useState(false);
   const [loginData, setLoginData] = useState({
@@ -34,12 +34,12 @@ const Login = () => {
     if(data) {
       setCargando(false)
       localStorage.setItem('token', data.token)
-      setUser(jwtDecode(data.token))
+      setUsuario(jwtDecode(data.token))
       navigate('/')
     }else {
       setCargando(false)
       setAlerta({
-        msg: error.message,
+        msg: error.response.data,
         error: true
       })
     }
