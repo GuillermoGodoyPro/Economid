@@ -8,8 +8,8 @@ import jwt_decode from "jwt-decode";
 const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
-    const [presupuesto, setPresupuesto] = useState(0)
-    const [metaFinanciera, setMetaFinanciera] = useState(0)
+    const [presupuesto, setPresupuesto] = useState('')
+    const [metaFinanciera, setMetaFinanciera] = useState('')
 
     const ocultarModal = () => {
         setAnimarModal(false)
@@ -22,26 +22,29 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if ([presupuesto, metaFinanciera].includes('')) {
+        if ([presupuesto, metaFinanciera].includes('') || [presupuesto, metaFinanciera].includes("0")) {
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
                 error: true
-            })
-            setTimeout(() => {
-                setAlerta({})
-            }, 3000)
-
-            return;
+            });            
         } else {
             setAlerta({
                 msg: 'Transacción realizada',
                 error: false
-            })
+            });
         }
 
-        /* Implementación temporal (sucia). A mejorar */
+        setTimeout(() => {
+            setAlerta({})
+        }, 3000)
+
         const { id } = jwt_decode(auth);
-        const usuarioId = parseInt(id);
+
+        const payload = {
+            presupuesto: parseFloat(presupuesto),
+            metaFinanciera: parseFloat(metaFinanciera),
+            usuarioId: parseInt(id)
+        }
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -50,7 +53,7 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
         }
 
         try {
-            const { data } = await AltaPerfilEconomico({ presupuesto, metaFinanciera, usuarioId }, config);
+            const { data } = await AltaPerfilEconomico(payload, config);
             console.log(data);
         } catch (error) {
             setError(error);

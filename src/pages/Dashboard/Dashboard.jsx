@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import jwt_decode from "jwt-decode";
-import useAuth from '../../hooks/useAuth';
-import { GetBalanceByPEId } from '../../services/balance';
 import Chart from "chart.js/auto";
-import { CategoryScale, defaults } from "chart.js";
+import { CategoryScale } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
+import useAuth from '../../hooks/useAuth';
 import Modal from '../../components/Modal';
 import { GetTransaccionesPorId } from '../../services/transacciones';
+import jwt_decode from 'jwt-decode';
 // import { generarId } from '../../Helpers/helper';
 
 
 const Dashboard = () => {
-
-
   const { auth } = useAuth();
   const [balance, setBalance] = useState(null);
   const [transacciones, setTransacciones] = useState([]);
@@ -97,15 +94,12 @@ const Dashboard = () => {
         borderColor: "none",
         borderWidth: 0,
         hoverOffset: 5,
-
       }
     ],
   });
   //---------- Fin de Conexiones JWT y Auth ----------
 
-
   return (
-    /* TODO: PONER SPINNER ACA */
     <div>
       <h1
         className='text-violet-800 font-bold uppercase mx-5 mt-6'
@@ -221,6 +215,7 @@ const Dashboard = () => {
       {/* Fin de lista de gastos */}
 
       {/* Balance */}
+
       <div className=" bg-inherit rounded p-4 m-1 mx-8 mb-0 flex justify-between">
         {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
         <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
@@ -250,23 +245,19 @@ const Dashboard = () => {
                 }
               </table>
             </div>
-
           </div>
-
         </div>
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full mx-1 w-min-6 ">
           <div>
             <h2 className='p-1 justify-around text-violet-600'>
               Egresos:
             </h2>
-
             <div className="bg-inherit rounded-lg  border">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-
                   </tr>
                 </thead>
                 {usuario.p_e_id ? 
@@ -284,20 +275,14 @@ const Dashboard = () => {
                 }
               </table>
             </div>
-
           </div>
-
         </div>
-
-
       </div>
-
       <div className="bg-gray-200 p-4 mx-40 rounded-lg shadow-sm ">
         <div>
           <h2 className='p-1 justify-around mb-4 text-violet-600 text-center'>
             Patrimonio Neto:
           </h2>
-
           {balance
             ?
             <div className='flex justify-center'>
@@ -309,8 +294,6 @@ const Dashboard = () => {
             <div></div>
           }
         </div>
-
-
       </div>
 
       {/* Fin de balance */}
@@ -320,3 +303,4 @@ const Dashboard = () => {
 }
 
 export default Dashboard
+
