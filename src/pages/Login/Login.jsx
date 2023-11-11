@@ -1,34 +1,24 @@
 import React, { useState } from 'react'
-import styles from './Login.module.css' 
+import styles from './Login.module.css'
 import Alerta from '../../components/Alerta'
-import { GoogleOAuthProvider } from '@react-oauth/google';
-import { GoogleLogin } from '@react-oauth/google';
-
 import { Link, useNavigate } from 'react-router-dom'
-import clienteAxios from '../../config/clienteAxios';
-import useAuth from '../../hooks/useAuth';
-
-
-/* 
-import.meta.env.GOOGLE_CLIENT_ID 
-*/
+import { UserLogin } from '../../services/usuario'
+import useAuth from '../../hooks/useAuth'
 
 const Login = () => {
 
-  const [ email, setEmail] = useState('')
-  const [ contraseña, setContraseña] = useState('')
-
-  const [alerta, setAlerta ] = useState({})
+  const [email, setEmail] = useState('');
+  const [contraseña, setContraseña] = useState('');
+  const [alerta, setAlerta] = useState({});
+  const [cargando, setCargando] = useState(true);
   const { setAuth } = useAuth();
-
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
-
-
-     /* Validación de campos */
-     if([ email, contraseña ].includes('')){
+    setCargando(false);
+    /* Validación de campos */
+    if ([email, contraseña].includes('')) {
       setAlerta({
         msg: 'Todos los campos son obligatorios',
         error: true
@@ -37,133 +27,102 @@ const Login = () => {
     }
 
     try {
-      const { data } = await clienteAxios.post('/usuario/login', { email, contraseña })
-      localStorage.setItem('token', data.token)       
-      setAuth(data.token)   
-      
-      // window.location.href="/dashboard"
-      setTimeout(() => {
-        
-        navigate('/dashboard')
-        setAlerta({})
-        
-      }, 1500 )
-      
-
-     // console.log(data)
+      const { data, status } = await UserLogin({ email, contraseña });
+      if (status === 200) {
+        localStorage.setItem('token', data.token);
+        setAuth(data.token);
+        navigate('/dashboard');
+      }
     } catch (error) {
       setAlerta({
-        msg: error.response.data.msg,
+        msg: error.response.data,
         error: true
       })
-      return
+      setTimeout(() => {
+        setAlerta({});
+      }, 5000);
+      setCargando(true);
     }
-
-    setAlerta({})
-
   }
-
-  const handleSuccessLogin = (res) => {
-    console.log(res)
-  }
-  const handleErrorLogin = (err) => {
-    console.log(err)
-  }
-  
-
-  const {msg} = alerta
+  const { msg } = alerta
 
   return (
-    
-    <GoogleOAuthProvider 
-      clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}
-    > 
-        <div className={styles.container} >
-          <span className={styles.span}> ¿Controlar tus finanzas? ¡fácil! </span>
-          <h1 className={styles.title}>Inicia sesión</h1>
-            
-          <form
-            className={styles.form}
-            onSubmit={handleSubmit}
+    <div className={styles.container} >
+      <span className={styles.span}> ¿Controlar tus finanzas? ¡fácil! </span>
+      <h1 className={styles.title}>Inicia sesión</h1>
+
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit}
+      >
+        <div>
+          <label className={styles.label}
+            htmlFor='email'
+          >Correo Electrónico</label>
+          <input
+            id='email'
+            type='email'
+            placeholder='Correo Electrónico'
+            className={styles.input}
+            value={email}
+            onChange={e => setEmail(e.target.value)}
+          />
+
+        </div>
+
+
+        <div>
+          <label className={styles.label}
+            htmlFor='contraseña'
+          >Contraseña</label>
+          <input
+            id='contraseña'
+            type='password'
+            placeholder='Contraseña'
+            className={styles.input}
+            value={contraseña}
+            onChange={e => setContraseña(e.target.value)}
+          />
+
+        </div>
+
+        <div
+          className={styles.submit}
+        >
+          <input
+            className={styles.button}
+            type="submit"
+            value={!cargando ? "Ingresando..." : "Ingresar"}
+          />
+
+        </div>
+
+
+        {/* Pasamos el estado de alerta por props */}
+        {msg && <Alerta alerta={alerta} />}
+
+      </form>
+
+
+      <div className={styles.nav}>
+        <nav>
+          <Link
+            className={styles.link} to="/signup">
+            Registrarse
+          </Link>
+          <Link
+            className={styles.link} to="/forgotpassword"
           >
-            <div>
-              <label className={styles.label}
-                htmlFor='email'
-              >Email</label>
-              <input
-                  id='email'
-                  type='email'
-                  placeholder='Email'
-                  className={styles.input}
-                  value={email}
-                  onChange={e => setEmail(e.target.value)}
-              />
+            Recuperar contraseña
+          </Link>
 
-            </div>
-
-
-            <div>
-              <label className={styles.label}
-                htmlFor='contraseña'
-              >Password</label>
-              <input
-                  id='contraseña'
-                  type='password'
-                  placeholder='Password'
-                  className={styles.input}
-                  value={contraseña}
-                  onChange={e => setContraseña(e.target.value)}
-              />
-
-            </div>
-            
-            <div
-              className={styles.submit}
-            >
-              <input 
-                className={styles.button}
-                type="submit"
-                value="Enviar"
-              />
-              
-            </div>
-
-
-            {/* Pasamos el estado de alerta por props */}
-            {msg && <Alerta alerta={alerta} /> }
-            
-            {/* TODO: hacer un estyles para centrar google login */}
-            <div className="mt-4">
-              <GoogleLogin onSuccess={handleSuccessLogin} onError={handleErrorLogin}/>
-            </div>
-
-          </form>          
-
-
-          <div className={styles.nav}>
-            <nav>           
-              <Link 
-                className={styles.link} to="/signup">
-                Registrarse
-              </Link>
-              <Link 
-                className={styles.link}  to="/forgotpassword"         
-              >
-                Recuperar contraseña
-              </Link>
-
-              {/* <Link 
+          {/* <Link 
                 className={styles.link} to="/dashboard">
                 dasboard
               </Link> */}
-            </nav>
-          </div>
-
-        </div>     
-
-    
-    </GoogleOAuthProvider>
-    
+        </nav>
+      </div>
+    </div>
   )
 }
 
