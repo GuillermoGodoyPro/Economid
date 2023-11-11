@@ -20,9 +20,7 @@ function DoughnutChart({ chartData }) {
 
             }
 
-          }
-
-          
+          }          
         }}
       />
     </div>

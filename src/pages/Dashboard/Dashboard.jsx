@@ -7,6 +7,7 @@ import { CategoryScale, defaults } from "chart.js";
 import { Data } from '../../utils/Data';
 import DoughnutChart from '../../components/DoughnutChart';
 import Modal from '../../components/Modal';
+import { GetTransaccionesPorId } from '../../services/transacciones';
 // import { generarId } from '../../Helpers/helper';
 
 
@@ -15,6 +16,7 @@ const Dashboard = () => {
 
   const { auth } = useAuth();
   const [balance, setBalance] = useState(null);
+  const [transacciones, setTransacciones] = useState([]);
   const [cargando, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
@@ -35,7 +37,7 @@ const Dashboard = () => {
 
   // Fin de Transacciones y PE -- conexión con Modal
 
-  
+
 
 
   //---------- Inicio de Conexiones JWT y Auth ----------
@@ -47,11 +49,11 @@ const Dashboard = () => {
       Authorization: `Bearer ${auth}`
     }
   }
-  
+
 
   if (usuario.p_e_id) {
     useEffect(() => {
-      async function fetchData() {
+      async function fetchBalance() {
         try {
           const res = await GetBalanceByPEId(usuario.p_e_id, config);
           setBalance(res);
@@ -61,9 +63,24 @@ const Dashboard = () => {
           setLoading(false);
         }
       }
-      fetchData();
+      fetchBalance();
     }, []);
   }
+
+  useEffect(() => {
+    async function fetchTransacciones() {
+      try {
+        const { data: response } = await GetTransaccionesPorId(usuario.p_e_id, config);
+        setTransacciones(response);
+        console.log(response);
+        setLoading(false);
+      } catch (error) {
+        setError(error);
+        setLoading(false);
+      }
+    }
+    fetchTransacciones();
+  }, []);
 
   Chart.register(CategoryScale);
   const [chartData, setChartData] = useState({
@@ -73,11 +90,9 @@ const Dashboard = () => {
         labels: "",
         data: Data.map((data) => data.monto),
         backgroundColor: [
-          "violet",
-          "green",
-          "purple",
-          "red",
-          "purple"
+          "darkviolet",
+          "blue",
+          "green"
         ],
         borderColor: "none",
         borderWidth: 0,
@@ -85,8 +100,6 @@ const Dashboard = () => {
 
       }
     ],
-
-
   });
   //---------- Fin de Conexiones JWT y Auth ----------
 
@@ -123,7 +136,7 @@ const Dashboard = () => {
             </div>}
 
           {
-            !modal ?
+            !usuario.p_e_id ?
               <div className='p-2 pt-8 flex justify-around bottom-1'>
 
                 <button
@@ -165,13 +178,11 @@ const Dashboard = () => {
             Transacciones:
           </h2>
 
+          {usuario.p_e_id ? 
           <div className='min-h-[5rem]'>
-            {/* <img
-                  src={graficoPrueba}
-                  className=' w-90 h-[11rem] rounded'
-                /> */}
             <DoughnutChart chartData={chartData} />
-          </div>
+          </div> :
+          <div></div>}
 
         </div>
       </div>
@@ -185,24 +196,23 @@ const Dashboard = () => {
           <table className="w-full border-collapse">
             <thead>
               <tr>
-                <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
+                <th className="text-left py-2 px-4 font-semibold text-violet-600">Detalle</th>
                 <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                 <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
+                <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b border-gray-200">
-                <td className="py-2 px-4">Panaderia</td>
-                <td className="py-2 px-4">$ 700</td>
-                <td className="py-2 px-4">05/06/2023</td>
-              </tr>
-              <tr className="border-b border-gray-200">
-                <td className="py-2 px-4">Alquiler</td>
-                <td className="py-2 px-4">$ 75000</td>
-                <td className="py-2 px-4">10/06/2023</td>
-              </tr>
-
-
+              {transacciones.map(transaccion => {
+                return (
+                  <tr className="border-b border-gray-200">
+                    <td className="py-2 px-4">{transaccion.detalle}</td>
+                    <td className="py-2 px-4">${transaccion.monto}</td>
+                    <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                    <td className="py-2 px-4">{transaccion.tipoTransaccion}</td>
+                  </tr>
+                )
+              })}
             </tbody>
           </table>
         </div>
@@ -216,8 +226,9 @@ const Dashboard = () => {
         <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
           <div>
             <h2 className='p-1 justify-around text-violet-600'>
-              Activos:
+              Ingresos:
             </h2>
+
 
             <div className="bg-inherit rounded-lg  border">
               <table className="w-full border-collapse">
@@ -227,20 +238,16 @@ const Dashboard = () => {
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                   </tr>
                 </thead>
+                {usuario.p_e_id ? 
                 <tbody>
                   <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">Salario</td>
-                    <td className="py-2 px-4">$ 400000</td>
+                    <td className="py-2 px-4">Dolares</td>
+                    <td className="py-2 px-4">$200000</td>
 
                   </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">Alquiler</td>
-                    <td className="py-2 px-4">$ 75000</td>
-
-                  </tr>
-
-
-                </tbody>
+                </tbody> :
+                <tbody></tbody>
+                }
               </table>
             </div>
 
@@ -250,29 +257,31 @@ const Dashboard = () => {
         <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full mx-1 w-min-6 ">
           <div>
             <h2 className='p-1 justify-around text-violet-600'>
-              Pasivos:
+              Egresos:
             </h2>
 
             <div className="bg-inherit rounded-lg  border">
               <table className="w-full border-collapse">
                 <thead>
                   <tr>
-                    <th className="text-left py-2 px-4 font-semibold text-violet-600">Transascción</th>
+                    <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
 
                   </tr>
                 </thead>
+                {usuario.p_e_id ? 
                 <tbody>
                   <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">Salario</td>
-                    <td className="py-2 px-4">$ 400000</td>
+                    <td className="py-2 px-4">Supermercado</td>
+                    <td className="py-2 px-4">$50000</td>
                   </tr>
                   <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">Alquiler</td>
-                    <td className="py-2 px-4">$ 75000</td>
+                    <td className="py-2 px-4">ISTEA</td>
+                    <td className="py-2 px-4">$65000</td>
                   </tr>
-
-                </tbody>
+                </tbody> :
+                <tbody></tbody>
+                }
               </table>
             </div>
 
