@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import styles from './Login.module.css'
 import Alerta from '../../components/Alerta'
 import { Link, useNavigate } from 'react-router-dom'
@@ -6,7 +6,13 @@ import useFetch from '../../hooks/useFetch'
 import { useAuthContext } from '../../context/AuthProvider'
 import jwtDecode from 'jwt-decode'
 
+const loginInitialValue = {
+  email: '',
+  contraseña: '',
+}
+
 const Login = () => {
+  const mailRef = useRef(null);
   const navigate = useNavigate();
   const { setUsuario } = useAuthContext();
   const [alerta, setAlerta] = useState({});
@@ -37,6 +43,8 @@ const Login = () => {
       setUsuario(jwtDecode(data.token))
       navigate('/')
     }else {
+      mailRef.current.focus()
+      setLoginData(loginInitialValue)
       setCargando(false)
       setAlerta({
         msg: error.response.data,
@@ -46,6 +54,7 @@ const Login = () => {
   }
 
   const handleChange = (e) => {
+    setAlerta({})
     const field = event.target.name;
     const value = event.target.value;
     setLoginData({
@@ -67,6 +76,7 @@ const Login = () => {
         <div>
           <label className={styles.label} htmlFor='email'>Email</label>
           <input
+            ref={mailRef}
             id='email'
             name='email'
             type='email'

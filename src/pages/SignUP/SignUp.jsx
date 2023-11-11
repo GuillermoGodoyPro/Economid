@@ -66,6 +66,7 @@ const SignUp = () => {
   }
   
   const handleChange = (e) => {
+    setAlerta({})
     const field = event.target.name;
     const value = event.target.value;
     setSignUpData({
