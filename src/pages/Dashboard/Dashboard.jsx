@@ -32,7 +32,7 @@ const Dashboard = () => {
     }, 400);
   }
 
-  // Fin de Transacciones y PE -- conexión con Modal
+  // Fin de Transacciones y PE -- conexión con Modal fin
 
 
 
