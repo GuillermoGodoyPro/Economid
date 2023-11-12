@@ -25,10 +25,10 @@ export const generarId = () => {
         month: 'long',
         day: '2-digit',
     }
-    
+
     // Formato - 27 de Junio de 2023
     return fechaNueva.toLocaleDateString('es-ES', opciones)
-    
+
 } */
 
 // Formato - 27/06/2023

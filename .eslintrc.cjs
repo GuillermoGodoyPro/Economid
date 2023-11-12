@@ -23,6 +23,10 @@ module.exports = {
     "react-hooks/rules-of-hooks": "off",
     "no-irregular-whitespace": "warn",
     "no-undef": "warn",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    "no-trailing-spaces": "error",
+    "no-multi-spaces": "error"
   },
 }
