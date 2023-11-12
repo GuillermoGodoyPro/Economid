@@ -48,12 +48,12 @@ export const GraficoTransacciones = ({ transacs }) => {
                         title: "",
                         legend: {
                             display: true,
-                            position: "left"
+                            position: "bottom"                                                        
                         }
                     }
                 }}
-                height={450}
-                width={450}
+                height={400}
+                width={400}
             />
         </div>
     );
