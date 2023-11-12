@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
-import AuthLayout from "./layouts/AuthLayout"
-import Login from "./pages/Login/Login"
-import SignUp from "./pages/SignUP/SignUp"
-import ForgotPassword from "./pages/ForgotPassword/ForgotPassword"
-import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount"
-import ProtectedPath from "./layouts/ProtectedPath"
-import Dashboard from "./pages/Dashboard/Dashboard"
-import NewPassword from "./pages/NewPassword/NewPassword"
-import { AuthProvider } from "./context/AuthProvider"
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AuthLayout from "./layouts/AuthLayout";
+import Login from "./pages/Login/Login";
+import SignUp from "./pages/SignUP/SignUp";
+import ForgotPassword from "./pages/ForgotPassword/ForgotPassword";
+import ConfirmAccount from "./pages/ConfirmAccount/ConfirmAccount";
+import ProtectedPath from "./layouts/ProtectedPath";
+import Dashboard from "./pages/Dashboard/Dashboard";
+import NewPassword from "./pages/NewPassword/NewPassword";
+import { AuthProvider } from "./context/AuthProvider";
 
-import Perfil from "./pages/Dashboard/Perfil"
+import Perfil from "./pages/Dashboard/Perfil";
 
 function App() {
 
@@ -43,7 +43,7 @@ function App() {
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-  )
+  );
 }
 
-export default App
+export default App;

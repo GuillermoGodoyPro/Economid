@@ -1,14 +1,14 @@
-import React, { useState } from 'react'
-import styles from './Login.module.css'
-import Alerta from '../../components/Alerta'
-import { Link, useNavigate } from 'react-router-dom'
-import { UserLogin } from '../../services/usuario'
-import useAuth from '../../hooks/useAuth'
+import { useState } from "react";
+import styles from "./Login.module.css";
+import Alerta from "../../components/Alerta";
+import { Link, useNavigate } from "react-router-dom";
+import { UserLogin } from "../../services/usuario";
+import useAuth from "../../hooks/useAuth";
 
 const Login = () => {
 
-  const [email, setEmail] = useState('');
-  const [contraseña, setContraseña] = useState('');
+  const [email, setEmail] = useState("");
+  const [contraseña, setContraseña] = useState("");
   const [alerta, setAlerta] = useState({});
   const [cargando, setCargando] = useState(true);
   const { setAuth } = useAuth();
@@ -18,11 +18,11 @@ const Login = () => {
     e.preventDefault();
     setCargando(false);
     /* Validación de campos */
-    if ([email, contraseña].includes('')) {
+    if ([email, contraseña].includes("")) {
       setAlerta({
-        msg: 'Todos los campos son obligatorios',
+        msg: "Todos los campos son obligatorios",
         error: true
-      })
+      });
       setTimeout(() => {
         setAlerta({});
       }, 5000);
@@ -33,23 +33,23 @@ const Login = () => {
       try {
         const { data, status } = await UserLogin({ email, contraseña });
         if (status === 200) {
-          localStorage.setItem('token', data.token);
+          localStorage.setItem("token", data.token);
           setAuth(data.token);
-          navigate('/dashboard');
+          navigate("/dashboard");
         }
       } catch (error) {
         setAlerta({
           msg: error.response.data,
           error: true
-        })
+        });
         setTimeout(() => {
           setAlerta({});
         }, 5000);
         setCargando(true);
       }
     }
-  }
-  const { msg } = alerta
+  };
+  const { msg } = alerta;
 
   return (
     <div className={styles.container} >
@@ -128,7 +128,7 @@ const Login = () => {
         </nav>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Login
+export default Login;

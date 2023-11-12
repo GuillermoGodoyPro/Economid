@@ -10,11 +10,11 @@ export const GraficoTransacciones = ({ transacs }) => {
   const categorias = transacs?.map(({ categoria }) => categoria.titulo);
   const montos = transacs?.map(data => data.monto);
   const colores = [
-    'rgb(113, 50, 255)',
-    'rgb(139, 79, 255)',
-    'rgb(180, 130, 255)',
-    'rgb(213, 180, 255)',
-    'rgb(242, 230, 255)'
+    "rgb(113, 50, 255)",
+    "rgb(139, 79, 255)",
+    "rgb(180, 130, 255)",
+    "rgb(213, 180, 255)",
+    "rgb(242, 230, 255)"
   ];
 
   console.log(categorias);
@@ -27,7 +27,7 @@ export const GraficoTransacciones = ({ transacs }) => {
           labels: categorias,
           datasets: [
             {
-              label: '',
+              label: "",
               data: montos,
               backgroundColor: colores,
               borderWidth: 1,
@@ -45,10 +45,10 @@ export const GraficoTransacciones = ({ transacs }) => {
             padding: 20
           },
           plugins: {
-            title: '',
+            title: "",
             legend: {
               display: true,
-              position: 'left'
+              position: "left"
             }
           }
         }}
@@ -56,5 +56,5 @@ export const GraficoTransacciones = ({ transacs }) => {
         width={450}
       />
     </div>
-  )
-}
+  );
+};

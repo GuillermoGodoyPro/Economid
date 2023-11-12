@@ -1,57 +1,57 @@
-import React, { useState } from 'react'
-import Alerta from '../../components/Alerta'
-import styles from '../NewPassword/NewPassword.module.css' 
+import { useState } from "react";
+import Alerta from "../../components/Alerta";
+import styles from "../NewPassword/NewPassword.module.css"; 
 
 
-import { Link } from 'react-router-dom'
-import clienteAxios from '../../config/clienteAxios'
+import { Link } from "react-router-dom";
+import clienteAxios from "../../config/clienteAxios";
 
 const NewPassword = () => {
   
-  const [ contraseña, setContraseña] = useState('')
-  const [alerta, setAlerta ] = useState({})
+  const [ contraseña, setContraseña] = useState("");
+  const [alerta, setAlerta ] = useState({});
 
   /* esta función tiene que ser asincrona para poder consultar al back */
   const handleSubmit = async e => {
     e.preventDefault();
 
     /* Validación de campos */
-    if([contraseña].includes('')){
+    if([contraseña].includes("")){
       setAlerta({
-        msg: 'Ingresar nueva contraseña',
+        msg: "Ingresar nueva contraseña",
         error: true
-      })
-      return
+      });
+      return;
     }
 
     
     if(contraseña.length < 6 ){
       setAlerta({
-        msg: 'El password debe tener al menos 6 caracteres',
+        msg: "El password debe tener al menos 6 caracteres",
         error: true
-      })
-      return
+      });
+      return;
     }
 
-    setAlerta({})
+    setAlerta({});
 
     // Enviar datos del usuario a la API para crear cuenta
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-      const { data } = await clienteAxios.post(`/usuarios`, 
-      {nombre, email, contraseña} )
+      // const { data } = await clienteAxios.post("/usuarios", 
+      // {nombre, email, contraseña} );
 
       setAlerta({
         msg: data.msg,
         error: false
-      })
+      });
 
       /* Reseteo los state para que no se vea en formulario */
       
-      setContraseña('')
+      setContraseña("");
 
     } catch (error) {
-        console.log(error.response.data.msg)
+        console.log(error.response.data.msg);
         /* si no hay mensaje, msg = "Error de conexión con la base de datos" */
 
         /* 
@@ -62,9 +62,9 @@ const NewPassword = () => {
         */
     }
 
-  }
+  };
 
-  const { msg } = alerta
+  const { msg } = alerta;
 
   return (
     <>
@@ -79,7 +79,7 @@ const NewPassword = () => {
           onSubmit={handleSubmit}
         >
           
-          <div>
+          {/* <div>
             <label className={styles.label}
               htmlFor='contraseña'
             >Nuevo Password</label>
@@ -92,7 +92,7 @@ const NewPassword = () => {
                 onChange={e => setPassword(e.target.value)}
             />
 
-          </div>          
+          </div>           */}
                    
           <div
              className={styles.submit}
@@ -131,7 +131,7 @@ const NewPassword = () => {
       
       
     </>
-  )
-}
+  );
+};
 
-export default NewPassword
+export default NewPassword;

@@ -1,9 +1,9 @@
-import React, { useContext } from 'react'
-import Header from '../components/Header'
-import Sidebar from '../components/Sidebar'
-import { Navigate, Outlet } from 'react-router-dom'
-import styles from '../styles/ProtectedPath.module.css' 
-import useAuth from '../hooks/useAuth'
+import React, { useContext } from "react";
+import Header from "../components/Header";
+import Sidebar from "../components/Sidebar";
+import { Navigate, Outlet } from "react-router-dom";
+import styles from "../styles/ProtectedPath.module.css"; 
+import useAuth from "../hooks/useAuth";
 
 
 const ProtectedPath = () => {
@@ -12,7 +12,7 @@ const ProtectedPath = () => {
   const { auth, cargando } = useAuth(); 
   
   // TODO: usar un spinner
-  if(cargando) return 'Cargando...' 
+  if(cargando) return "Cargando..."; 
 /*   const autid = true
  */
   return (
@@ -50,7 +50,7 @@ const ProtectedPath = () => {
   
         
     </>
-  )
-}
+  );
+};
 
-export default ProtectedPath
+export default ProtectedPath;

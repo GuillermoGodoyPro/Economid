@@ -6,7 +6,7 @@ import AuthContext from "../context/AuthProvider";
 const useAuth = () => {
 
     // ** Acá identifica que es un context y permite extraer datos "AuthContext"
-    return useContext(AuthContext)
-}
+    return useContext(AuthContext);
+};
 
 export default useAuth;

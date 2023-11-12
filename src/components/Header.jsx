@@ -1,18 +1,18 @@
-import React from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import logoparaMF from '../assets/logoparaMF.png'
-import useAuth from '../hooks/useAuth'
-import jwt_decode from "jwt-decode";
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import logoparaMF from "../assets/logoparaMF.png";
+import useAuth from "../hooks/useAuth";
+import jwtDecode from "jwt-decode";
 
 
 const Header = () => {
-  const { auth } = useAuth()
-  const usuario = jwt_decode(auth);
+  const { auth } = useAuth();
+  const usuario = jwtDecode(auth);
   const navigate = useNavigate();
   const handleClick = () => {
     localStorage.clear(); 
-    navigate('/');
-  }
+    navigate("/");
+  };
 
   return (
     <>
@@ -51,7 +51,7 @@ const Header = () => {
         
       </header>
     </>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

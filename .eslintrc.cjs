@@ -16,5 +16,13 @@ module.exports = {
       'warn',
       { allowConstantExport: true },
     ],
+    "quotes": ["error", "double"],
+    "camelcase": "error",
+    "semi": [1, "always"],
+    "no-unused-vars": "warn",
+    "react-hooks/rules-of-hooks": "off",
+    "no-irregular-whitespace": "warn",
+    "no-undef": "warn",
+    "react/prop-types": "off"
   },
 }

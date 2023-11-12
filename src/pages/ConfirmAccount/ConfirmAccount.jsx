@@ -1,5 +1,5 @@
-import React from 'react'
-import styles from '../ConfirmAccount/ConfirmAccount.module.css' 
+import React from "react";
+import styles from "../ConfirmAccount/ConfirmAccount.module.css"; 
 
 const ConfirmAccount = () => {
 
@@ -16,7 +16,7 @@ const ConfirmAccount = () => {
       </div>     
       
     </>
-  )
-}
+  );
+};
 
-export default ConfirmAccount
+export default ConfirmAccount;

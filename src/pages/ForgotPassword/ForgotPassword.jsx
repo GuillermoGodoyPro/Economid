@@ -1,48 +1,48 @@
-import React, { useState } from 'react'
-import styles from '../ForgotPassword/ForgotPassword.module.css' 
-import Alerta from '../../components/Alerta'
+import { useState } from "react";
+import styles from "../ForgotPassword/ForgotPassword.module.css"; 
+import Alerta from "../../components/Alerta";
 
-import { Link } from 'react-router-dom'
-import clienteAxios from '../../config/clienteAxios'
+import { Link } from "react-router-dom";
+import clienteAxios from "../../config/clienteAxios";
 
 const ForgotPassword = () => {
 
-  const [ email, setEmail] = useState('')
+  const [ email, setEmail] = useState("");
 
-  const [alerta, setAlerta ] = useState({})
+  const [alerta, setAlerta ] = useState({});
 
   /* esta función tiene que ser asincrona para poder consultar al back */
   const handleSubmit = async e => {
     e.preventDefault();
 
     /* Validación de campos */
-    if([email].includes('')){
+    if([email].includes("")){
       setAlerta({
-        msg: 'INGRESAR EMAIL',
+        msg: "INGRESAR EMAIL",
         error: true
-      })
-      return
+      });
+      return;
     }    
       
-    setAlerta({})
+    setAlerta({});
 
     // Enviar datos del usuario a la API para crear cuenta
     try {
       /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-      const { data } = await clienteAxios.post(`/usuarios`, 
-      {email} )
+      const { data } = await clienteAxios.post("/usuarios", 
+      {email} );
 
       setAlerta({
         msg: data.msg,
         error: false
-      })
+      });
 
       /* Reseteo los state para que no se vea en formulario */      
-      setEmail('')     
+      setEmail("");     
       
 
     } catch (error) {
-        console.log(error.response.data.msg)
+        console.log(error.response.data.msg);
         /* si no hay mensaje, msg = "Error de conexión con la base de datos" */
 
         /* 
@@ -53,9 +53,9 @@ const ForgotPassword = () => {
         */
     }
 
-  }
+  };
 
-  const { msg } = alerta
+  const { msg } = alerta;
 
   return (
     <>
@@ -122,7 +122,7 @@ const ForgotPassword = () => {
       
       
     </>
-  )
-}
+  );
+};
 
-export default ForgotPassword
+export default ForgotPassword;
