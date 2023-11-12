@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
-import useAuth from '../../hooks/useAuth';
-import Modal from '../../components/Modal';
-import { ObtenerTodasUsuario } from '../../services/transacciones';
-import { GetBalanceByPEId } from '../../services/balance';
-import jwt_decode from 'jwt-decode';
-import { GraficoTransacciones } from '../../components/GraficoTransacciones';
+import { useState, useEffect } from "react";
+import useAuth from "../../hooks/useAuth";
+import Modal from "../../components/Modal";
+import { FiltrarPorTipo, ObtenerTodasUsuario } from "../../services/transacciones";
+import { GetBalanceByPEId } from "../../services/balance";
+import { GraficoTransacciones } from "../../components/GraficoTransacciones";
+import jwtDecode from "jwt-decode";
 // import { generarId } from '../../Helpers/helper';
 
 
@@ -12,6 +12,8 @@ const Dashboard = () => {
   const { auth } = useAuth();
   const [balance, setBalance] = useState(null);
   const [transacciones, setTransacciones] = useState([]);
+  const [ingresos, setIngresos] = useState([]);
+  const [egresos, setEgresos] = useState([]);
   const [cargando, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [modal, setModal] = useState(false);
@@ -24,9 +26,9 @@ const Dashboard = () => {
 
     setTimeout(() => {
 
-      setAnimarModal(true)
+      setAnimarModal(true);
     }, 400);
-  }
+  };
 
   // Fin de Transacciones y PE -- conexión con Modal fin
 
@@ -35,13 +37,13 @@ const Dashboard = () => {
 
   //---------- Inicio de Conexiones JWT y Auth ----------
 
-  const usuario = jwt_decode(auth);
+  const usuario = jwtDecode(auth);
   const config = {
     headers: {
       "Content-Type": "application/json",
       Authorization: `Bearer ${auth}`
     }
-  }
+  };
 
 
   if (usuario.p_e_id) {
@@ -55,7 +57,7 @@ const Dashboard = () => {
           setError(error);
           setLoading(false);
         }
-      }
+      };
       const fetchTransacciones = async () => {
         try {
           const { data: response } = await ObtenerTodasUsuario(config);
@@ -65,9 +67,31 @@ const Dashboard = () => {
           setError(error);
           setLoading(false);
         }
-      }
+      };
+      const transaccionesIngresos = async () => {
+        try {
+          const { data: response } = await FiltrarPorTipo(0, config);
+          setIngresos(response);
+          setLoading(false);
+        } catch (error) {
+          setError(error);
+          setLoading(false);
+        }
+      };
+      const transaccionesEgresos = async () => {
+        try {
+          const { data: response } = await FiltrarPorTipo(1, config);
+          setEgresos(response);
+          setLoading(false);
+        } catch (error) {
+          setError(error);
+          setLoading(false);
+        }
+      };
       fetchBalance();
       fetchTransacciones();
+      transaccionesIngresos();
+      transaccionesEgresos();
     }, []);
   }
   //---------- Fin de Conexiones JWT y Auth ----------
@@ -178,7 +202,7 @@ const Dashboard = () => {
                     <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
                     <td className="py-2 px-4">{transaccion.tipoTransaccion}</td>
                   </tr>
-                )
+                );
               })}
             </tbody>
           </table>
@@ -197,7 +221,6 @@ const Dashboard = () => {
               Ingresos:
             </h2>
 
-
             <div className="bg-inherit rounded-lg  border">
               <table className="w-full border-collapse">
                 <thead>
@@ -208,11 +231,14 @@ const Dashboard = () => {
                 </thead>
                 {usuario.p_e_id ?
                   <tbody>
-                    <tr className="border-b border-gray-300">
-                      <td className="py-2 px-4">Dolares</td>
-                      <td className="py-2 px-4">$200000</td>
-
-                    </tr>
+                    {ingresos.map((transaccion, index) => {
+                      return (
+                        <tr className="border-b border-gray-200" key={index}>
+                          <td className="py-2 px-4">{transaccion.detalle}</td>
+                          <td className="py-2 px-4">${transaccion.monto}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody> :
                   <tbody></tbody>
                 }
@@ -235,14 +261,14 @@ const Dashboard = () => {
                 </thead>
                 {usuario.p_e_id ?
                   <tbody>
-                    <tr className="border-b border-gray-300">
-                      <td className="py-2 px-4">Supermercado</td>
-                      <td className="py-2 px-4">$50000</td>
-                    </tr>
-                    <tr className="border-b border-gray-300">
-                      <td className="py-2 px-4">ISTEA</td>
-                      <td className="py-2 px-4">$65000</td>
-                    </tr>
+                    {egresos.map((transaccion, index) => {
+                      return (
+                        <tr className="border-b border-gray-200" key={index}>
+                          <td className="py-2 px-4">{transaccion.detalle}</td>
+                          <td className="py-2 px-4">${transaccion.monto}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody> :
                   <tbody></tbody>
                 }
@@ -272,8 +298,8 @@ const Dashboard = () => {
       {/* Fin de balance */}
 
     </div>
-  )
-}
+  );
+};
 
-export default Dashboard
+export default Dashboard;
 

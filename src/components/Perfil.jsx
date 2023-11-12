@@ -1,10 +1,10 @@
-import React from 'react'
-import useAuth from '../hooks/useAuth'
-import jwt_decode from "jwt-decode";
+import React from "react";
+import useAuth from "../hooks/useAuth";
+import jwtDecode from "jwt-decode";
 
 const Perfil = () => {
-  const { auth } = useAuth()
-  const usuario = jwt_decode(auth);
+  const { auth } = useAuth();
+  const usuario = jwtDecode(auth);
 
   return (
     <div>
@@ -12,7 +12,7 @@ const Perfil = () => {
       safasfasf
 
     </div>
-  )
-}
+  );
+};
 
-export default Perfil
+export default Perfil;

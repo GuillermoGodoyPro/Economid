@@ -1,54 +1,54 @@
-import { useState } from 'react'
-import Alerta from '../components/Alerta'
-import { AltaPerfilEconomico } from '../services/perfilEconomico';
-import useAuth from '../hooks/useAuth';
-import jwt_decode from "jwt-decode";
+import { useState } from "react";
+import Alerta from "../components/Alerta";
+import { AltaPerfilEconomico } from "../services/perfilEconomico";
+import useAuth from "../hooks/useAuth";
+import jwtDecode from "jwt-decode";
 
 const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
-    const [presupuesto, setPresupuesto] = useState('')
-    const [metaFinanciera, setMetaFinanciera] = useState('')
+    const [presupuesto, setPresupuesto] = useState("");
+    const [metaFinanciera, setMetaFinanciera] = useState("");
 
     const ocultarModal = () => {
-        setAnimarModal(false)
+        setAnimarModal(false);
         setTimeout(() => {
-            setModal(false)
-        }, 200)
-    }
+            setModal(false);
+        }, 200);
+    };
 
     const handleSubmit = async e => {
         e.preventDefault();
 
         if ([presupuesto, metaFinanciera].length === 0) {
             setAlerta({
-                msg: 'Todos los campos son obligatorios',
+                msg: "Todos los campos son obligatorios",
                 error: true
             });
         } else {
             setAlerta({
-                msg: 'Transacción realizada',
+                msg: "Transacción realizada",
                 error: false
             });
         }
 
         setTimeout(() => {
-            setAlerta({})
-        }, 3000)
+            setAlerta({});
+        }, 3000);
 
-        const { id } = jwt_decode(auth);
+        const { id } = jwtDecode(auth);
 
         const payload = {
             presupuesto: parseFloat(presupuesto),
             metaFinanciera: parseFloat(metaFinanciera),
             usuarioId: parseInt(id)
-        }
+        };
         const config = {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth}`
             }
-        }
+        };
 
         try {
             const { data } = await AltaPerfilEconomico(payload, config);
@@ -58,9 +58,9 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
         }
 
         ocultarModal();
-    }
+    };
 
-    const { msg } = alerta
+    const { msg } = alerta;
 
     return (
         <div className="modal">
@@ -68,7 +68,7 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
             <div className='modalContainer'>
                 <form
                     onSubmit={handleSubmit}
-                    className={`formulario ${animarModal ? "animar" : 'cerrar'}`}
+                    className={`formulario ${animarModal ? "animar" : "cerrar"}`}
                 >
                     <div className="cerrar-modal">
                         <i className="fa-regular fa-circle-xmark"
@@ -115,7 +115,7 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
 
 
         </div>
-    )
-}
+    );
+};
 
-export default Modal
+export default Modal;

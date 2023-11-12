@@ -1,44 +1,44 @@
-import { Link, useNavigate } from "react-router-dom"
-import styles from '../SignUP/SignUp.module.css'
-import { useState } from "react"
-import Alerta from "../../components/Alerta"
-import { UserRegister } from "../../services/usuario"
+import { Link, useNavigate } from "react-router-dom";
+import styles from "../SignUP/SignUp.module.css";
+import { useState } from "react";
+import Alerta from "../../components/Alerta";
+import { UserRegister } from "../../services/usuario";
 
 
 
 const SignUp = () => {
 
-  const [nombre, setNombre] = useState('')
-  const [apellido, setApellido] = useState('')
-  const [email, setEmail] = useState('')
-  const [contraseña, setPassword] = useState('')
-  const [repetirPassword, setRepetirPassword] = useState('')
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [email, setEmail] = useState("");
+  const [contraseña, setPassword] = useState("");
+  const [repetirPassword, setRepetirPassword] = useState("");
   const navigate = useNavigate();
 
-  const [alerta, setAlerta] = useState({})
+  const [alerta, setAlerta] = useState({});
 
   /* esta función tiene que ser asincrona para poder consultar al back */
   const handleSubmit = async e => {
     e.preventDefault();
 
     /* Validación de campos */
-    if ([nombre, apellido, email, contraseña, repetirPassword].includes('')) {
+    if ([nombre, apellido, email, contraseña, repetirPassword].includes("")) {
       setAlerta({
-        msg: 'Todos los campos son obligatorios',
+        msg: "Todos los campos son obligatorios",
         error: true
-      })
-      return
+      });
+      return;
     }
 
     if (contraseña !== repetirPassword) {
       setAlerta({
-        msg: 'No coinciden los password',
+        msg: "No coinciden los password",
         error: true
-      })
-      return
+      });
+      return;
     }
     
-    setAlerta({})
+    setAlerta({});
 
     // Enviar datos del usuario a la API para crear cuenta
     try {
@@ -50,17 +50,17 @@ const SignUp = () => {
           error: false
         });
         setTimeout(() => {
-          navigate('/');
+          navigate("/");
         }, 3000);
       }
 
 
       /* Reseteo los state para que no se vea en formulario */
-      setNombre('')
-      setApellido('')
-      setEmail('')
-      setPassword('')
-      setRepetirPassword('')
+      setNombre("");
+      setApellido("");
+      setEmail("");
+      setPassword("");
+      setRepetirPassword("");
 
     } catch (error) {      
       if (contraseña.length < 6){
@@ -79,9 +79,9 @@ const SignUp = () => {
         setAlerta({});
       }, 5000);
     }
-  }
+  };
 
-  const { msg } = alerta
+  const { msg } = alerta;
 
   return (
     <>
@@ -206,7 +206,7 @@ const SignUp = () => {
 
 
     </>
-  )
-}
+  );
+};
 
-export default SignUp
+export default SignUp;

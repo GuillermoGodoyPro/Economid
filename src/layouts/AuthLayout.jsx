@@ -1,5 +1,5 @@
-import { Outlet } from "react-router-dom"
-import styles from '../styles/AuthLayout.module.css' 
+import { Outlet } from "react-router-dom";
+import styles from "../styles/AuthLayout.module.css"; 
 
 const AuthLayout = () => {
   return (
@@ -11,7 +11,7 @@ const AuthLayout = () => {
         </main>
 
     </>
-  )
-}
+  );
+};
 
-export default AuthLayout
+export default AuthLayout;
