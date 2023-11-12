@@ -1,5 +1,4 @@
 import { useState } from 'react'
-import CerrarBtn from '../assets/btnCierre.jfif'
 import Alerta from '../components/Alerta'
 import { AltaPerfilEconomico } from '../services/perfilEconomico';
 import useAuth from '../hooks/useAuth';
@@ -14,7 +13,6 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     const ocultarModal = () => {
         setAnimarModal(false)
         setTimeout(() => {
-
             setModal(false)
         }, 200)
     }
@@ -22,11 +20,11 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if ([presupuesto, metaFinanciera].includes('') || [presupuesto, metaFinanciera].includes("0")) {
+        if ([presupuesto, metaFinanciera].length === 0) {
             setAlerta({
                 msg: 'Todos los campos son obligatorios',
                 error: true
-            });            
+            });
         } else {
             setAlerta({
                 msg: 'Transacción realizada',
@@ -73,12 +71,8 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
                     className={`formulario ${animarModal ? "animar" : 'cerrar'}`}
                 >
                     <div className="cerrar-modal">
-                        <img
-                            src={CerrarBtn}
-                            alt='cerrar modal'
-                            onClick={ocultarModal}
-                        />
-
+                        <i className="fa-regular fa-circle-xmark"
+                            onClick={ocultarModal}></i>
                     </div>
 
                     <div className='campo'>
@@ -102,26 +96,8 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
                             placeholder="Meta financiera"
                             value={metaFinanciera}
                             onChange={e => setMetaFinanciera(e.target.value)}
-
                         />
-
                     </div>
-
-                    {/* <div className='campo'>
-                        <label htmlFor="metaFinanciera">Meta Financiera</label>
-
-                        <select
-                            id="metaFinanciera"
-                            value={perfilEc}
-                            onChange={ e => setPerfilEc( e.target.value ) }
-                        >
-                            <option value="">-- Seleccione --</option>
-                            <option value="moderado">Moderado</option>
-                            <option value="emprendedor">Emprendedor</option>
-
-                        </select>                    
-
-                    </div> */}
 
                     <input
                         type="submit"

@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import Chart from "chart.js/auto";
-import { CategoryScale } from "chart.js";
-import { Data } from '../../utils/Data';
-import DoughnutChart from '../../components/DoughnutChart';
 import useAuth from '../../hooks/useAuth';
 import Modal from '../../components/Modal';
-import { GetTransaccionesPorId } from '../../services/transacciones';
+import { ObtenerTodasUsuario } from '../../services/transacciones';
+import { GetBalanceByPEId } from '../../services/balance';
 import jwt_decode from 'jwt-decode';
+import { GraficoTransacciones } from '../../components/GraficoTransacciones';
 // import { generarId } from '../../Helpers/helper';
 
 
@@ -16,10 +14,8 @@ const Dashboard = () => {
   const [transacciones, setTransacciones] = useState([]);
   const [cargando, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [modal, setModal] = useState(false);
   const [animarModal, setAnimarModal] = useState(false);
-
 
   // Inicio de Transacciones y PE -- conexión con Modal
 
@@ -50,7 +46,7 @@ const Dashboard = () => {
 
   if (usuario.p_e_id) {
     useEffect(() => {
-      async function fetchBalance() {
+      const fetchBalance = async () => {
         try {
           const res = await GetBalanceByPEId(usuario.p_e_id, config);
           setBalance(res);
@@ -60,43 +56,20 @@ const Dashboard = () => {
           setLoading(false);
         }
       }
+      const fetchTransacciones = async () => {
+        try {
+          const { data: response } = await ObtenerTodasUsuario(config);
+          setTransacciones(response);
+          setLoading(false);
+        } catch (error) {
+          setError(error);
+          setLoading(false);
+        }
+      }
       fetchBalance();
+      fetchTransacciones();
     }, []);
   }
-
-  useEffect(() => {
-    async function fetchTransacciones() {
-      try {
-        const { data: response } = await GetTransaccionesPorId(usuario.p_e_id, config);
-        setTransacciones(response);
-        console.log(response);
-        setLoading(false);
-      } catch (error) {
-        setError(error);
-        setLoading(false);
-      }
-    }
-    fetchTransacciones();
-  }, []);
-
-  Chart.register(CategoryScale);
-  const [chartData, setChartData] = useState({
-    labels: Data.map((data) => data.category),
-    datasets: [
-      {
-        labels: "",
-        data: Data.map((data) => data.monto),
-        backgroundColor: [
-          "darkviolet",
-          "blue",
-          "green"
-        ],
-        borderColor: "none",
-        borderWidth: 0,
-        hoverOffset: 5,
-      }
-    ],
-  });
   //---------- Fin de Conexiones JWT y Auth ----------
 
   return (
@@ -172,11 +145,11 @@ const Dashboard = () => {
             Transacciones:
           </h2>
 
-          {usuario.p_e_id ? 
-          <div className='min-h-[5rem]'>
-            <DoughnutChart chartData={chartData} />
-          </div> :
-          <div></div>}
+          {usuario.p_e_id ?
+            <div className='min-h-[5rem]'>
+              <GraficoTransacciones transacs={transacciones}/>
+            </div> :
+            <div></div>}
 
         </div>
       </div>
@@ -197,9 +170,9 @@ const Dashboard = () => {
               </tr>
             </thead>
             <tbody>
-              {transacciones.map(transaccion => {
+              {transacciones.map((transaccion, index) => {
                 return (
-                  <tr className="border-b border-gray-200">
+                  <tr className="border-b border-gray-200" key={index}>
                     <td className="py-2 px-4">{transaccion.detalle}</td>
                     <td className="py-2 px-4">${transaccion.monto}</td>
                     <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
@@ -233,15 +206,15 @@ const Dashboard = () => {
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                   </tr>
                 </thead>
-                {usuario.p_e_id ? 
-                <tbody>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">Dolares</td>
-                    <td className="py-2 px-4">$200000</td>
+                {usuario.p_e_id ?
+                  <tbody>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 px-4">Dolares</td>
+                      <td className="py-2 px-4">$200000</td>
 
-                  </tr>
-                </tbody> :
-                <tbody></tbody>
+                    </tr>
+                  </tbody> :
+                  <tbody></tbody>
                 }
               </table>
             </div>
@@ -260,18 +233,18 @@ const Dashboard = () => {
                     <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                   </tr>
                 </thead>
-                {usuario.p_e_id ? 
-                <tbody>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">Supermercado</td>
-                    <td className="py-2 px-4">$50000</td>
-                  </tr>
-                  <tr className="border-b border-gray-300">
-                    <td className="py-2 px-4">ISTEA</td>
-                    <td className="py-2 px-4">$65000</td>
-                  </tr>
-                </tbody> :
-                <tbody></tbody>
+                {usuario.p_e_id ?
+                  <tbody>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 px-4">Supermercado</td>
+                      <td className="py-2 px-4">$50000</td>
+                    </tr>
+                    <tr className="border-b border-gray-300">
+                      <td className="py-2 px-4">ISTEA</td>
+                      <td className="py-2 px-4">$65000</td>
+                    </tr>
+                  </tbody> :
+                  <tbody></tbody>
                 }
               </table>
             </div>
