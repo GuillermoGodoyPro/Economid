@@ -5,40 +5,45 @@
 
 /* Aquí definimos las Custom properties */
 :root {
-  
 
- 
+
+
     --violetlight: #4f339ccb;
     --violetdark: #372174cb;
-    --violethover:#ae9cdfcb;
+    --violethover: #ae9cdfcb;
     --crema: #f5f5f3;
     --white: white;
     --rojo: #e50914;
     --negro: #141414;
     --gris: #303030;
-    --gris-f: #757575;    
-    --gris-mod: #f5f5f5;    
+    --gris-f: #757575;
+    --gris-mod: #f5f5f5;
+    --gris-popup: rgb(229 231 235);
     /* Tipografía */
     --tipo-principal: Helvetica, Arial, sans-serif;
     --tipo-secundaria: Verdana;
-  }
+}
 
-  body{
+body {
     background-color: var(--crema);
-  }
+}
 
- /* Evitamos problemas con las imagenes */
- img, picture, video, iframe, figure {
+/* Evitamos problemas con las imagenes */
+img,
+picture,
+video,
+iframe,
+figure {
     max-width: 100%;
     width: 100%;
     display: block;
     /* opcional */
     -o-object-fit: cover;
-       object-fit: cover;
+    object-fit: cover;
     /* opcional */
     -o-object-position: center center;
-       object-position: center center;
-  }
+    object-position: center center;
+}
 
 /* Reseteamos los enlaces para funcionar como cajas... */
 a {
@@ -46,62 +51,87 @@ a {
     text-decoration: none;
     color: inherit;
     font-size: inherit;
-  }
-  
-  /* ... excepto los que se encuentran en párrafos */
-  p a {
+}
+
+/* ... excepto los que se encuentran en párrafos */
+p a {
     display: inline;
-  }
-  
-  /* Quitamos los puntos de los <li> */
-  li {
+}
+
+/* Quitamos los puntos de los <li> */
+li {
     list-style-type: none;
-  }
-  
-  /* Configuramos anclas suaves */
-  html {
+}
+
+/* Configuramos anclas suaves */
+html {
     scroll-behavior: smooth;
-  }
-  
-  /* Desactivamos estilos por defecto de las principales etiquetas de texto */
-  h1, h2, h3, h4, h5, h6, p, span, a, strong, blockquote, i, b, u, em {
+}
+
+/* Desactivamos estilos por defecto de las principales etiquetas de texto */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+span,
+a,
+strong,
+blockquote,
+i,
+b,
+u,
+em {
     font-size: 1em;
     font-weight: inherit;
     font-style: inherit;
     text-decoration: none;
     color: inherit;
-  }
-
-  /* MODAL */
-.formulario {
-  width: 100%;
-  margin: 0 auto;
-  padding: 10rem 0;
 }
+
+/* MODAL */
+.formulario {
+    width: 100%;
+    margin: 0 auto;
+    padding: 10rem 0;
+}
+
 @media (min-width: 768px) {
     .formulario {
         padding: 2rem 0;
         width: 60rem;
     }
 }
+
 .formulario legend {
     font-size: 1.2rem;
     text-align: center;
     display: block;
     text-transform: uppercase;
-    color: var(--negro);
+    color: var(--violetdark);
     margin-bottom: 1rem;
     padding-bottom: 0.5rem;
     border-bottom: 2px solid var(--violetdark);
 }
+
 .formulario .campo {
     display: grid;
     margin-bottom: 1rem;
-    
+    color: var(--negro);
+}
+
+i {
+    cursor: pointer;
+    font-size: 25px;
+}
+.fa-regular, .far {
+    font-size: 25px;
 }
 
 .formulario label {
-    color: var(--violetlight);
+    color: var(--violetdark);
     font-size: 1.2rem;
     text-align: center;
     margin-bottom: 0.5rem;
@@ -110,34 +140,20 @@ a {
 
 .formulario input[type="text"],
 .formulario input[type="number"] {
-    background-color: var(--gris-f);
+    background-color: var(--gris-popup);
     border-radius: 0.3rem;
     padding: 0.5rem;
     border: none;
     flex: 1;
     font-size: 1rem;
-    
-}
-.formulario select {
-  background-color: var(--gris-mod);
-  display: flex;
-  padding: 0.55rem;
-  border: none;
-  border-radius: 0.5rem;
-  flex: 1;
-  text-align: center;
-  
-  font-size: 0.1rem;
-  
+    color: var(--negro);
 }
 
 .formulario input[type="submit"] {
-    
     background-color: var(--violetdark);
-    
     border: none;
     border-radius: 0.5rem;
-    padding: 1rem; 
+    padding: 1rem;
     text-align: center;
     margin-top: 2.7rem;
     margin-bottom: 0.8rem;
@@ -148,16 +164,17 @@ a {
     width: 100%;
     transition: background-color 300ms ease;
 }
+
 @media (min-width: 768px) {
     .formulario input[type="submit"] {
         display: block;
         padding: 0.6rem 5rem;
     }
 }
+
 .formulario input[type="submit"]:hover {
     background-color: #042a67;
     cursor: pointer;
-    
 }
 
 .modal {
@@ -168,10 +185,9 @@ a {
     left: 0;
     right: 0;
     bottom: 0;
-    
 }
 
-.modalContainer{
+.modalContainer {
     margin: 0 auto;
     margin-top: 8rem;
     justify-items: center;
@@ -187,20 +203,11 @@ a {
     position: absolute;
     right: 0.3rem;
     top: 1rem;
-    
     width: 2rem;
     height: 2rem;
-    
-
-    
-}
-.modal .cerrar-modal img {    
-    background-color: var(--crema);
-    width: 100%;
 }
 
 .modal .formulario {
-    
     max-width: 40rem;
     width: 20rem;
     transition-property: all;
@@ -208,9 +215,12 @@ a {
     transition-timing-function: ease-in;
     opacity: 0;
 }
-.modal label {
-    color: var(--negro);
+
+.modal .campo label {
+    color: var(--violetdark);
+    font-weight: bolder;
 }
+
 body .modal {
     overflow: hidden;
 }
@@ -218,15 +228,14 @@ body .modal {
 .modal .formulario.animar {
     position: relative;
     opacity: 1;
-    
+
 }
 
 .modal .formulario.cerrar {
-    
     opacity: 0;
 }
-.modal .formulario.cerrar img{  
-    
+
+.modal .formulario.cerrar i .fa-regular{
     display: none;
 }
 

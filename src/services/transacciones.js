@@ -1,7 +1,7 @@
 import clienteAxios from "../config/clienteAxios";
 
-export async function GetTransaccionesPorId(PEId, config) { 
+export async function ObtenerTodasUsuario(config) { 
        
-    const data = await clienteAxios(`/transaccion/ObtenerTodasPorPEId/${PEId}`, config);
+    const data = await clienteAxios(`/transaccion/ObtenerTodasUsuario`, config);
     return data;
 }

@@ -23,25 +23,30 @@ const Login = () => {
         msg: 'Todos los campos son obligatorios',
         error: true
       })
-      return
-    }
-
-    try {
-      const { data, status } = await UserLogin({ email, contraseña });
-      if (status === 200) {
-        localStorage.setItem('token', data.token);
-        setAuth(data.token);
-        navigate('/dashboard');
-      }
-    } catch (error) {
-      setAlerta({
-        msg: error.response.data,
-        error: true
-      })
       setTimeout(() => {
         setAlerta({});
       }, 5000);
+
       setCargando(true);
+    }
+    else {
+      try {
+        const { data, status } = await UserLogin({ email, contraseña });
+        if (status === 200) {
+          localStorage.setItem('token', data.token);
+          setAuth(data.token);
+          navigate('/dashboard');
+        }
+      } catch (error) {
+        setAlerta({
+          msg: error.response.data,
+          error: true
+        })
+        setTimeout(() => {
+          setAlerta({});
+        }, 5000);
+        setCargando(true);
+      }
     }
   }
   const { msg } = alerta
