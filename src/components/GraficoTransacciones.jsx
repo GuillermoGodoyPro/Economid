@@ -32,7 +32,8 @@ export const GraficoTransacciones = ({ transacs }) => {
                             backgroundColor: colores,
                             borderWidth: 1,
                             hoverOffset: 25,
-                            borderRadius: 15
+                            borderRadius: 15,
+                            borderColor: "rgb(242, 230, 255)"
                         }
                     ]
                 }}

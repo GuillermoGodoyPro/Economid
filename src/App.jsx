@@ -8,8 +8,7 @@ import ProtectedPath from "./layouts/ProtectedPath";
 import Dashboard from "./pages/Dashboard/Dashboard";
 import NewPassword from "./pages/NewPassword/NewPassword";
 import { AuthProvider } from "./context/AuthProvider";
-
-import Perfil from "./pages/Dashboard/Perfil";
+import Usuario from "./pages/User/Usuario";
 
 function App() {
 
@@ -33,13 +32,8 @@ function App() {
 
                     <Route path="/dashboard" element={ <ProtectedPath/> }>
                         <Route index element={<Dashboard />} />
-                        <Route path="perfil" element={<Perfil />} />
-
-
+                        <Route path="usuario" element={<Usuario />} />
                     </Route>
-
-
-
                 </Routes>
             </AuthProvider>
         </BrowserRouter>

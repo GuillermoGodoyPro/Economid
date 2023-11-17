@@ -98,27 +98,29 @@ const Dashboard = () => {
 
     return (
         <div>
-            <h1
+            <h2
                 className='text-violet-800 font-bold uppercase mx-5 mt-6'
             >
                 Bienvenido: {usuario.nombre}
-            </h1>
+            </h2>
             {/* Cabecera */}
             <div className=" bg-inherit rounded p-2 m-4 mb-0 flex justify-between">
                 {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
                 <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1">
                     {balance ?
                         <div className='flex justify-around'>
+                            <div className='flex'>
+                                <span className='font-bold text-violet-600'>
+                                    Saldo Actual <hr />
+                                </span>
+                                <h1 className='text-violet-600'>
+                                    ${parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                </h1>
+                            </div>
                             <h2 className='p-1 mb-4 text-violet-600'>
                                 <span className='font-bold'>
                                     Saldo Inicial: <br />
                                     ${parseFloat(balance.data.saldo_Inicial).toFixed(2)}
-                                </span>
-                            </h2>
-                            <h2 className='p-1 mb-4 text-violet-600'>
-                                <span className='font-bold'>
-                                    Saldo Total: <br />
-                                    ${parseFloat(balance.data.saldo_Total).toFixed(2)}
                                 </span>
                             </h2>
                         </div> :
@@ -151,11 +153,11 @@ const Dashboard = () => {
                                 </button>
 
                                 {modal &&
-                                <Modal
-                                    setModal={setModal}
-                                    animarModal={animarModal}
-                                    setAnimarModal={setAnimarModal}
-                                />
+                                    <Modal
+                                        setModal={setModal}
+                                        animarModal={animarModal}
+                                        setAnimarModal={setAnimarModal}
+                                    />
                                 }
 
 
@@ -286,7 +288,7 @@ const Dashboard = () => {
                         ?
                         <div className='flex justify-center'>
                             <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
-                                    ${parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
                             </h1>
                         </div>
                         :
