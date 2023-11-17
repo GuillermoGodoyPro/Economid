@@ -9,6 +9,10 @@ import Dashboard from "./pages/Dashboard/Dashboard";
 import NewPassword from "./pages/NewPassword/NewPassword";
 import { AuthProvider } from "./context/AuthProvider";
 import Usuario from "./pages/User/Usuario";
+import Transacciones from "./pages/Transacciones/Transacciones";
+import Perfil from "./pages/Perfil/Perfil";
+import Balance from "./pages/Balance/Balance";
+import Faq from "./pages/Faq/Faq";
 
 function App() {
 
@@ -32,7 +36,13 @@ function App() {
 
                     <Route path="/dashboard" element={ <ProtectedPath/> }>
                         <Route index element={<Dashboard />} />
+
                         <Route path="usuario" element={<Usuario />} />
+
+                        <Route path="perfil" element={<Perfil />} />
+                        <Route path="transacciones" element={<Transacciones />} />
+                        <Route path="balance" element={<Balance />} />
+                        <Route path="faq" element={<Faq />} />
                     </Route>
                 </Routes>
             </AuthProvider>

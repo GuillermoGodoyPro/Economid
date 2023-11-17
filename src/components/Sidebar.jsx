@@ -28,27 +28,34 @@ const Sidebar = () => {
                 </div>
                 <div className='mt-6 block fixed'>
 
-                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+                    <Link
+                        to="perfil"
+                        className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold"
+                    >
                         Perfil Económico
                     </Link>
-                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+
+                    <Link
+                        to="transacciones"
+                        className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold"
+                    >
                         Transacciones
                     </Link>
-                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+
+                    <Link
+                        to="balance"
+                        className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold"
+                    >
                         Balance
                     </Link>
-                    <Link className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold">
+
+                    <Link
+                        to="faq"
+                        className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold"
+                    >
                         FAQ
                     </Link>
-                    {/* <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
-                        Item
-                    </Link>
-                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
-                        Item
-                    </Link>
-                    <Link className="mb-6 ml-10 text-xl text-white hover:text-violet-800 font-bold">
-                        Item
-                    </Link> */}
+
                 </div>
 
 

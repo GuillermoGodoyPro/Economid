@@ -16,7 +16,7 @@ const Header = () => {
 
     return (
         <>
-            <header className='border border-t md:justify-between '>
+            <header className='border border-t md:justify-between'>
 
                 <div className='mt-1 px-4 py-5  flex items-center gap-3 justify-between'>
 
