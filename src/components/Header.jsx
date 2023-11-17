@@ -34,7 +34,7 @@ const Header = () => {
                     </Link>
 
                     <Link
-                        to="perfil"
+                        to="usuario"
                         className='text-violet-600 font-bold uppercase'
                     >
                         Ver Perfil ({usuario.nombre})
