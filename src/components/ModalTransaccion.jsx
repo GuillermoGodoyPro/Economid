@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Alerta from "../components/Alerta";
+import Alerta from "./Alerta";
 import { AltaPerfilEconomico } from "../services/perfilEconomico";
 import useAuth from "../hooks/useAuth";
 import jwtDecode from "jwt-decode";
@@ -88,6 +88,16 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
 
                     </div>
 
+                    <div className='campo'>
+                        <label htmlFor="metaFinanciera">Meta Financiera</label>
+                        <input
+                            id="metaFinanciera"
+                            type="number"
+                            placeholder="Meta financiera"
+                            value={metaFinanciera}
+                            onChange={e => setMetaFinanciera(e.target.value)}
+                        />
+                    </div>
                     <div className='campo'>
                         <label htmlFor="metaFinanciera">Meta Financiera</label>
                         <input

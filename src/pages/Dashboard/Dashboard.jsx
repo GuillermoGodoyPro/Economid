@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import Modal from "../../components/Modal";
+import ModalPerfilEconomico from "../../components/ModalPerfilEconomico";
+import ModalTransaccion from "../../components/ModalTransaccion";
 import { FiltrarPorTipo, ObtenerTodasUsuario } from "../../services/transacciones";
 import { GetBalanceByPEId } from "../../services/balance";
 import { GraficoTransacciones } from "../../components/GraficoTransacciones";
 import jwtDecode from "jwt-decode";
+import Transacciones from "../Transacciones/Transacciones";
 // import { generarId } from '../../Helpers/helper';
 
 
@@ -140,6 +142,14 @@ const Dashboard = () => {
                                     Perfil Económico
                                 </button>
 
+                                {modal &&
+                                    <ModalPerfilEconomico
+                                        setModal={setModal}
+                                        animarModal={animarModal}
+                                        setAnimarModal={setAnimarModal}
+                                    />
+                                }
+
                             </div>
 
                             :
@@ -153,7 +163,7 @@ const Dashboard = () => {
                                 </button>
 
                                 {modal &&
-                                    <Modal
+                                    <ModalTransaccion
                                         setModal={setModal}
                                         animarModal={animarModal}
                                         setAnimarModal={setAnimarModal}
@@ -183,6 +193,10 @@ const Dashboard = () => {
             {/* fin Cabecera */}
 
             {/* Lista de gastos */}
+
+            <div className="hidden">
+                <Transacciones transacciones={transacciones} balance={balance}/>
+            </div>
 
             <div className="bg-inherit p-10">
                 <div className="bg-inherit p-4 rounded-lg shadow-md border">
