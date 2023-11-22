@@ -1,11 +1,13 @@
 .container {
     display: flex;  
-    height:100%;      
+    height:100%;   
+    
     
 } 
 
 .mainContainer{
     width: 100%;
+    
     
 }
 
@@ -19,6 +21,13 @@
 
 .headerContainer{
     background-color: var(--crema);
+    position: fixed;
+    width: 100%;
+
+}
+
+.mainSinHeader{
+    margin: 6rem 0 2rem;
 
 
 }

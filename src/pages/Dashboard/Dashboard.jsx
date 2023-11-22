@@ -101,12 +101,12 @@ const Dashboard = () => {
     return (
         <div>
             <h2
-                className='text-violet-800 font-bold uppercase mx-5 mt-6'
+                className='mx-5 text-violet-800 font-bold uppercase '
             >
                 Bienvenido: {usuario.nombre}
             </h2>
             {/* Cabecera */}
-            <div className=" bg-inherit rounded p-2 m-4 mb-0 flex justify-between">
+            <div className="p-2 m-4 mb-0 bg-inherit rounded flex justify-between">
                 {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
                 <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1">
                     {balance ?

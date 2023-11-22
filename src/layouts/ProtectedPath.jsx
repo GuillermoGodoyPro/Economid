@@ -24,16 +24,16 @@ const ProtectedPath = () => {
                     (
                         <div className={styles.container}>
 
-                            <div className={styles.menu}>
+                            {/*  <div className={styles.menu}>
                                 <Sidebar />
-                            </div>
+                            </div> */}
 
                             <div className={styles.mainContainer}>
                                 <div className={styles.headerContainer}>
                                     <Header />
                                 </div>
 
-                                <main>
+                                <main className={styles.mainSinHeader}>
                                     <Outlet />
                                 </main>
                             </div>

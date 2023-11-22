@@ -33,7 +33,7 @@ const Usuario = () => {
                     <input type="date" id="bornDate" name="bornDate" />
                 </div>
                 <Link
-                    to="/dashboard">
+                    to="/dashboard/index">
                     Volver
                 </Link>
             </form>
