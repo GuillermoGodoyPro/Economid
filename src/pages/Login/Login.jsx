@@ -35,7 +35,7 @@ const Login = () => {
                 if (status === 200) {
                     localStorage.setItem("token", data.token);
                     setAuth(data.token);
-                    navigate("/dashboard");
+                    navigate("/dashboard/index");
                 }
             } catch (error) {
                 setAlerta({

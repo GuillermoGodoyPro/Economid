@@ -35,14 +35,15 @@ function App() {
                     {/* para invocar el dashboard, dentro de una ruta protegida (para proteger el resto de los componentes), todo lo que esté debajo de ruta protegida */}
 
                     <Route path="/dashboard" element={ <ProtectedPath/> }>
-                        <Route index element={<Dashboard />} />
+                        <Route path="index" element={<Dashboard />} />
 
-                        <Route path="usuario" element={<Usuario />} />
 
                         <Route path="perfil" element={<Perfil />} />
                         <Route path="transacciones" element={<Transacciones />} />
                         <Route path="balance" element={<Balance />} />
                         <Route path="faq" element={<Faq />} />
+
+                        <Route path="usuario" element={<Usuario />} />
                     </Route>
                 </Routes>
             </AuthProvider>

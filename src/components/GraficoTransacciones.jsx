@@ -49,7 +49,7 @@ export const GraficoTransacciones = ({ transacs }) => {
                         title: "",
                         legend: {
                             display: true,
-                            position: "bottom"                                                        
+                            position: "bottom"
                         }
                     }
                 }}
