@@ -1,7 +1,6 @@
 import React from "react";
 import { ArcElement, BarElement, CategoryScale, Tooltip, Legend ,Chart as ChartJS, Title } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
-import { Data } from "../utils/Data.js";
 
 ChartJS.register(CategoryScale, ArcElement, BarElement, Tooltip, Legend, Title);
 

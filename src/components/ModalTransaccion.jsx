@@ -1,14 +1,23 @@
 import { useState } from "react";
 import Alerta from "./Alerta";
-import { AltaPerfilEconomico } from "../services/perfilEconomico";
 import useAuth from "../hooks/useAuth";
 import jwtDecode from "jwt-decode";
 
-const Modal = ({ setModal, animarModal, setAnimarModal }) => {
+import { AltaTransaccion } from "../services/transacciones";
+
+const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, idBalance, setTransacciones, transacciones }) => {
+
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
-    const [presupuesto, setPresupuesto] = useState("");
-    const [metaFinanciera, setMetaFinanciera] = useState("");
+    const [error, setError] = useState(null);
+    const [cargando, setLoading] = useState(true);
+    const [fecha, setFecha] = useState("");
+    const [detalle, setDetalle] = useState("");
+    const [monto, setMonto] = useState(0);
+    const [divisaElegida, setDivisa] = useState("USD");
+    const [tipoTransaccion, setTipoTransaccion] = useState("Ingreso");
+    const [categoriaId, setCategoria] = useState(categorias[0].id);
+
 
     const ocultarModal = () => {
         setAnimarModal(false);
@@ -16,11 +25,10 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
             setModal(false);
         }, 200);
     };
-
     const handleSubmit = async e => {
         e.preventDefault();
 
-        if ([presupuesto, metaFinanciera].length === 0) {
+        if ([detalle, monto].length === 0) {
             setAlerta({
                 msg: "Todos los campos son obligatorios",
                 error: true
@@ -36,13 +44,7 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
             setAlerta({});
         }, 3000);
 
-        const { id } = jwtDecode(auth);
-
-        const payload = {
-            presupuesto: parseFloat(presupuesto),
-            metaFinanciera: parseFloat(metaFinanciera),
-            usuarioId: parseInt(id)
-        };
+        const { p_e_id } = jwtDecode(auth);
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -50,9 +52,29 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
             }
         };
 
+        const payload = {
+            fecha: fecha,
+            detalle: detalle,
+            monto: parseFloat(monto),
+            divisa: divisaElegida,
+            tipoTransaccion: tipoTransaccion,
+            cat_Id: parseInt(categoriaId),
+            balance_Id: parseInt(idBalance) ?? null,
+            p_E_Id: parseInt(p_e_id)
+        };
+
         try {
-            const { data } = await AltaPerfilEconomico(payload, config);
-            console.log(data);
+            const { data, status } = await AltaTransaccion(payload, config);
+            const newTransact = await data;
+            setTransacciones(transacciones => [...transacciones, newTransact]);
+            console.log(transacciones);
+            setAlerta({
+                msg: "Transaccion Creada!",
+                error: false
+            });
+            setTimeout(() => {
+                setModal(false);
+            }, 200);
         } catch (error) {
             setError(error);
         }
@@ -76,37 +98,76 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
                     </div>
 
                     <div className='campo'>
-                        <label htmlFor="presupuesto">Presupuesto</label>
+                        <label htmlFor="Fecha">Fecha</label>
                         <input
-                            id="presupuesto"
-                            type="number"
-                            placeholder="Presupuesto: ej. 50000"
-                            value={presupuesto}
-                            onChange={e => setPresupuesto(e.target.value)}
-
+                            id="fecha"
+                            type={"date"}
+                            value={fecha}
+                            onChange={e => setFecha(e.target.value)}
                         />
 
                     </div>
 
                     <div className='campo'>
-                        <label htmlFor="metaFinanciera">Meta Financiera</label>
+                        <label htmlFor="detalle">Detalle</label>
                         <input
-                            id="metaFinanciera"
-                            type="number"
-                            placeholder="Meta financiera"
-                            value={metaFinanciera}
-                            onChange={e => setMetaFinanciera(e.target.value)}
+                            id="detalle"
+                            type="text"
+                            placeholder="Detalle"
+                            value={detalle}
+                            onChange={e => setDetalle(e.target.value)}
                         />
                     </div>
                     <div className='campo'>
-                        <label htmlFor="metaFinanciera">Meta Financiera</label>
+                        <label htmlFor="monto">Monto</label>
                         <input
-                            id="metaFinanciera"
+                            id="monto"
                             type="number"
-                            placeholder="Meta financiera"
-                            value={metaFinanciera}
-                            onChange={e => setMetaFinanciera(e.target.value)}
+                            placeholder="Ingresar monto"
+                            value={monto}
+                            onChange={e => setMonto(e.target.value)}
                         />
+                    </div>
+
+                    <div className='campo'>
+                        <label htmlFor="divisa">Divisa</label>
+                        <select name="divisa" id="divisa" value={divisaElegida}
+                            onChange={e => setDivisa(e.target.value)}
+                        >
+                            <option value="USD">USD</option>
+                            <option value="EUR">EUR</option>
+                            <option value="BTC">BTC</option>
+                        </select>
+                    </div>
+
+                    <div className='campo'>
+                        <label htmlFor="tipo">Tipo de Transacción</label>
+                        <select name="tipo" id="tipo" value={tipoTransaccion}
+                            onChange={e => setTipoTransaccion(e.target.value)}
+                        >
+                            <option defaultValue={"Ingreso"} value="Ingreso">Ingreso</option>
+                            <option value="Egreso">Egreso</option>
+                        </select>
+                    </div>
+
+                    <div className='campo'>
+                        <label htmlFor="categoria">Categoria</label>
+                        <select name="categoria" id="categoria" value={categoriaId}
+                            onChange={e => setCategoria(e.target.value)}
+                        >
+                            {
+                                categorias?.map((c, index) => {
+                                    return (
+                                        <option
+                                            defaultValue={c.id}
+                                            value={c.id}
+                                            key={index}>
+                                            {c.titulo}
+                                        </option>
+                                    );
+                                })
+                            }
+                        </select>
                     </div>
 
                     <input
@@ -128,4 +189,4 @@ const Modal = ({ setModal, animarModal, setAnimarModal }) => {
     );
 };
 
-export default Modal;
+export default ModalTransaccion;
