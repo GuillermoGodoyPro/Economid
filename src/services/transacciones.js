@@ -11,3 +11,9 @@ export async function FiltrarPorTipo(tipo, config) {
     const data = await clienteAxios(`/transaccion/FiltrarPorTipo/${tipo}`, config);
     return data;
 }
+
+export async function AltaTransaccion(payload, config) {
+
+    const data = await clienteAxios.post("/transaccion/NuevaTransaccion", payload, config);
+    return data;
+}

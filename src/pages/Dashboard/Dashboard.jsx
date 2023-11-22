@@ -6,38 +6,28 @@ import { FiltrarPorTipo, ObtenerTodasUsuario } from "../../services/transaccione
 import { GetBalanceByPEId } from "../../services/balance";
 import { GraficoTransacciones } from "../../components/GraficoTransacciones";
 import jwtDecode from "jwt-decode";
-import Transacciones from "../Transacciones/Transacciones";
-// import { generarId } from '../../Helpers/helper';
+import { GetCategorias } from "../../services/categorias";
 
 
 const Dashboard = () => {
     const { auth } = useAuth();
     const [balance, setBalance] = useState(null);
-    const [transacciones, setTransacciones] = useState([]);
+    const [balanceId, setBalanceId] = useState(null);
+    const [transacciones, setTransacciones] = useState([{}]);
     const [ingresos, setIngresos] = useState([]);
     const [egresos, setEgresos] = useState([]);
+    const [categorias, setCategorias] = useState([""]);
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modal, setModal] = useState(false);
-    const [animarModal, setAnimarModal] = useState(false);
-
-    // Inicio de Transacciones y PE -- conexión con Modal
+    const [animarModal, setAnimarModal] = useState(false);    
 
     const handlePerfilEcon = () => {
         setModal(true);
-
         setTimeout(() => {
-
             setAnimarModal(true);
         }, 400);
     };
-
-    // Fin de Transacciones y PE -- conexión con Modal f
-
-
-
-
-    //---------- Inicio de Conexiones JWT y Auth ----------
 
     const usuario = jwtDecode(auth);
     const config = {
@@ -47,14 +37,16 @@ const Dashboard = () => {
         }
     };
 
-
     if (usuario.p_e_id) {
         useEffect(() => {
             const fetchBalance = async () => {
                 try {
                     const res = await GetBalanceByPEId(usuario.p_e_id, config);
-                    setBalance(res);
-                    setLoading(false);
+                    if (res) {
+                        setBalance(res);
+                        setBalanceId(res.data.id);
+                        setLoading(false);
+                    }
                 } catch (error) {
                     setError(error);
                     setLoading(false);
@@ -96,7 +88,19 @@ const Dashboard = () => {
             transaccionesEgresos();
         }, []);
     }
-    //---------- Fin de Conexiones JWT y Auth ----------
+    useEffect(() => {
+        const fetchCategorias = async () => {
+            try {
+                const { data: response } = await GetCategorias(config);
+                setCategorias(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        fetchCategorias();
+    }, [])
 
     return (
         <div>
@@ -109,7 +113,10 @@ const Dashboard = () => {
             <div className="p-2 m-4 mb-0 bg-inherit rounded flex justify-between">
                 {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
                 <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1">
-                    {balance ?
+                    {
+                        cargando ? "Cargando..."
+                        :
+                        balance ?
                         <div className='flex justify-around'>
                             <div className='flex'>
                                 <span className='font-bold text-violet-600'>
@@ -151,7 +158,6 @@ const Dashboard = () => {
                                 }
 
                             </div>
-
                             :
                             <div className='p-2 pt-8 flex justify-around bottom-1' >
                                 <button
@@ -162,40 +168,37 @@ const Dashboard = () => {
                                     Agregar Transacción
                                 </button>
 
-                                {modal &&
+                                {
+                                    modal &&
                                     <ModalTransaccion
                                         setModal={setModal}
                                         animarModal={animarModal}
                                         setAnimarModal={setAnimarModal}
+                                        categorias={categorias}
+                                        idBalance={balanceId}
+                                        setTransacciones={setTransacciones}
+                                        transacciones={transacciones}
                                     />
                                 }
-
-
                             </div>
-
                     }
-
                 </div>
+
                 <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
                     <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
-                        Transacciones:
+                        Ultimos Gastos:
                     </h2>
 
-                    {usuario.p_e_id ?
-                        <div className='min-h-[5rem]'>
-                            <GraficoTransacciones transacs={transacciones}/>
-                        </div> :
-                        <div></div>}
-
+                    {
+                        cargando ? "Cargando..."
+                        :
+                        usuario.p_e_id ?
+                            <div className='min-h-[5rem]'>
+                                <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
+                            </div> :
+                            <div></div>
+                    }
                 </div>
-            </div>
-
-            {/* fin Cabecera */}
-
-            {/* Lista de gastos */}
-
-            <div className="hidden">
-                <Transacciones transacciones={transacciones} balance={balance}/>
             </div>
 
             <div className="bg-inherit p-10">
@@ -209,28 +212,30 @@ const Dashboard = () => {
                                 <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            {transacciones.map((transaccion, index) => {
-                                return (
-                                    <tr className="border-b border-gray-200" key={index}>
-                                        <td className="py-2 px-4">{transaccion.detalle}</td>
-                                        <td className="py-2 px-4">${transaccion.monto}</td>
-                                        <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
-                                        <td className="py-2 px-4">{transaccion.tipoTransaccion}</td>
-                                    </tr>
-                                );
-                            })}
-                        </tbody>
+                        {   cargando ? "Cargando..."
+                            :
+                            usuario.p_e_id ?
+                                <tbody>
+                                    {
+                                        transacciones
+                                            .slice(-5).reverse()
+                                            .map((transaccion, index) => {
+                                                return (
+                                                    <tr className="border-b border-gray-200" key={index}>
+                                                        <td className="py-2 px-4">{transaccion.detalle}</td>
+                                                        <td className="py-2 px-4">${transaccion.monto}</td>
+                                                        <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                        <td className="py-2 px-4">{transaccion.tipoTransaccion}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                </tbody>
+                                : <tbody></tbody>
+                        }
                     </table>
                 </div>
             </div>
-
-            {/* Fin de lista de gastos */}
-
-            {/* Balance */}
-
             <div className=" bg-inherit rounded p-4 m-1 mx-8 mb-0 flex justify-between">
-                {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
                 <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
                     <div>
                         <h2 className='p-1 justify-around text-violet-600'>
@@ -247,14 +252,16 @@ const Dashboard = () => {
                                 </thead>
                                 {usuario.p_e_id ?
                                     <tbody>
-                                        {ingresos.map((transaccion, index) => {
-                                            return (
-                                                <tr className="border-b border-gray-200" key={index}>
-                                                    <td className="py-2 px-4">{transaccion.detalle}</td>
-                                                    <td className="py-2 px-4">${transaccion.monto}</td>
-                                                </tr>
-                                            );
-                                        })}
+                                        {ingresos
+                                            .slice(0, 5)
+                                            .map((transaccion, index) => {
+                                                return (
+                                                    <tr className="border-b border-gray-200" key={index}>
+                                                        <td className="py-2 px-4">{transaccion.detalle}</td>
+                                                        <td className="py-2 px-4">${transaccion.monto}</td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </tbody> :
                                     <tbody></tbody>
                                 }
@@ -277,14 +284,16 @@ const Dashboard = () => {
                                 </thead>
                                 {usuario.p_e_id ?
                                     <tbody>
-                                        {egresos.map((transaccion, index) => {
-                                            return (
-                                                <tr className="border-b border-gray-200" key={index}>
-                                                    <td className="py-2 px-4">{transaccion.detalle}</td>
-                                                    <td className="py-2 px-4">${transaccion.monto}</td>
-                                                </tr>
-                                            );
-                                        })}
+                                        {egresos
+                                            .slice(0, 5)
+                                            .map((transaccion, index) => {
+                                                return (
+                                                    <tr className="border-b border-gray-200" key={index}>
+                                                        <td className="py-2 px-4">{transaccion.detalle}</td>
+                                                        <td className="py-2 px-4">${transaccion.monto}</td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </tbody> :
                                     <tbody></tbody>
                                 }
@@ -298,21 +307,18 @@ const Dashboard = () => {
                     <h2 className='p-1 justify-around mb-4 text-violet-600 text-center'>
                         Patrimonio Neto:
                     </h2>
-                    {balance
-                        ?
-                        <div className='flex justify-center'>
-                            <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
-                                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
-                            </h1>
-                        </div>
-                        :
-                        <div></div>
+                    {
+                        balance ?
+                            <div className='flex justify-center'>
+                                <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
+                                    ${parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                </h1>
+                            </div>
+                            :
+                            <div></div>
                     }
                 </div>
             </div>
-
-            {/* Fin de balance */}
-
         </div>
     );
 };
