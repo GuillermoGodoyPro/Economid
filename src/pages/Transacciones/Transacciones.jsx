@@ -111,11 +111,18 @@ const Transacciones = () => {
                         {transacciones?.map((transaccion, index) => {
                             return (
                                 <tr className="border-b border-gray-200" key={index}>
-                                    <td className="py-2 px-4">{transaccion.detalle}</td>
-                                    <td className="py-2 px-4">${transaccion.monto}</td>
-                                    <td className="py-2 px-4">{transaccion.divisa}</td>
-                                    <td className="py-2 px-4">{new Date(transaccion.fecha).toLocaleDateString()}</td>
-                                    <td className="py-2 px-4">{transaccion.tipoTransaccion}</td>
+                                    <td className="py-2 px-4 text-gray-800">{transaccion.detalle}</td>
+                                    <td className="py-2 px-4 text-gray-800">${transaccion.monto}</td>
+                                    <td className="py-2 px-4 text-gray-400">{transaccion.divisa}</td>
+                                    <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                    <td className="py-2 px-4 text-gray-400">{transaccion.tipoTransaccion}</td>
+                                    <td>
+                                        <i class="fa-regular fa-pen-to-square text-gray-600" alt="hola"></i>
+                                        <i 
+                                            className="fa-regular fa-trash-can pl-2 text-red-600"
+                                        
+                                        ></i>                                    
+                                    </td>
                                 </tr>
                             );
                         })}

@@ -110,23 +110,23 @@ const Dashboard = () => {
                 Bienvenido: {usuario.nombre}
             </h2>
             {/* Cabecera */}
-            <div className="p-2 m-4 mb-0 bg-inherit rounded flex justify-between">
+            <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
                 {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
-                <div className="bg-gray-200 p-4 rounded-lg shadow-sm w-full mr-1">
+                <div className="bg-gray-200 pt-4 rounded-lg shadow-sm w-full mr-1">
                     {
                         cargando ? "Cargando..."
                         :
                         balance ?
                         <div className='flex justify-around'>
-                            <div className='flex'>
+                            <div className=''>
                                 <span className='font-bold text-violet-600'>
-                                    Saldo Actual <hr />
+                                    Saldo Actual: 
                                 </span>
-                                <h1 className='text-violet-600'>
+                                <h1 className=' font-bold text-violet-600'>
                                     ${parseFloat(balance.data.saldo_Total).toFixed(2)}
                                 </h1>
                             </div>
-                            <h2 className='p-1 mb-4 text-violet-600'>
+                            <h2 className=' text-violet-600'>
                                 <span className='font-bold'>
                                     Saldo Inicial: <br />
                                     ${parseFloat(balance.data.saldo_Inicial).toFixed(2)}
@@ -139,7 +139,7 @@ const Dashboard = () => {
 
                     {
                         !usuario.p_e_id ?
-                            <div className='p-2 pt-8 flex justify-around bottom-1'>
+                            <div className='p-2 pt-8 flex justify-around bottom-1 '>
 
                                 <button
                                     type="button"
@@ -159,7 +159,7 @@ const Dashboard = () => {
 
                             </div>
                             :
-                            <div className='p-2 pt-8 flex justify-around bottom-1' >
+                            <div className='p-2 pt-14 flex justify-around bottom-1' >
                                 <button
                                     type="button"
                                     className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute'
@@ -184,20 +184,29 @@ const Dashboard = () => {
                     }
                 </div>
 
-                <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full ml-1 w-min-6 flex">
-                    <h2 className='p-1 text-violet-600 justify-around mb-4 font-bold'>
-                        Ultimos Gastos:
-                    </h2>
+                <div className="bg-gray-200 pt-4 pl-8 rounded-lg shadow-sm w-full ml-1 flex">
 
-                    {
-                        cargando ? "Cargando..."
-                        :
-                        usuario.p_e_id ?
-                            <div className='min-h-[5rem]'>
-                                <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
-                            </div> :
-                            <div></div>
-                    }
+                    <div>
+                        <h2 className=' text-violet-600  font-bold'>
+                            Ultimos Gastos:
+                        </h2>
+
+                    </div>
+
+                    <div className="h-min-2 pr-8">
+                        {
+                            cargando ? "Cargando..."
+                            :
+                            usuario.p_e_id ?
+                                <div>
+                                    <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
+                                </div> :
+                                <div></div>
+                        }
+
+                    </div>
+
+                    
                 </div>
             </div>
 
