@@ -42,7 +42,7 @@ export const GraficoTransacciones = ({ transacs }) => {
                         text: "Ultimos gastos por categoria"
                     },
                     layout: {
-                        padding: 20
+                        padding: 16
                     },
                     plugins: {
                         title: "",
@@ -51,9 +51,10 @@ export const GraficoTransacciones = ({ transacs }) => {
                             position: "bottom"
                         }
                     }
+
                 }}
-                height={400}
-                width={400}
+                height={300}
+                 
             />
         </div>
     );

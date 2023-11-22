@@ -17,7 +17,7 @@ const Header = () => {
         <>
             <header className='bg-violet-200 md:justify-between'>
 
-                <div className=' px-4 pt-2  flex items-center gap-3 justify-between'>
+                <div className=' px-4 pt-2  flex items-center justify-between'>
                     <Link
                         to="index"
                         className=" text-violet-900 ml-2 overflow-hidden flex justify-center"
@@ -29,7 +29,7 @@ const Header = () => {
                         <NavLink
                             to="index"
                             className={({ isActive, isPending }) =>
-                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  rounded-md p-4 text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                                isPending ? "text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  rounded-md p-4 text-md text-violet-600 hover:text-violet-800 font-bold" : " p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <i className="fa-solid fa-house-chimney-window"></i>
@@ -43,8 +43,18 @@ const Header = () => {
                             }
                         >
                             {/* <i className="fa-solid fa-piggy-bank"></i> */}
-                            <i class="fa-solid fa-money-bill-trend-up"></i>
+                            <i className="fa-solid fa-money-bill-trend-up"></i>
                             <p>Transacciones</p>
+                        </NavLink>
+
+                        <NavLink
+                            to="perfil"
+                            className={({ isActive, isPending }) =>
+                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  rounded-md p-4 text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                            }
+                        >
+                            <i className="fa-solid fa-piggy-bank"></i>
+                            <p>Metas</p>
                         </NavLink>
 
 
@@ -69,12 +79,24 @@ const Header = () => {
                         </NavLink>
                     </div>
 
-                    <Link
-                        to="usuario"
-                        className='p-[0.8rem] mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
-                    >
-                        <i className={`fa-solid fa-${usuario.nombre ? usuario.nombre.charAt(0).toLowerCase() : "x"}`}></i>
-                    </Link>
+                    <div className="flex">
+                        <Link
+                            to="usuario"
+                            className='p-[0.9rem] mb-1 mr-2 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
+                        >
+                            <i className={`fa-solid fa-${usuario.nombre ? usuario.nombre.charAt(0).toLowerCase() : "x"}`}></i>
+                        </Link>
+                        
+                        <button
+                            type="button"
+                            className='p-[0.56rem] mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
+                            onClick={handleClick}
+                        >
+                            <i class="fa-solid fa-power-off"></i>
+                        </button>
+
+                    </div>
+                    
                     {/*
                     <button
                         type="button"
