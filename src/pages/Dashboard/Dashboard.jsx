@@ -20,7 +20,7 @@ const Dashboard = () => {
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modal, setModal] = useState(false);
-    const [animarModal, setAnimarModal] = useState(false);    
+    const [animarModal, setAnimarModal] = useState(false);
 
     const handlePerfilEcon = () => {
         setModal(true);
@@ -100,7 +100,7 @@ const Dashboard = () => {
             }
         };
         fetchCategorias();
-    }, [])
+    }, []);
 
     return (
         <div>
@@ -115,27 +115,27 @@ const Dashboard = () => {
                 <div className="bg-gray-200 pt-4 rounded-lg shadow-sm w-full mr-1">
                     {
                         cargando ? "Cargando..."
-                        :
-                        balance ?
-                        <div className='flex justify-around'>
-                            <div className=''>
-                                <span className='font-bold text-violet-600'>
-                                    Saldo Actual: 
-                                </span>
-                                <h1 className=' font-bold text-violet-600'>
+                            :
+                            balance ?
+                                <div className='flex justify-around'>
+                                    <div className=''>
+                                        <span className='font-bold text-violet-600'>
+                                    Saldo Actual:
+                                        </span>
+                                        <h1 className=' font-bold text-violet-600'>
                                     ${parseFloat(balance.data.saldo_Total).toFixed(2)}
-                                </h1>
-                            </div>
-                            <h2 className=' text-violet-600'>
-                                <span className='font-bold'>
+                                        </h1>
+                                    </div>
+                                    <h2 className=' text-violet-600'>
+                                        <span className='font-bold'>
                                     Saldo Inicial: <br />
                                     ${parseFloat(balance.data.saldo_Inicial).toFixed(2)}
-                                </span>
-                            </h2>
-                        </div> :
-                        <div className='flex justify-center'>
-                            <h3>Informacion de Saldos no disponible, empiece a crear transacciones...</h3>
-                        </div>}
+                                        </span>
+                                    </h2>
+                                </div> :
+                                <div className='flex justify-center'>
+                                    <h3>Informacion de Saldos no disponible, empiece a crear transacciones...</h3>
+                                </div>}
 
                     {
                         !usuario.p_e_id ?
@@ -196,17 +196,17 @@ const Dashboard = () => {
                     <div className="h-min-2 pr-8">
                         {
                             cargando ? "Cargando..."
-                            :
-                            usuario.p_e_id ?
-                                <div>
-                                    <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
-                                </div> :
-                                <div></div>
+                                :
+                                usuario.p_e_id ?
+                                    <div>
+                                        <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
+                                    </div> :
+                                    <div></div>
                         }
 
                     </div>
 
-                    
+
                 </div>
             </div>
 
@@ -221,7 +221,7 @@ const Dashboard = () => {
                                 <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
                             </tr>
                         </thead>
-                        {   cargando ? "Cargando..."
+                        { cargando ? "Cargando..."
                             :
                             usuario.p_e_id ?
                                 <tbody>

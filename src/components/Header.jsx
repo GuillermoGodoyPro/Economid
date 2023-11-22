@@ -2,6 +2,8 @@ import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import jwtDecode from "jwt-decode";
+import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Header = () => {
     const { auth } = useAuth();
@@ -84,27 +86,23 @@ const Header = () => {
                             to="usuario"
                             className='p-[0.9rem] mb-1 mr-2 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
                         >
-                            <i className={`fa-solid fa-${usuario.nombre ? usuario.nombre.charAt(0).toLowerCase() : "x"}`}></i>
+                            <a data-tooltip-id="my-tooltip" data-tooltip-content="Mi Perfil">
+                                <i className={`fa-solid fa-${usuario.nombre ? usuario.nombre.charAt(0).toLowerCase() : "x"}`}></i>
+                            </a>
+                            <Tooltip id="my-tooltip" />
                         </Link>
-                        
+
                         <button
                             type="button"
                             className='p-[0.56rem] mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
                             onClick={handleClick}
                         >
-                            <i class="fa-solid fa-power-off"></i>
+                            <a data-tooltip-id="my-tooltip" data-tooltip-content="Cerrar Sesión">
+                                <i className="fa-solid fa-power-off"></i>
+                            </a>
+                            <Tooltip id="my-tooltip" />
                         </button>
-
                     </div>
-                    
-                    {/*
-                    <button
-                        type="button"
-                        className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold'
-                        onClick={handleClick}
-                    >
-                        Cerrar Sesión
-                    </button> */}
                 </div>
             </header>
         </>

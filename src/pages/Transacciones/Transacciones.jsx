@@ -16,7 +16,7 @@ const Transacciones = () => {
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [categorias, setCategorias] = useState([""]);
-    
+
     const handleModalClosing = () => {
         setModal(true);
 
@@ -117,11 +117,11 @@ const Transacciones = () => {
                                     <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                     <td className="py-2 px-4 text-gray-400">{transaccion.tipoTransaccion}</td>
                                     <td>
-                                        <i class="fa-regular fa-pen-to-square text-gray-600" alt="hola"></i>
-                                        <i 
+                                        <i className="fa-regular fa-pen-to-square text-gray-600" alt="hola"></i>
+                                        <i
                                             className="fa-regular fa-trash-can pl-2 text-red-600"
-                                        
-                                        ></i>                                    
+
+                                        ></i>
                                     </td>
                                 </tr>
                             );

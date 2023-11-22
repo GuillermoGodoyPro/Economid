@@ -54,7 +54,7 @@ export const GraficoTransacciones = ({ transacs }) => {
 
                 }}
                 height={300}
-                 
+
             />
         </div>
     );
