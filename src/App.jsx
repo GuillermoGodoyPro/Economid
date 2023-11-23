@@ -35,6 +35,8 @@ function App() {
                     {/* para invocar el dashboard, dentro de una ruta protegida (para proteger el resto de los componentes), todo lo que esté debajo de ruta protegida */}
 
                     <Route path="/dashboard" element={ <ProtectedPath/> }>
+
+                        {/* <Route index element={<Faq />} /> */}
                         <Route path="index" element={<Dashboard />} />
 
 

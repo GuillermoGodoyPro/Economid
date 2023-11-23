@@ -16,8 +16,6 @@ export const GraficoTransacciones = ({ transacs }) => {
         "rgb(242, 230, 255)"
     ];
 
-    console.log(categorias);
-    console.log(montos);
 
     return (
         <div className="chart-container">

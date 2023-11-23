@@ -4,6 +4,7 @@ import Alerta from "../../components/Alerta";
 import { Link, useNavigate } from "react-router-dom";
 import { UserLogin } from "../../services/usuario";
 import useAuth from "../../hooks/useAuth";
+import jwtDecode from "jwt-decode";
 
 const Login = () => {
 
@@ -34,7 +35,11 @@ const Login = () => {
                 const { data, status } = await UserLogin({ email, contraseña });
                 if (status === 200) {
                     localStorage.setItem("token", data.token);
-                    setAuth(data.token);
+
+                    const usuario = jwtDecode(data.token);
+
+
+                    setAuth(usuario);
                     navigate("/dashboard/index");
                 }
             } catch (error) {

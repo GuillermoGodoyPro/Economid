@@ -5,8 +5,8 @@ import ModalTransaccion from "../../components/ModalTransaccion";
 import { FiltrarPorTipo, ObtenerTodasUsuario } from "../../services/transacciones";
 import { GetBalanceByPEId } from "../../services/balance";
 import { GraficoTransacciones } from "../../components/GraficoTransacciones";
-import jwtDecode from "jwt-decode";
 import { GetCategorias } from "../../services/categorias";
+
 
 
 const Dashboard = () => {
@@ -29,19 +29,22 @@ const Dashboard = () => {
         }, 400);
     };
 
-    const usuario = jwtDecode(auth);
+
+    // Opcional: Mejorable, probablemente esto lo podríamos hacer en el provider o hacer un nuevo provider para TODO LO SIGUIENTE
+
+    const usuarioToken = localStorage.getItem("token");
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth}`
+            Authorization: `Bearer ${usuarioToken}`
         }
     };
 
-    if (usuario.p_e_id) {
+    if (auth.p_e_id) {
         useEffect(() => {
             const fetchBalance = async () => {
                 try {
-                    const res = await GetBalanceByPEId(usuario.p_e_id, config);
+                    const res = await GetBalanceByPEId(auth.p_e_id, config);
                     if (res) {
                         setBalance(res);
                         setBalanceId(res.data.id);
@@ -88,6 +91,7 @@ const Dashboard = () => {
             transaccionesEgresos();
         }, []);
     }
+
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
@@ -107,7 +111,7 @@ const Dashboard = () => {
             <h2
                 className='mx-5 text-violet-800 font-bold uppercase '
             >
-                Bienvenido: {usuario.nombre}
+                Bienvenido: {auth.nombre}
             </h2>
             {/* Cabecera */}
             <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
@@ -138,7 +142,7 @@ const Dashboard = () => {
                                 </div>}
 
                     {
-                        !usuario.p_e_id ?
+                        !auth.p_e_id ?
                             <div className='p-2 pt-8 flex justify-around bottom-1 '>
 
                                 <button
@@ -197,7 +201,7 @@ const Dashboard = () => {
                         {
                             cargando ? "Cargando..."
                                 :
-                                usuario.p_e_id ?
+                                auth.p_e_id ?
                                     <div>
                                         <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
                                     </div> :
@@ -221,9 +225,9 @@ const Dashboard = () => {
                                 <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
                             </tr>
                         </thead>
-                        { cargando ? "Cargando..."
-                            :
-                            usuario.p_e_id ?
+                        { /* cargando ? "Cargando..."  : */
+
+                            auth.p_e_id ? (
                                 <tbody>
                                     {
                                         transacciones
@@ -239,7 +243,8 @@ const Dashboard = () => {
                                                 );
                                             })}
                                 </tbody>
-                                : <tbody></tbody>
+                            )
+                                : <tbody>"Cargando..."</tbody>
                         }
                     </table>
                 </div>
@@ -259,7 +264,7 @@ const Dashboard = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {usuario.p_e_id ?
+                                {auth.p_e_id ?
                                     <tbody>
                                         {ingresos
                                             .slice(0, 5)
@@ -291,7 +296,7 @@ const Dashboard = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {usuario.p_e_id ?
+                                {auth.p_e_id ?
                                     <tbody>
                                         {egresos
                                             .slice(0, 5)

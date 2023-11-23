@@ -16,19 +16,19 @@ const Balance = () => {
     const [animarModal, setAnimarModal] = useState(false);
 
 
-    const usuario = jwtDecode(auth);
+    const usuarioToken = localStorage.getItem("token");
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth}`
+            Authorization: `Bearer ${usuarioToken}`
         }
     };
 
-    if (usuario.p_e_id) {
+    if (auth.p_e_id) {
         useEffect(() => {
             const fetchBalance = async () => {
                 try {
-                    const res = await GetBalanceByPEId(usuario.p_e_id, config);
+                    const res = await GetBalanceByPEId(auth.p_e_id, config);
                     setBalance(res);
                     setLoading(false);
                 } catch (error) {
@@ -84,7 +84,7 @@ const Balance = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {usuario.p_e_id ?
+                                {auth.p_e_id ?
                                     <tbody>
                                         {ingresos.map((transaccion, index) => {
                                             return (
@@ -114,7 +114,7 @@ const Balance = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {usuario.p_e_id ?
+                                {auth.p_e_id ?
                                     <tbody>
                                         {egresos.map((transaccion, index) => {
                                             return (

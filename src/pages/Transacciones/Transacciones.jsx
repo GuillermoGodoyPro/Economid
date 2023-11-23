@@ -4,7 +4,6 @@ import useAuth from "../../hooks/useAuth";
 import ModalTransaccion from "../../components/ModalTransaccion";
 import { ObtenerTodasUsuario } from "../../services/transacciones";
 import { GetCategorias } from "../../services/categorias";
-import jwtDecode from "jwt-decode";
 import { GetBalanceByPEId } from "../../services/balance";
 
 const Transacciones = () => {
@@ -26,16 +25,15 @@ const Transacciones = () => {
         }, 400);
     };
 
-
-    const usuario = jwtDecode(auth);
+    const usuarioToken = localStorage.getItem("token");
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${auth}`
+            Authorization: `Bearer ${usuarioToken}`
         }
     };
 
-    if (usuario.p_e_id) {
+    if (auth.p_e_id) {
         useEffect(() => {
             const fetchTransacciones = async () => {
                 try {
@@ -59,7 +57,7 @@ const Transacciones = () => {
             };
             const fetchBalanceId = async () => {
                 try {
-                    const { data: response } = await GetBalanceByPEId(usuario.p_e_id, config);
+                    const { data: response } = await GetBalanceByPEId(auth.p_e_id, config);
                     setBalanceId(response.id);
                     setLoading(false);
                 } catch (error) {

@@ -101,6 +101,7 @@ em {
     .formulario {
         padding: 2rem 0;
         width: 60rem;
+        
     }
 }
 
@@ -119,6 +120,7 @@ em {
     display: grid;
     margin-bottom: 1rem;
     color: var(--negro);
+    
 }
 
 i {
@@ -131,9 +133,9 @@ i {
 
 .formulario label {
     color: var(--violetdark);
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     text-transform: capitalize;
 }
 
@@ -143,10 +145,10 @@ i {
 select {
     background-color: var(--gris-popup);
     border-radius: 0.3rem;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: none;
     flex: 1;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--negro);
 }
 
@@ -154,14 +156,14 @@ select {
     background-color: var(--violetdark);
     border: none;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.8rem;
     text-align: center;
-    margin-top: 2.7rem;
+    margin-top: 2.5rem;
     margin-bottom: 0.8rem;
     color: var(--white);
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: 0.8rem;
     width: 100%;
     transition: background-color 300ms ease;
 }
@@ -186,11 +188,12 @@ select {
     left: 0;
     right: 0;
     bottom: 0;
+    
 }
 
 .modalContainer {
     margin: 0 auto;
-    margin-top: 8rem;
+    margin-top: 2.5rem;
     justify-items: center;
     background-color: var(--crema);
     width: 30rem;
@@ -209,7 +212,7 @@ select {
 }
 
 .modal .formulario {
-    max-width: 40rem;
+    max-width: 30rem;
     width: 20rem;
     transition-property: all;
     transition-duration: 300ms;

@@ -1,13 +1,11 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
-import jwtDecode from "jwt-decode";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 
 const Header = () => {
     const { auth } = useAuth();
-    const usuario = jwtDecode(auth);
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -82,24 +80,27 @@ const Header = () => {
                     </div>
 
                     <div className="flex">
+
                         <Link
                             to="usuario"
                             className='p-[0.9rem] mb-1 mr-2 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="Mi Perfil"
                         >
-                            <a data-tooltip-id="my-tooltip" data-tooltip-content="Mi Perfil">
-                                <i className={`fa-solid fa-${usuario.nombre ? usuario.nombre.charAt(0).toLowerCase() : "x"}`}></i>
-                            </a>
+                            <i className={`fa-solid fa-${auth.nombre ? auth.nombre.charAt(0).toLowerCase() : "x"}`}></i>
                             <Tooltip id="my-tooltip" />
                         </Link>
+
+
 
                         <button
                             type="button"
                             className='p-[0.56rem] mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
+                            data-tooltip-id="my-tooltip"
+                            data-tooltip-content="Cerrar Sesión"
                             onClick={handleClick}
                         >
-                            <a data-tooltip-id="my-tooltip" data-tooltip-content="Cerrar Sesión">
-                                <i className="fa-solid fa-power-off"></i>
-                            </a>
+                            <i className="fa-solid fa-power-off"></i>
                             <Tooltip id="my-tooltip" />
                         </button>
                     </div>

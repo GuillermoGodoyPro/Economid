@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import Header from "../components/Header";
-import Sidebar from "../components/Sidebar";
+/* import Sidebar from "../components/Sidebar"; */
 import { Navigate, Outlet } from "react-router-dom";
 import styles from "../styles/ProtectedPath.module.css";
 import useAuth from "../hooks/useAuth";
@@ -11,6 +11,7 @@ const ProtectedPath = () => {
 
     const { auth, cargando } = useAuth();
 
+
     // TODO: usar un spinner
     if(cargando) return "Cargando...";
     /*   const autid = true
@@ -20,7 +21,7 @@ const ProtectedPath = () => {
     // Si existe auth.id Ingresa a dashboard por medio de ProtectedPath (ver el navegate to Dashboard en App.jsx)
         <>
             {
-                auth ?
+                auth.id ?
                     (
                         <div className={styles.container}>
 
@@ -28,15 +29,15 @@ const ProtectedPath = () => {
                                 <Sidebar />
                             </div> */}
 
-                            <div className={styles.mainContainer}>
-                                <div className={styles.headerContainer}>
-                                    <Header />
-                                </div>
 
-                                <main className={styles.mainSinHeader}>
-                                    <Outlet />
-                                </main>
+                            <div className={styles.headerContainer}>
+                                <Header />
                             </div>
+
+                            <main className={styles.mainSinHeader}>
+                                <Outlet />
+                            </main>
+
 
 
                         </div>
