@@ -1,7 +1,4 @@
 import { createContext, useEffect, useState } from "react";
-/* import { useNavigate } from "react-router-dom"; */
-
-import jwtDecode from "jwt-decode";
 
 
 const AuthContext = createContext();
@@ -11,15 +8,8 @@ const AuthProvider = ({ children }) => {
     const [auth, setAuth] = useState("");
     const [cargando, setCargando] = useState(true);
 
-    /*     const navigate = useNavigate()
- */
-
-
     useEffect(() => {
-
-
-        // En el código original, si había un async también existía un await... Puede que esto genere problemas
-        const autenticarUsuario = async () => {
+        const autenticarUsuario = () => {
             const token = localStorage.getItem("token");
 
             if (!token) {
@@ -27,19 +17,8 @@ const AuthProvider = ({ children }) => {
                 return;
             }
 
-            /*   const config = {
-                headers: {
-                    "Content-Type": "application/json",
-                    Authorization: `Bearer ${token}`
-                }
-            };    */
-
             try {
-
-                const usuario = await jwtDecode(token);
-                setAuth(usuario);
-                // navigate('/dasboard')
-
+                setAuth(token);                
             } catch (error) {
                 console.log(error);
                 setAuth({});
@@ -48,7 +27,6 @@ const AuthProvider = ({ children }) => {
             setCargando(false);
         };
         autenticarUsuario();
-
     }, []);
 
     return (

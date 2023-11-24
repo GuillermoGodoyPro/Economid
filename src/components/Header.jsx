@@ -1,11 +1,11 @@
 import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
-import useAuth from "../hooks/useAuth";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import { getUserToken } from "../services/token/tokenService";
 
 const Header = () => {
-    const { auth } = useAuth();
+    const user = getUserToken();
     const navigate = useNavigate();
 
     const handleClick = () => {
@@ -15,7 +15,7 @@ const Header = () => {
 
     return (
         <>
-            <header className='bg-violet-200 md:justify-between'>
+            <header className='headerStyle bg-violet-200 md:justify-between'>
 
                 <div className=' px-4 pt-2  flex items-center justify-between'>
                     <Link
@@ -87,7 +87,7 @@ const Header = () => {
                             data-tooltip-id="my-tooltip"
                             data-tooltip-content="Mi Perfil"
                         >
-                            <i className={`fa-solid fa-${auth.nombre ? auth.nombre.charAt(0).toLowerCase() : "x"}`}></i>
+                            <i className={`fa-solid fa-${user.nombre ? user.nombre.charAt(0).toLowerCase() : "x"}`}></i>
                             <Tooltip id="my-tooltip" />
                         </Link>
 

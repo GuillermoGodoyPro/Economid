@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
-import { FiltrarPorTipo, ObtenerTodasUsuario } from "../../services/transacciones";
+import { FiltrarPorTipo } from "../../services/transacciones";
 import { GetBalanceByPEId } from "../../services/balance";
-import jwtDecode from "jwt-decode";
+import { getUserToken } from "../../services/token/tokenService";
 
 const Balance = () => {
 
@@ -16,19 +16,19 @@ const Balance = () => {
     const [animarModal, setAnimarModal] = useState(false);
 
 
-    const usuarioToken = localStorage.getItem("token");
+    const user = getUserToken();
     const config = {
         headers: {
             "Content-Type": "application/json",
-            Authorization: `Bearer ${usuarioToken}`
+            Authorization: `Bearer ${auth}`
         }
     };
 
-    if (auth.p_e_id) {
+    if (user.p_e_id) {
         useEffect(() => {
             const fetchBalance = async () => {
                 try {
-                    const res = await GetBalanceByPEId(auth.p_e_id, config);
+                    const res = await GetBalanceByPEId(user.p_e_id, config);
                     setBalance(res);
                     setLoading(false);
                 } catch (error) {
@@ -39,7 +39,7 @@ const Balance = () => {
 
             const transaccionesIngresos = async () => {
                 try {
-                    const { data: response } = await FiltrarPorTipo(0, config);
+                    const { data: response } = await FiltrarPorTipo(0, user.p_e_id, config);
                     setIngresos(response);
                     setLoading(false);
                 } catch (error) {
@@ -49,7 +49,7 @@ const Balance = () => {
             };
             const transaccionesEgresos = async () => {
                 try {
-                    const { data: response } = await FiltrarPorTipo(1, config);
+                    const { data: response } = await FiltrarPorTipo(1, user.p_e_id, config);
                     setEgresos(response);
                     setLoading(false);
                 } catch (error) {
@@ -84,7 +84,7 @@ const Balance = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {auth.p_e_id ?
+                                {user.p_e_id ?
                                     <tbody>
                                         {ingresos.map((transaccion, index) => {
                                             return (
@@ -114,7 +114,7 @@ const Balance = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {auth.p_e_id ?
+                                {user.p_e_id ?
                                     <tbody>
                                         {egresos.map((transaccion, index) => {
                                             return (
