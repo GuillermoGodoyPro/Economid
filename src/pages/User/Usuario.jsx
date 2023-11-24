@@ -1,44 +1,57 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
+import styles from "./Usuario.module.css";
+import ModalPerfil from "../../components/ModalPerfil";
+import { getUserToken } from "../../services/token/tokenService";
 
 const Usuario = () => {
+    const user = getUserToken();
+    const [modalModificarPerfil, setModalPerfil] = useState(false);
+    const [animarModalPerfil, setAnimarModalPerfil] = useState(false);
+
+    const handleModificarPerfil = () => {
+        setModalPerfil(true);
+
+        setTimeout(() => {
+
+            setAnimarModalPerfil(true);
+        }, 400);
+    };
+
     return (
+
         <div>
-            <form>
+
+            <div className={styles.container2} >
+
                 <div>
-                    <label>ID</label>
-                    <input type="number" placeholder="Student ID to Edit" id="idInput" />
+                    <h1 className={styles.title}>NOMBRE</h1>
+                    <p>{user.nombre}</p>
+                    <h1 className={styles.title}>APELLIDO</h1>
+                    <p>{user.apellido}</p>
+                    <h1 className={styles.title}>CORREO ELECTRÓNICO</h1>
+                    <p>{user.email}</p>
+                    <h1 className={styles.title}>TELÉFONO</h1>
+                    <p>No Disponible</p>
+
+                    <div className={styles.divbuttons}>
+                        <div>
+
+                            <button onClick={handleModificarPerfil} className={styles.button}>MODIFICAR PERFIL</button>
+                            {modalModificarPerfil &&
+                                <ModalPerfil
+                                    setModal={setModalPerfil}
+                                    animarModal={animarModalPerfil}
+                                    setAnimarModal={setAnimarModalPerfil}
+                                />
+                            }
+                        </div>
+                    </div>
                 </div>
-                <div>
-                    <label>First Name</label>
-                    <input type="text" />
-                </div>
-                <div>
-                    <label>Last Name</label>
-                    <input type="text" name="lastName" id="lastNameInput" />
-                </div>
-                <div>
-                    <label>Address</label>
-                    <input type="text" name="address" id="address" />
-                </div>
-                <div>
-                    <label>Grade</label>
-                    <input type="number" id="grade" name="grade" />
-                </div>
-                <div>
-                    <label>DNI</label>
-                    <input type="number" id="DNI" name="dni" />
-                </div>
-                <div>
-                    <label>Born Date</label>
-                    <input type="date" id="bornDate" name="bornDate" />
-                </div>
-                <Link
-                    to="/dashboard/index">
-                    Volver
-                </Link>
-            </form>
+            </div>
+
         </div>
     );
 };
+
 
 export default Usuario;

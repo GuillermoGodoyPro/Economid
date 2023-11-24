@@ -1,0 +1,123 @@
+
+.container{
+    width: 40%;
+}
+
+.span {
+    font-weight: 700;
+    font-size: 2rem;
+    text-transform: capitalize;
+    color: var(--violetlight);
+}
+
+.title {
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: capitalize;
+    color: var(--violetlight);
+
+}
+#title2{
+    font-size: 30px;
+    color: var(--violetlight) ;
+    font-weight: bold;
+    text-align: center;
+
+}
+.container2{
+    background-color: #29212918;
+    margin: 1.5rem 0;
+    width: 40%;
+    height: 50%;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    margin : auto;
+    margin-top: 1rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.label{
+    text-transform: capitalize;
+    display: block;
+    margin-top: 0.5rem;
+
+    font-size: 1.25rem;     
+    font-weight: bold;
+
+    color: var(--violetlight);
+
+}
+
+.input{
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.75rem;
+
+    border: 1px solid #e2e8f0;
+    border-radius: 1.5rem;
+
+    color: var(--gris);
+
+    background-color: #f7f4ffee;
+       
+}
+
+.submit{
+    margin-top: 2rem;
+    margin: 2rem auto 0;
+
+    background-color: var(--violetlight) ;
+    padding: 0;
+    border-radius: 0.25rem;
+    width: 40%;  
+  
+        
+}
+
+.button{
+    font-size: 14px;
+    width: 80%;   
+    cursor: pointer;
+    padding: 0.15rem 0;
+    color: var(--crema);
+    background-color: var(--violetlight);
+    margin-top: 8px;
+    font-weight: bold;
+    border-radius: 0.25rem;   
+}
+
+.button:hover{
+    cursor: pointer;
+    background-color: var(--violetdark) ;
+    border-radius: 0.25rem;   
+}
+
+.nav {
+    display: flex;
+    justify-content: center;
+    padding-top: 0.30rem;
+    padding-bottom: 0.30rem;
+    color: var(--violetlight) ;
+    background-color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    font-weight: bold;  
+    text-align: center;
+    align-items: center;  
+    border-radius: 0.5rem;
+}
+
+.nav .link:hover {
+  color: var(--violetdark) ;
+  display: flex;
+  background-color: var(--violethover);
+  border-radius: 0.25rem;
+  align-items: center;
+  justify-content: center;
+  transition-property: background-color, border-color, color, fill, stroke;
+  transition-duration: 0.35s;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
