@@ -1,5 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 
+
 const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
@@ -8,17 +9,16 @@ const AuthProvider = ({ children }) => {
     const [cargando, setCargando] = useState(true);
 
     useEffect(() => {
-
-        // En el código original, si había un async también existía un await... Puede que esto genere problemas
-        const autenticarUsuario = async () => {
+        const autenticarUsuario = () => {
             const token = localStorage.getItem("token");
+
             if (!token) {
                 setCargando(false);
                 return;
             }
 
             try {
-                setAuth(token);
+                setAuth(token);                
             } catch (error) {
                 console.log(error);
                 setAuth({});
@@ -27,7 +27,6 @@ const AuthProvider = ({ children }) => {
             setCargando(false);
         };
         autenticarUsuario();
-
     }, []);
 
     return (

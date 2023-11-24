@@ -2,9 +2,9 @@ import { useState } from "react";
 import Alerta from "./Alerta";
 import { AltaPerfilEconomico } from "../services/perfilEconomico";
 import useAuth from "../hooks/useAuth";
-import jwtDecode from "jwt-decode";
+import { getUserToken } from "../services/token/tokenService";
 
-const ModalPerfilEconomico = ({ setModal, animarModal, setAnimarModal }) => {
+const ModalPerfilEconomico = ({ setModal, animarModal, setAnimarModal, setPerfilEconomico }) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
     const [presupuesto, setPresupuesto] = useState("");
@@ -35,13 +35,12 @@ const ModalPerfilEconomico = ({ setModal, animarModal, setAnimarModal }) => {
         setTimeout(() => {
             setAlerta({});
         }, 3000);
-
-        const { id } = jwtDecode(auth);
-
+       
+        const user = getUserToken();
         const payload = {
             presupuesto: parseFloat(presupuesto),
             metaFinanciera: parseFloat(metaFinanciera),
-            usuarioId: parseInt(id)
+            usuarioId: parseInt(user.id)
         };
         const config = {
             headers: {
@@ -53,6 +52,7 @@ const ModalPerfilEconomico = ({ setModal, animarModal, setAnimarModal }) => {
         try {
             const { data } = await AltaPerfilEconomico(payload, config);
             console.log(data);
+            setPerfilEconomico(data);
         } catch (error) {
             setError(error);
         }

@@ -5,8 +5,11 @@ import ModalTransaccion from "../../components/ModalTransaccion";
 import { FiltrarPorTipo, ObtenerTodasUsuario } from "../../services/transacciones";
 import { GetBalanceByPEId } from "../../services/balance";
 import { GraficoTransacciones } from "../../components/GraficoTransacciones";
-import jwtDecode from "jwt-decode";
+// import jwtDecode from "jwt-decode";
 import { GetCategorias } from "../../services/categorias";
+import { getUserToken, setUserToken } from "../../services/token/tokenService";
+// import { SetUserToken, getUserToken, setUserToken } from "../../services/token/tokenService";
+
 
 
 const Dashboard = () => {
@@ -21,6 +24,8 @@ const Dashboard = () => {
     const [error, setError] = useState(null);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
+    const [perfilEconomico, setPerfilEconomico] = useState(null);
+    // const [currentUser, setCurrentUser] = useState({});
 
     const handlePerfilEcon = () => {
         setModal(true);
@@ -29,7 +34,21 @@ const Dashboard = () => {
         }, 400);
     };
 
-    const usuario = jwtDecode(auth);
+    const user = getUserToken();
+    let userT = { ...user };
+    console.dir("user: " + userT);
+
+    //Si es primera vez (Registro)
+    if ((!userT.p_e_id || userT.p_e_id == "") && perfilEconomico) {
+        userT = {
+            ...user,
+            p_e_id: perfilEconomico.id
+        };
+        setUserToken("user", JSON.stringify(userT));
+        const userToken = getUserToken();
+        console.log("Token us: " + JSON.stringify(userToken));
+    }
+    console.log(JSON.stringify(userT.p_e_id));
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -37,11 +56,11 @@ const Dashboard = () => {
         }
     };
 
-    if (usuario.p_e_id) {
-        useEffect(() => {
+    useEffect(() => {
+        if (userT.p_e_id) {
             const fetchBalance = async () => {
                 try {
-                    const res = await GetBalanceByPEId(usuario.p_e_id, config);
+                    const res = await GetBalanceByPEId(userT.p_e_id, config);
                     if (res) {
                         setBalance(res);
                         setBalanceId(res.data.id);
@@ -54,7 +73,7 @@ const Dashboard = () => {
             };
             const fetchTransacciones = async () => {
                 try {
-                    const { data: response } = await ObtenerTodasUsuario(config);
+                    const { data: response } = await ObtenerTodasUsuario(userT.p_e_id, config);
                     setTransacciones(response);
                     setLoading(false);
                 } catch (error) {
@@ -64,7 +83,7 @@ const Dashboard = () => {
             };
             const transaccionesIngresos = async () => {
                 try {
-                    const { data: response } = await FiltrarPorTipo(0, config);
+                    const { data: response } = await FiltrarPorTipo(0, userT.p_e_id, config);
                     setIngresos(response);
                     setLoading(false);
                 } catch (error) {
@@ -74,7 +93,7 @@ const Dashboard = () => {
             };
             const transaccionesEgresos = async () => {
                 try {
-                    const { data: response } = await FiltrarPorTipo(1, config);
+                    const { data: response } = await FiltrarPorTipo(1, userT.p_e_id, config);
                     setEgresos(response);
                     setLoading(false);
                 } catch (error) {
@@ -86,8 +105,8 @@ const Dashboard = () => {
             fetchTransacciones();
             transaccionesIngresos();
             transaccionesEgresos();
-        }, []);
-    }
+        }
+    }, []);
     useEffect(() => {
         const fetchCategorias = async () => {
             try {
@@ -107,7 +126,7 @@ const Dashboard = () => {
             <h2
                 className='mx-5 text-violet-800 font-bold uppercase '
             >
-                Bienvenido: {usuario.nombre}
+                Bienvenido {userT.nombre}
             </h2>
             {/* Cabecera */}
             <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
@@ -120,16 +139,16 @@ const Dashboard = () => {
                                 <div className='flex justify-around'>
                                     <div className=''>
                                         <span className='font-bold text-violet-600'>
-                                    Saldo Actual:
+                                            Saldo Actual:
                                         </span>
                                         <h1 className=' font-bold text-violet-600'>
-                                    ${parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                            ${parseFloat(balance.data.saldo_Total).toFixed(2)}
                                         </h1>
                                     </div>
                                     <h2 className=' text-violet-600'>
                                         <span className='font-bold'>
-                                    Saldo Inicial: <br />
-                                    ${parseFloat(balance.data.saldo_Inicial).toFixed(2)}
+                                            Saldo Inicial: <br />
+                                            ${parseFloat(balance.data.saldo_Inicial).toFixed(2)}
                                         </span>
                                     </h2>
                                 </div> :
@@ -138,7 +157,7 @@ const Dashboard = () => {
                                 </div>}
 
                     {
-                        !usuario.p_e_id ?
+                        !userT.p_e_id ?
                             <div className='p-2 pt-8 flex justify-around bottom-1 '>
 
                                 <button
@@ -154,6 +173,7 @@ const Dashboard = () => {
                                         setModal={setModal}
                                         animarModal={animarModal}
                                         setAnimarModal={setAnimarModal}
+                                        setPerfilEconomico={setPerfilEconomico}
                                     />
                                 }
 
@@ -197,7 +217,7 @@ const Dashboard = () => {
                         {
                             cargando ? "Cargando..."
                                 :
-                                usuario.p_e_id ?
+                                userT.p_e_id ?
                                     <div>
                                         <GraficoTransacciones transacs={egresos.slice(-5).reverse()} />
                                     </div> :
@@ -221,9 +241,9 @@ const Dashboard = () => {
                                 <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
                             </tr>
                         </thead>
-                        { cargando ? "Cargando..."
+                        {cargando ? "Cargando..."
                             :
-                            usuario.p_e_id ?
+                            userT.p_e_id ?
                                 <tbody>
                                     {
                                         transacciones
@@ -239,7 +259,8 @@ const Dashboard = () => {
                                                 );
                                             })}
                                 </tbody>
-                                : <tbody></tbody>
+                                :
+                                <tbody></tbody>
                         }
                     </table>
                 </div>
@@ -259,7 +280,7 @@ const Dashboard = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {usuario.p_e_id ?
+                                {userT.p_e_id ?
                                     <tbody>
                                         {ingresos
                                             .slice(0, 5)
@@ -291,7 +312,7 @@ const Dashboard = () => {
                                         <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
-                                {usuario.p_e_id ?
+                                {userT.p_e_id ?
                                     <tbody>
                                         {egresos
                                             .slice(0, 5)

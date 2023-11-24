@@ -4,8 +4,9 @@ import useAuth from "../../hooks/useAuth";
 import ModalTransaccion from "../../components/ModalTransaccion";
 import { ObtenerTodasUsuario } from "../../services/transacciones";
 import { GetCategorias } from "../../services/categorias";
-import jwtDecode from "jwt-decode";
 import { GetBalanceByPEId } from "../../services/balance";
+import { getUserToken } from "../../services/token/tokenService";
+import { Tooltip } from "react-tooltip";
 
 const Transacciones = () => {
     const { auth } = useAuth();
@@ -26,8 +27,8 @@ const Transacciones = () => {
         }, 400);
     };
 
+    const user = getUserToken();
 
-    const usuario = jwtDecode(auth);
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -35,11 +36,11 @@ const Transacciones = () => {
         }
     };
 
-    if (usuario.p_e_id) {
-        useEffect(() => {
+    useEffect(() => {
+        if (user.p_e_id) {
             const fetchTransacciones = async () => {
                 try {
-                    const { data: response } = await ObtenerTodasUsuario(config);
+                    const { data: response } = await ObtenerTodasUsuario(user.p_e_id, config);
                     setTransacciones(response);
                     setLoading(false);
                 } catch (error) {
@@ -59,7 +60,7 @@ const Transacciones = () => {
             };
             const fetchBalanceId = async () => {
                 try {
-                    const { data: response } = await GetBalanceByPEId(usuario.p_e_id, config);
+                    const { data: response } = await GetBalanceByPEId(user.p_e_id, config);
                     setBalanceId(response.id);
                     setLoading(false);
                 } catch (error) {
@@ -70,8 +71,8 @@ const Transacciones = () => {
             fetchTransacciones();
             fetchCategorias();
             fetchBalanceId();
-        }, []);
-    }
+        }
+    }, []);
 
     return (
         <div className="bg-inherit p-10">
@@ -82,17 +83,17 @@ const Transacciones = () => {
                     className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute'
                     onClick={handleModalClosing}
                 >
-                Agregar Transacción
+                    Agregar Transacción
                 </button>
 
                 {modal &&
-                <ModalTransaccion
-                    setModal={setModal}
-                    animarModal={animarModal}
-                    setAnimarModal={setAnimarModal}
-                    categorias={categorias}
-                    idBalance={bId}
-                />
+                    <ModalTransaccion
+                        setModal={setModal}
+                        animarModal={animarModal}
+                        setAnimarModal={setAnimarModal}
+                        categorias={categorias}
+                        idBalance={bId}
+                    />
                 }
             </div>
             <div className="bg-inherit p-4 rounded-lg shadow-md border">
@@ -105,6 +106,7 @@ const Transacciones = () => {
                             <th className="text-left py-2 px-4 font-semibold text-violet-600">Divisa</th>
                             <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
                             <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
+                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Operación</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -117,11 +119,13 @@ const Transacciones = () => {
                                     <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                     <td className="py-2 px-4 text-gray-400">{transaccion.tipoTransaccion}</td>
                                     <td>
-                                        <i className="fa-regular fa-pen-to-square text-gray-600" alt="hola"></i>
-                                        <i
-                                            className="fa-regular fa-trash-can pl-2 text-red-600"
-
-                                        ></i>
+                                        <i className="fa-regular fa-pen-to-square text-gray-600"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="Modificar"></i>
+                                        <i className="fa-regular fa-trash-can pl-2 text-red-600"
+                                        data-tooltip-id="my-tooltip"
+                                        data-tooltip-content="Eliminar"></i>
+                                        <Tooltip id="my-tooltip" />
                                     </td>
                                 </tr>
                             );

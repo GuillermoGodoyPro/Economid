@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Alerta from "./Alerta";
 import useAuth from "../hooks/useAuth";
-import jwtDecode from "jwt-decode";
 
 import { AltaTransaccion } from "../services/transacciones";
+import { getUserToken } from "../services/token/tokenService";
 
 const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, idBalance, setTransacciones, transacciones }) => {
 
@@ -44,7 +44,8 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
             setAlerta({});
         }, 3000);
 
-        const { p_e_id } = jwtDecode(auth);
+        const user = getUserToken();
+
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -60,7 +61,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
             tipoTransaccion: tipoTransaccion,
             cat_Id: parseInt(categoriaId),
             balance_Id: parseInt(idBalance) ?? null,
-            p_E_Id: parseInt(p_e_id)
+            p_E_Id: parseInt(user.p_e_id)
         };
 
         try {
