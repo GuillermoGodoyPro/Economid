@@ -2,11 +2,12 @@ import React from "react";
 import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import ModalTransaccion from "../../components/ModalTransaccion";
-import { ObtenerTodasUsuario } from "../../services/transacciones";
+import { EliminarTransaccion, ObtenerTodasUsuario } from "../../services/transacciones";
 import { GetCategorias } from "../../services/categorias";
 import { GetBalanceByPEId } from "../../services/balance";
 import { getUserToken } from "../../services/token/tokenService";
 import { Tooltip } from "react-tooltip";
+// import BorrarTransaccion from "../../components/ConfirmarBorrado";
 
 const Transacciones = () => {
     const { auth } = useAuth();
@@ -25,6 +26,32 @@ const Transacciones = () => {
 
             setAnimarModal(true);
         }, 400);
+    };
+
+    const handleBorrado = async (transaccionId) => {        
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth}`
+            }
+        };
+
+        try {
+
+            const { data, status } = await EliminarTransaccion(transaccionId, config);
+            console.log(data);
+            if (status === 200) {
+                setTransacciones((prevTransacciones) =>
+                prevTransacciones.filter((transaccion) => transaccion.id !== transaccionId));
+                // setAlerta("Transaccion Eliminada");
+                // setTimeout(() => {
+                //     setModal(false);
+                // }, 200);
+            }
+        } catch (error) {
+           console.log(error);
+        }
+        // ocultarModal();
     };
 
     const user = getUserToken();
@@ -93,6 +120,8 @@ const Transacciones = () => {
                         setAnimarModal={setAnimarModal}
                         categorias={categorias}
                         idBalance={bId}
+                        setTransacciones={setTransacciones}
+                        transacciones={transacciones}
                     />
                 }
             </div>
@@ -122,9 +151,19 @@ const Transacciones = () => {
                                         <i className="fa-regular fa-pen-to-square text-gray-600"
                                         data-tooltip-id="my-tooltip"
                                         data-tooltip-content="Modificar"></i>
+                                        
                                         <i className="fa-regular fa-trash-can pl-2 text-red-600"
                                         data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="Eliminar"></i>
+                                        data-tooltip-content="Eliminar"
+                                        onClick={e => handleBorrado(transaccion.id)}>
+                                           {/* {modal && <BorrarTransaccion
+                                                setAnimarModal={setAnimarModal}
+                                                setModal={setModal}
+                                                animarModal={animarModal}
+                                                transaccionId={transaccion.id}
+                                            />onClick={handleModalClosing}
+                                           } */}
+                                        </i>
                                         <Tooltip id="my-tooltip" />
                                     </td>
                                 </tr>

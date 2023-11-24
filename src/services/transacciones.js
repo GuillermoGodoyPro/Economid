@@ -17,3 +17,8 @@ export async function AltaTransaccion(payload, config) {
     const data = await clienteAxios.post("/transaccion/NuevaTransaccion", payload, config);
     return data;
 }
+
+export async function EliminarTransaccion(id, config) {
+    const data = await clienteAxios.delete("/transaccion/BorrarTransaccion/" + id, config);
+    return data;
+}

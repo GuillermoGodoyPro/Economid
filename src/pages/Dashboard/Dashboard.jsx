@@ -57,55 +57,53 @@ const Dashboard = () => {
     };
 
     useEffect(() => {
-        if (userT.p_e_id) {
-            const fetchBalance = async () => {
-                try {
-                    const res = await GetBalanceByPEId(userT.p_e_id, config);
-                    if (res) {
-                        setBalance(res);
-                        setBalanceId(res.data.id);
-                        setLoading(false);
-                    }
-                } catch (error) {
-                    setError(error);
+        const fetchBalance = async () => {
+            try {
+                const res = await GetBalanceByPEId(userT.p_e_id, config);
+                if (res) {
+                    setBalance(res);
+                    setBalanceId(res.data.id);
                     setLoading(false);
                 }
-            };
-            const fetchTransacciones = async () => {
-                try {
-                    const { data: response } = await ObtenerTodasUsuario(userT.p_e_id, config);
-                    setTransacciones(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            const transaccionesIngresos = async () => {
-                try {
-                    const { data: response } = await FiltrarPorTipo(0, userT.p_e_id, config);
-                    setIngresos(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            const transaccionesEgresos = async () => {
-                try {
-                    const { data: response } = await FiltrarPorTipo(1, userT.p_e_id, config);
-                    setEgresos(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            fetchBalance();
-            fetchTransacciones();
-            transaccionesIngresos();
-            transaccionesEgresos();
-        }
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        const fetchTransacciones = async () => {
+            try {
+                const { data: response } = await ObtenerTodasUsuario(userT.p_e_id, config);
+                setTransacciones(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        const transaccionesIngresos = async () => {
+            try {
+                const { data: response } = await FiltrarPorTipo(0, userT.p_e_id, config);
+                setIngresos(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        const transaccionesEgresos = async () => {
+            try {
+                const { data: response } = await FiltrarPorTipo(1, userT.p_e_id, config);
+                setEgresos(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        fetchBalance();
+        fetchTransacciones();
+        transaccionesIngresos();
+        transaccionesEgresos();
     }, []);
     useEffect(() => {
         const fetchCategorias = async () => {
