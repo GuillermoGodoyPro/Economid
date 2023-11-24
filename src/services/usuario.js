@@ -14,3 +14,8 @@ export async function GetById(id, config) {
     const data = await clienteAxios("/usuario/obtenerporid/" + id, config);
     return data;
 }
+
+export async function ModificarPerfil(id, payload, config) {
+    const data = await clienteAxios.put("/usuario/Modificar/" + id , payload, config);
+    return data;
+}
