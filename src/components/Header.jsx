@@ -77,6 +77,16 @@ const Header = () => {
                             <i className="fa-solid fa-circle-question"></i>
                             <p>Ayuda</p>
                         </NavLink>
+
+                        <NavLink
+                            to="Contacto"
+                            className={({ isActive, isPending }) =>
+                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  p-4 rounded-md text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                            }
+                        >
+                            <i class="fa-solid fa-address-book"></i>
+                            <p>Contacto</p>
+                        </NavLink>
                     </div>
 
                     <div className="flex">
