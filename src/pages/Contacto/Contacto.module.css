@@ -1,0 +1,83 @@
+
+.asd{
+    font-size: 14px;
+    width: 80%;   
+    cursor: pointer;
+    padding: 0.15rem 0;
+    color: var(--crema);
+    background-color: var(--violetlight);
+    margin-top: 8px;
+    font-weight: bold;
+    border-radius: 0.25rem;   
+}
+
+.asd:hover{
+    cursor: pointer;
+    background-color: var(--violetdark) ;
+    border-radius: 0.25rem;   
+}
+
+.container2{
+    background-color: #29212918;
+    margin: 1.5rem 0;
+    width: 30%;
+    height: 300px;
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    padding: 1.25rem 2.5rem;
+    text-align: center;
+    border-radius: 0.5rem;
+    margin : auto;
+    margin-top: 2em;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-weight: 700;
+    font-size: 1rem;
+    text-transform: capitalize;
+    color: var(--violetlight);
+
+}
+
+.input{
+    border-radius: 6px;
+    font-size: 14px;
+}
+
+.textarea{
+    border-radius: 6px;
+    height: 80px;
+    width: 200px;
+    font-size: 14px;
+}
+
+.button {
+    font-size: 14px;
+    width: 80%; 
+    color: var(--crema);
+
+    font-weight: 500;
+    padding: 0.5em 1.2em;
+    background-color: var(--violetlight);
+    border: 2px solid;
+    background-color: var(--violetlight);
+    position: relative;
+    font-weight: bold;
+    border-radius: 6px;
+    margin-top: 0.75rem;
+  }
+  .button:before {
+    content:"";
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 0px;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 1s ease;
+  }
+  .button:hover:before {
+  width: 100%;
+  }

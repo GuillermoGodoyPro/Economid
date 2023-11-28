@@ -13,6 +13,7 @@ import Transacciones from "./pages/Transacciones/Transacciones";
 import Perfil from "./pages/Perfil/Perfil";
 import Balance from "./pages/Balance/Balance";
 import Faq from "./pages/Faq/Faq";
+import Contacto from "./pages/Contacto/Contacto";
 
 function App() {
 
@@ -44,6 +45,7 @@ function App() {
                         <Route path="transacciones" element={<Transacciones />} />
                         <Route path="balance" element={<Balance />} />
                         <Route path="faq" element={<Faq />} />
+                        <Route path="contacto" element={<Contacto />} />
 
                         <Route path="usuario" element={<Usuario />} />
                     </Route>

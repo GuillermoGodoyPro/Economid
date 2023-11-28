@@ -56,6 +56,13 @@ const Sidebar = () => {
                         FAQ
                     </Link>
 
+                    <Link
+                        to="Contacto"
+                        className="mb-6 ml-6 text-md text-white hover:text-violet-800 font-bold"
+                    >
+                        Contacto
+                    </Link>
+
                 </div>
 
 
