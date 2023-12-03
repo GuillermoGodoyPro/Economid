@@ -2,10 +2,10 @@ import { useState } from "react";
 import styles from "./Login.module.css";
 import Alerta from "../../components/Alerta";
 import { Link, useNavigate } from "react-router-dom";
-import { UserLogin } from "../../services/usuario";
-import useAuth from "../../hooks/useAuth";
 import jwtDecode from "jwt-decode";
 import { setUserToken } from "../../services/token/tokenService";
+import useAuth from "../../context/useAuth";
+import { login } from "../../services/myfinances-api/usuario";
 
 const Login = () => {
 
@@ -33,7 +33,7 @@ const Login = () => {
         }
         else {
             try {
-                const { data, status } = await UserLogin({ email, contraseña });
+                const { data, status } = await login({ email, contraseña });
                 if (status === 200) {
                     setUserToken("token", data.token);
                     setAuth(data.token);

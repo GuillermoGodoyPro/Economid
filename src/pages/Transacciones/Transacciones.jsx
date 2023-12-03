@@ -1,13 +1,14 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
-import ModalTransaccion from "../../components/ModalTransaccion";
-import { EliminarTransaccion, ObtenerTodasUsuario } from "../../services/transacciones";
-import { GetCategorias } from "../../services/categorias";
-import { GetBalanceByPEId } from "../../services/balance";
 import { getUserToken } from "../../services/token/tokenService";
-import { Tooltip } from "react-tooltip";
-// import BorrarTransaccion from "../../components/ConfirmarBorrado";
+import useAuth from "../../context/useAuth";
+import ModalTransaccion from "../../components/pop-ups/ModalTransaccion";
+import { getAll } from "../../services/myfinances-api/transacciones";
+import { getCategories } from "../../services/myfinances-api/categorias";
+import { getBalanceByUserId } from "../../services/myfinances-api/balance";
+import { TransactionsTable } from "../../components/transactions/transactions-table";
+import { texts } from "../../constants/myfinances-constants";
+import Alerta from "../../components/Alerta";
 
 const Transacciones = () => {
     const { auth } = useAuth();
@@ -18,40 +19,13 @@ const Transacciones = () => {
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [categorias, setCategorias] = useState([""]);
+    const [alertaTransacciones, setAlertaTransacciones] = useState({});
 
     const handleModalClosing = () => {
         setModal(true);
-
         setTimeout(() => {
-
             setAnimarModal(true);
         }, 400);
-    };
-
-    const handleBorrado = async (transaccionId) => {        
-        const config = {
-            headers: {
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${auth}`
-            }
-        };
-
-        try {
-
-            const { data, status } = await EliminarTransaccion(transaccionId, config);
-            console.log(data);
-            if (status === 200) {
-                setTransacciones((prevTransacciones) =>
-                prevTransacciones.filter((transaccion) => transaccion.id !== transaccionId));
-                // setAlerta("Transaccion Eliminada");
-                // setTimeout(() => {
-                //     setModal(false);
-                // }, 200);
-            }
-        } catch (error) {
-           console.log(error);
-        }
-        // ocultarModal();
     };
 
     const user = getUserToken();
@@ -64,53 +38,65 @@ const Transacciones = () => {
     };
 
     useEffect(() => {
-        if (user.p_e_id) {
-            const fetchTransacciones = async () => {
-                try {
-                    const { data: response } = await ObtenerTodasUsuario(user.p_e_id, config);
-                    setTransacciones(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            const fetchCategorias = async () => {
-                try {
-                    const { data: response } = await GetCategorias(config);
-                    setCategorias(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            const fetchBalanceId = async () => {
-                try {
-                    const { data: response } = await GetBalanceByPEId(user.p_e_id, config);
-                    setBalanceId(response.id);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            fetchTransacciones();
-            fetchCategorias();
-            fetchBalanceId();
-        }
+        const fetchTransacciones = async () => {
+            try {
+                const { data: response } = await getAll(user.id, config);
+                setTransacciones(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+                setAlertaTransacciones({
+                    msg: texts.WITH_NO_TRANSACTIONS,
+                    error: true
+                });
+                setTimeout(() => {
+                    setAlertaTransacciones({});
+                }, 3000);
+            }
+        };
+        const fetchCategorias = async () => {
+            try {
+                const { data: response } = await getCategories(config);
+                setCategorias(response);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        const fetchBalanceId = async () => {
+            try {
+                const { data: response } = await getBalanceByUserId(user.id, config);
+                setBalanceId(response.id);
+                setLoading(false);
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        fetchTransacciones();
+        fetchCategorias();
+        fetchBalanceId();
     }, []);
+
+    const { msg } = alertaTransacciones;
 
     return (
         <div className="bg-inherit p-10">
-            <div className='flex  bottom-1 pb-8' >{/* justify-end para poner el boton al final */}
-
+            {alertaTransacciones ?
+                <div className="flex justify-end">
+                    <div className="fixed">
+                        {msg && <Alerta alerta={alertaTransacciones} />}
+                    </div>
+                </div> : <div></div>}
+            <div className='flex bottom-1 pb-8' >
                 <button
                     type="button"
-                    className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute'
+                    className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500'
                     onClick={handleModalClosing}
                 >
-                    Agregar Transacción
+                    Nueva Transacción
                 </button>
 
                 {modal &&
@@ -125,52 +111,12 @@ const Transacciones = () => {
                     />
                 }
             </div>
-            <div className="bg-inherit p-4 rounded-lg shadow-md border">
-
-                <table className="w-full border-collapse">
-                    <thead>
-                        <tr>
-                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Detalle</th>
-                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Divisa</th>
-                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
-                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
-                            <th className="text-left py-2 px-4 font-semibold text-violet-600">Operación</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {transacciones?.map((transaccion, index) => {
-                            return (
-                                <tr className="border-b border-gray-200" key={index}>
-                                    <td className="py-2 px-4 text-gray-800">{transaccion.detalle}</td>
-                                    <td className="py-2 px-4 text-gray-800">${transaccion.monto}</td>
-                                    <td className="py-2 px-4 text-gray-400">{transaccion.divisa}</td>
-                                    <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
-                                    <td className="py-2 px-4 text-gray-400">{transaccion.tipoTransaccion}</td>
-                                    <td>
-                                        <i className="fa-regular fa-pen-to-square text-gray-600"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="Modificar"></i>
-                                        
-                                        <i className="fa-regular fa-trash-can pl-2 text-red-600"
-                                        data-tooltip-id="my-tooltip"
-                                        data-tooltip-content="Eliminar"
-                                        onClick={e => handleBorrado(transaccion.id)}>
-                                           {/* {modal && <BorrarTransaccion
-                                                setAnimarModal={setAnimarModal}
-                                                setModal={setModal}
-                                                animarModal={animarModal}
-                                                transaccionId={transaccion.id}
-                                            />onClick={handleModalClosing}
-                                           } */}
-                                        </i>
-                                        <Tooltip id="my-tooltip" />
-                                    </td>
-                                </tr>
-                            );
-                        })}
-                    </tbody>
-                </table>
+            <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
+                <TransactionsTable
+                    cargando={cargando}
+                    transacciones={transacciones}
+                    setTransacciones={setTransacciones}
+                    auth={auth} />
             </div>
         </div>
     );

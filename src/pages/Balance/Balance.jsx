@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import useAuth from "../../hooks/useAuth";
-import { FiltrarPorTipo } from "../../services/transacciones";
-import { GetBalanceByPEId } from "../../services/balance";
 import { getUserToken } from "../../services/token/tokenService";
+import useAuth from "../../context/useAuth";
+import { getBalanceByUserId } from "../../services/myfinances-api/balance";
+import { filterByType } from "../../services/myfinances-api/transacciones";
 
 const Balance = () => {
 
@@ -28,7 +28,7 @@ const Balance = () => {
         useEffect(() => {
             const fetchBalance = async () => {
                 try {
-                    const res = await GetBalanceByPEId(user.p_e_id, config);
+                    const res = await getBalanceByUserId(user.p_e_id, config);
                     setBalance(res);
                     setLoading(false);
                 } catch (error) {
@@ -39,7 +39,7 @@ const Balance = () => {
 
             const transaccionesIngresos = async () => {
                 try {
-                    const { data: response } = await FiltrarPorTipo(0, user.p_e_id, config);
+                    const { data: response } = await filterByType(0, user.p_e_id, config);
                     setIngresos(response);
                     setLoading(false);
                 } catch (error) {
@@ -49,7 +49,7 @@ const Balance = () => {
             };
             const transaccionesEgresos = async () => {
                 try {
-                    const { data: response } = await FiltrarPorTipo(1, user.p_e_id, config);
+                    const { data: response } = await filterByType(1, user.p_e_id, config);
                     setEgresos(response);
                     setLoading(false);
                 } catch (error) {

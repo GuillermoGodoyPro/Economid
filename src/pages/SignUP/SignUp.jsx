@@ -1,18 +1,18 @@
 import { Link, useNavigate } from "react-router-dom";
-import styles from "../SignUP/SignUp.module.css";
+import styles from "./SignUp.module.css";
 import { useState } from "react";
 import Alerta from "../../components/Alerta";
-import { UserRegister } from "../../services/usuario";
+import { register } from "../../services/myfinances-api/usuario";
 
 
 
 const SignUp = () => {
-
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [email, setEmail] = useState("");
     const [contraseña, setPassword] = useState("");
     const [repetirPassword, setRepetirPassword] = useState("");
+    const [cargando, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const [alerta, setAlerta] = useState({});
@@ -20,7 +20,7 @@ const SignUp = () => {
     /* esta función tiene que ser asincrona para poder consultar al back */
     const handleSubmit = async e => {
         e.preventDefault();
-
+        setLoading(true);
         /* Validación de campos */
         if ([nombre, apellido, email, contraseña, repetirPassword].includes("")) {
             setAlerta({
@@ -43,19 +43,17 @@ const SignUp = () => {
         // Enviar datos del usuario a la API para crear cuenta
         try {
             /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
-            const { status } = await UserRegister({ nombre, apellido, email, esAdmin: false, contraseña });
+            const { status } = await register({ nombre, apellido, email, esAdmin: false, contraseña });
             if (status === 200) {
+                setLoading(false);
                 setAlerta({
-                    msg: "Usuario creado con éxito",
+                    msg: "Usuario creado con éxito. Redirigiendo al inicio de sesión...",
                     error: false
                 });
                 setTimeout(() => {
                     navigate("/");
                 }, 3000);
             }
-
-
-            /* Reseteo los state para que no se vea en formulario */
             setNombre("");
             setApellido("");
             setEmail("");
@@ -63,7 +61,7 @@ const SignUp = () => {
             setRepetirPassword("");
 
         } catch (error) {
-            if (contraseña.length < 6){
+            if (contraseña.length < 6) {
                 setAlerta({
                     msg: error.response.data.errors.Contraseña[0],
                     error: true
@@ -173,18 +171,13 @@ const SignUp = () => {
                         className={styles.submit}
                     >
                         <input
-                            className={styles.button}
+                            className={`${styles.button}`}
                             type="submit"
-                            value="Crear Cuenta"
+                            value={!cargando ? "Crear Cuenta" : "Registrando..."}
                         />
                     </div>
-
-                    {/* Pasamos el estado de alerta por props */}
                     {msg && <Alerta alerta={alerta} />}
-
-
                 </form>
-
                 <div className={styles.nav}>
                     <nav>
                         <Link className={styles.link} to="/">
@@ -201,10 +194,6 @@ const SignUp = () => {
                 </div>
 
             </div>
-
-            {/* se podría usar flex en el nav para ubicar uno de lado izq y otro a la derecha, en movil se ubicaría uno debajo del otro */}
-
-
         </>
     );
 };
