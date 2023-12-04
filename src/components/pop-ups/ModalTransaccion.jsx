@@ -33,11 +33,6 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
                 msg: "Todos los campos son obligatorios",
                 error: true
             });
-        } else {
-            setAlerta({
-                msg: "Transacción realizada",
-                error: false
-            });
         }
 
         setTimeout(() => {
@@ -74,7 +69,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
                 });
                 setTimeout(() => {
                     setAlerta({});
-                    setTransacciones(transacciones => [...transacciones, data]);
+                    setTransacciones(transacciones => [data, ...transacciones]);
                     if (setBalance) {
                         setBalance(data.balance);
                         setBalanceId(data.balance.id);

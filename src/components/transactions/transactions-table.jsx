@@ -85,30 +85,31 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                                                     </div>
                                                 </td>
                                         }
-
-                                        <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
-                                            data-tooltip-id="my-tooltip"
-                                            data-tooltip-content="Modificar"></i>
-
-                                        <button disabled={!transaccion.estaActiva}>
-                                            <i className="fa-solid fa-ban pl-2 text-red-600"
+                                        <td>
+                                            <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
                                                 data-tooltip-id="my-tooltip"
-                                                data-tooltip-content="Anular"
-                                                onClick={e => handleDeletingModal(transaccion.id)}
-                                                style={!transaccion.estaActiva ? { cursor: "not-allowed" } : { cursor: "pointer" }}>
-                                            </i>
-                                        </button>
-                                        {
-                                            modal && <BorrarTransaccion
-                                                setAnimarModal={setAnimarModal}
-                                                setModal={setModal}
-                                                animarModal={animarModal}
-                                                auth={auth}
-                                                transaccionId={transaccionId}
-                                                transacciones={transacciones}
-                                                setTransacciones={setTransacciones}
-                                            />
-                                        }
+                                                data-tooltip-content="Modificar"></i>
+
+                                            <button disabled={!transaccion.estaActiva}>
+                                                <i className="fa-solid fa-ban pl-2 text-red-600"
+                                                    data-tooltip-id="my-tooltip"
+                                                    data-tooltip-content="Anular"
+                                                    onClick={e => handleDeletingModal(transaccion.id)}
+                                                    style={!transaccion.estaActiva ? { cursor: "not-allowed" } : { cursor: "pointer" }}>
+                                                </i>
+                                            </button>
+                                            {
+                                                modal && <BorrarTransaccion
+                                                    setAnimarModal={setAnimarModal}
+                                                    setModal={setModal}
+                                                    animarModal={animarModal}
+                                                    auth={auth}
+                                                    transaccionId={transaccionId}
+                                                    transacciones={transacciones}
+                                                    setTransacciones={setTransacciones}
+                                                />
+                                            }
+                                        </td>
                                     </tr>
                                 );
                             })}
@@ -117,4 +118,4 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
             }
         </div>
     );
-}
+};

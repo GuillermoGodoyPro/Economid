@@ -34,7 +34,8 @@ const Dashboard = () => {
             try {
                 const { data: response, status } = await getAll(user.id, config);
                 if (status === 200) {
-                    setTransacciones(response);
+                    const activeTransactions = response.filter((t) => t.estaActiva);
+                    setTransacciones(activeTransactions);
                     setLoading(false);
                 }
             } catch (error) {
@@ -73,7 +74,6 @@ const Dashboard = () => {
     }, []);
 
     const { msg } = alertaTransacciones;
-
     return (
         <div>
             {alertaTransacciones ?

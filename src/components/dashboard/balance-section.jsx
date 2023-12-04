@@ -17,6 +17,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
     const [animarModal, setAnimarModal] = useState(false);
     const [dolarValue, setDolarValue] = useState(null);
     const [dolarDate, setDolarDate] = useState(null);
+    const [divisa, setDivisa] = useState("ARS");
 
     const handleModalTransaccion = () => {
         setModal(true);
@@ -59,7 +60,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
             const { data } = await getDollarExchangeRate();
             setDolarValue(data.blue.value_sell);
             setDolarDate(data.last_update);
-        }
+        };
         fetchBalance();
         fetchCategorias();
         fetchDollars();
@@ -75,25 +76,73 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                     balance ?
                         <div className='flex flex-col p-5 justify-center text-center'>
                             <div>
+                                <div className="flex justify-end">
+                                    <div>
+                                        <select
+                                            className={`${divisa === "ARS" ?
+                                                "font-semibold bg-blue-200 shadow-md hover:shadow-blue-400" :
+                                                "font-semibold bg-green-200 shadow-md hover:shadow-green-400"}`}
+                                            name="divisa"
+                                            id="divisa"
+                                            value={divisa}
+                                            onChange={e => setDivisa(e.target.value)}
+                                        >
+                                            <option className="font-semibold" value="ARS">ARS</option>
+                                            <option className="font-semibold" value="USD">USD</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <h3 className='text-xl font-semibold text-violet-600 antialiased'>
                                     Saldo
                                 </h3>
                                 {
-                                    balance.data ?
-                                        balance.data.saldo_Total < 0 ?
-                                            <h1 className='text-red-500 font-bold text-5xl font-mono'>
-                                                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
-                                            </h1> :
-                                            <h1 className='text-gray-600 font-bold text-5xl font-mono'>
-                                                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
-                                            </h1> :
-                                        balance.saldo_Total < 0 ?
-                                            <h1 className='text-red-600 font-bold text-5xl font-mono'>
-                                                ${parseFloat(balance.saldo_Total).toFixed(2)}
-                                            </h1> :
-                                            <h1 className='text-gray-600 font-bold text-5xl font-mono'>
-                                                ${parseFloat(balance.saldo_Total).toFixed(2)}
-                                            </h1>
+                                    divisa === "ARS"
+                                        ?
+                                        balance.data ?
+                                            balance.data.saldo_Total < 0 ?
+                                                <h1 className='text-red-500 font-bold text-5xl font-mono'>
+                                                    <span className="mr-1">$</span>
+                                                    {parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                                </h1> :
+                                                <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                    <span className="mr-1">$</span>
+                                                    {parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                                </h1> :
+                                            balance.saldo_Total < 0 ?
+                                                <h1 className='text-red-600 font-bold text-5xl font-mono'>
+                                                    <span className="mr-1">$</span>
+                                                    {parseFloat(balance.saldo_Total).toFixed(2)}
+                                                </h1> :
+                                                <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                    <span className="mr-1">$</span>
+                                                    {parseFloat(balance.saldo_Total).toFixed(2)}
+                                                </h1>
+                                        :
+                                        divisa === "USD"
+                                            ?
+                                            balance.data ?
+                                                balance.data.saldo_Total < 0 ?
+                                                    <h1 className='text-red-500 font-bold text-5xl font-mono'>
+                                                        <span className="mr-1">U$S</span>
+                                                        {parseFloat(balance.data.saldo_Total / dolarValue).toFixed(2)}
+                                                    </h1> :
+                                                    <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                        <span className="mr-1">U$S</span>
+                                                        {parseFloat(balance.data.saldo_Total / dolarValue).toFixed(2)}
+                                                    </h1> :
+                                                balance.saldo_Total < 0 ?
+                                                    <h1 className='text-red-600 font-bold text-5xl font-mono'>
+                                                        <span className="mr-1">U$S</span>
+                                                        {parseFloat(balance.saldo_Total / dolarValue).toFixed(2)}
+                                                    </h1> :
+                                                    <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                        <span className="mr-1">U$S</span>
+                                                        {parseFloat(balance.saldo_Total / dolarValue).toFixed(2)}
+                                                    </h1>
+                                            :
+                                            <div className="flex justify-center">
+                                                <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
+                                            </div>
                                 }
                                 <br />
                                 {
@@ -101,12 +150,13 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                         <div className="text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400">
                                             <div className="flex flex-col items-center font-semibold mb-4 text-violet-600">
                                                 <h3 className="w-24 text-white shadow-md font-semibold text-center rounded-3xl bg-green-400 font-mono">
-                                                    ${dolarValue}
+                                                    <span className="mr-1">USD</span>
+                                                    {dolarValue}
                                                 </h3>
                                             </div>
                                             <div className="flex flex-col items-center font-bold text-green-500 mt-4">
-                                                <h3>Dólar Blue</h3>
-                                                <h3>Al día: {new Date(dolarDate).toLocaleDateString()}</h3>
+                                                <h3>Cotización Dólar</h3>
+                                                <h3>{new Date(dolarDate).toLocaleDateString()}</h3>
                                             </div>
                                         </div> :
                                         <div></div>
@@ -148,4 +198,4 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
             }
         </div>
     );
-}
+};

@@ -37,7 +37,7 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                                             <span className="font-semibold text-xs text-violet-500 font-mono">
                                                 {
                                                     !goal.montoActual ?
-                                                        `$0` :
+                                                        "$0" :
                                                         `$${parseFloat(goal.montoActual)}`
                                                 }
                                                 <span className="font-semibold text-xs text-gray-500">
@@ -95,4 +95,4 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
             }
         </div>
     );
-}
+};

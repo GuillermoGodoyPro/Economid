@@ -57,7 +57,7 @@ const Metas = () => {
             }
         };
         fetchGoals();
-    }, [])
+    }, []);
 
     const { msg } = alerta;
 

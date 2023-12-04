@@ -24,7 +24,7 @@ function App() {
                         <Route path="forgotpassword" element={ <ForgotPassword/>} />
                         <Route path="forgotpassword/:token" element={ <NewPassword/>} />
                     </Route>
-                    <Route path="/dashboard" element={ <ProtectedPath/> }>                        
+                    <Route path="/dashboard" element={ <ProtectedPath/> }>
                         <Route path="index" element={<Dashboard />} />
                         <Route path="metas" element={<Metas />} />
                         <Route path="transacciones" element={<Transacciones />} />

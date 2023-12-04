@@ -35,7 +35,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
         const payload = {
             metaId: goalId,
             monto: parseFloat(amount)
-        }
+        };
 
         try {
             const { data, status } = await agregarMonto(payload, config);
@@ -48,7 +48,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
                 setTimeout(() => {
                     setAlerta({});
                     setActiveGoals(activeGoals.map((goal) => {
-                        return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal
+                        return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
                     }));
                     if (data.completada) {
                         setTimeout(() => {
@@ -57,7 +57,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
                                 error: false
                             });
                             setActiveGoals(activeGoals.map((goal) => {
-                                return goal.id === goalId ? { ...goal, completada: data.completada } : goal
+                                return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                             }));
                             if (setCompletedGoals) {
                                 setCompletedGoals(completedGoals => [...completedGoals, data]);
@@ -81,7 +81,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
             console.log(error);
         }
 
-    }
+    };
     const { msg } = alerta;
 
     return (

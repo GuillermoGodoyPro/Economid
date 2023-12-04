@@ -18,7 +18,7 @@ const AuthProvider = ({ children }) => {
             }
 
             try {
-                setAuth(token);                
+                setAuth(token);
             } catch (error) {
                 console.log(error);
                 setAuth({});

@@ -1,6 +1,5 @@
 import clienteAxios from "../../config/clienteAxios";
 
-
 export async function login(payload) {
     const data = await clienteAxios.post("/usuario/login", payload);
     return data;
@@ -13,5 +12,5 @@ export async function register(payload) {
 
 export async function modifyProfile(userId, payload, config) {
     const data = await clienteAxios.put(`/usuario/Modificar/${userId}`, payload, config);
-    return data;
+    return data;
 }

@@ -2,7 +2,7 @@ import { PulseLoader } from "react-spinners";
 import { type } from "../../../constants/myfinances-constants";
 
 export const IncomesSection = ({ cargando, transacciones }) => {
-    const ingresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.INGRESO)
+    const ingresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.INGRESO);
     return (
         <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 w-full mx-2">
             <div>
@@ -16,8 +16,8 @@ export const IncomesSection = ({ cargando, transacciones }) => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th className="text-left py-2 px-20 font-semibold text-violet-600">Transacción</th>
-                                        <th className="text-left py-2 px-20 font-semibold text-violet-600">Monto</th>
+                                        <th className="text-center py-2 px-20 font-semibold text-violet-600">Transacción</th>
+                                        <th className="text-center py-2 px-20 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -40,4 +40,4 @@ export const IncomesSection = ({ cargando, transacciones }) => {
             </div>
         </div>
     );
-}
+};

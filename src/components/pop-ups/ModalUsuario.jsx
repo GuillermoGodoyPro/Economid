@@ -54,7 +54,7 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                 apellido: data.apellido,
                 email: data.email
             }));
-                
+
 
             console.log(data);
         } catch (error) {

@@ -1,20 +1,23 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { getUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
+import { getAll } from "../../services/myfinances-api/transacciones";
+import { texts } from "../../constants/myfinances-constants";
+import Alerta from "../../components/Alerta";
+import { IncomesSection } from "../../components/dashboard/transactions/incomes-section";
+import { ExpensesSection } from "../../components/dashboard/transactions/expenses-section";
+import { BalanceIncomes } from "../../components/balance/incomes-component";
+import { BalanceExpenses } from "../../components/balance/expenses-component";
+import { BalanceComponent } from "../../components/balance/balance-component";
 import { getBalanceByUserId } from "../../services/myfinances-api/balance";
-import { filterByType } from "../../services/myfinances-api/transacciones";
 
 const Balance = () => {
-
     const { auth } = useAuth();
-    const [ingresos, setIngresos] = useState([]);
-    const [balance, setBalance] = useState(null);
-    const [egresos, setEgresos] = useState([]);
+    const [transacciones, setTransacciones] = useState([{}]);
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [modal, setModal] = useState(false);
-    const [animarModal, setAnimarModal] = useState(false);
-
+    const [alertaTransacciones, setAlertaTransacciones] = useState({});
+    const [balance, setBalance] = useState(null);
 
     const user = getUserToken();
     const config = {
@@ -24,134 +27,60 @@ const Balance = () => {
         }
     };
 
-    if (user.p_e_id) {
-        useEffect(() => {
-            const fetchBalance = async () => {
-                try {
-                    const res = await getBalanceByUserId(user.p_e_id, config);
+    useEffect(() => {
+        const fetchTransacciones = async () => {
+            try {
+                const { data: response, status } = await getAll(user.id, config);
+                if (status === 200) {
+                    setTransacciones(response);
+                    setLoading(false);
+                }
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+                setAlertaTransacciones({
+                    msg: texts.WITH_NO_TRANSACTIONS,
+                    error: true
+                });
+                setTimeout(() => {
+                    setAlertaTransacciones({});
+                }, 3000);
+            }
+        };
+        const fetchBalance = async () => {
+            try {
+                const res = await getBalanceByUserId(user.id, config);
+                if (res) {
                     setBalance(res);
                     setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
                 }
-            };
-
-            const transaccionesIngresos = async () => {
-                try {
-                    const { data: response } = await filterByType(0, user.p_e_id, config);
-                    setIngresos(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            const transaccionesEgresos = async () => {
-                try {
-                    const { data: response } = await filterByType(1, user.p_e_id, config);
-                    setEgresos(response);
-                    setLoading(false);
-                } catch (error) {
-                    setError(error);
-                    setLoading(false);
-                }
-            };
-            fetchBalance();
-            transaccionesIngresos();
-            transaccionesEgresos();
-        }, []);
-    }
-
-
+            } catch (error) {
+                setError(error);
+                setLoading(false);
+            }
+        };
+        fetchTransacciones();
+        fetchBalance();
+    }, []);
+    const { msg } = alertaTransacciones;
     return (
-
-
-        <>
-            <div className=" bg-inherit rounded p-4 pt-8 m-1 mx-8 mb-0 flex justify-between">
-                {/* TODO: Cambiar por ternario, copiar y pegar todo pero solo modificar el boton perfil económico por nueva transacción */}
-                <div className="bg-gray-200 p-4  rounded-lg shadow-sm w-full  mx-1 ">
-                    <div>
-                        <h2 className='p-1 justify-around text-violet-600'>
-                            Ingresos:
-                        </h2>
-
-                        <div className="bg-inherit rounded-lg  border">
-                            <table className="w-full border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
-                                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                                    </tr>
-                                </thead>
-                                {user.p_e_id ?
-                                    <tbody>
-                                        {ingresos.map((transaccion, index) => {
-                                            return (
-                                                <tr className="border-b border-gray-200" key={index}>
-                                                    <td className="py-2 px-4">{transaccion.detalle}</td>
-                                                    <td className="py-2 px-4">${transaccion.monto}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody> :
-                                    <tbody></tbody>
-                                }
-                            </table>
-                        </div>
+        <div className="flex flex-col items-center">
+            {alertaTransacciones ?
+                <div className="flex justify-end">
+                    <div className="fixed">
+                        {msg && <Alerta alerta={alertaTransacciones} />}
                     </div>
-                </div>
-                <div className="bg-gray-200  p-4 rounded-lg shadow-sm w-full mx-1 w-min-6 ">
-                    <div>
-                        <h2 className='p-1 justify-around text-violet-600'>
-                            Egresos:
-                        </h2>
-                        <div className="bg-inherit rounded-lg  border">
-                            <table className="w-full border-collapse">
-                                <thead>
-                                    <tr>
-                                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Transacción</th>
-                                        <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                                    </tr>
-                                </thead>
-                                {user.p_e_id ?
-                                    <tbody>
-                                        {egresos.map((transaccion, index) => {
-                                            return (
-                                                <tr className="border-b border-gray-200" key={index}>
-                                                    <td className="py-2 px-4">{transaccion.detalle}</td>
-                                                    <td className="py-2 px-4">${transaccion.monto}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </tbody> :
-                                    <tbody></tbody>
-                                }
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                </div> : <div></div>}
+            <div className="bg-inherit rounded p-2 m-1 mb-0 flex justify-around">
+                <BalanceIncomes cargando={cargando} transacciones={transacciones} />
+                <BalanceExpenses cargando={cargando} transacciones={transacciones} />
             </div>
-            <div className="bg-gray-200 p-4 mx-40 rounded-lg shadow-sm ">
-                <div>
-                    <h2 className='p-1 justify-around mb-4 text-violet-600 text-center'>
-                        Patrimonio Neto:
-                    </h2>
-                    {balance
-                        ?
-                        <div className='flex justify-center'>
-                            <h1 className='p-1 justify-around text-violet-800 font-bold uppercase'>
-                                ${parseFloat(balance.data.saldo_Total).toFixed(2)}
-                            </h1>
-                        </div>
-                        :
-                        <div></div>
-                    }
-                </div>
+            {/* Se podria agregar el histograma usando chart.js acá */}
+            <div className="bg-inherit rounded p-2 m-1 mb-0">
+                <BalanceComponent cargando={cargando} balance={balance} />
             </div>
-
-        </>
-
+            {/* O acá */}
+        </div>
     );
 };
 

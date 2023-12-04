@@ -46,7 +46,7 @@ export const ExpensesChart = ({ egresos }) => {
                         legend: {
                             display: true,
                             position: "bottom",
-                            align: "center"                            
+                            align: "center"
                         }
                     }
 

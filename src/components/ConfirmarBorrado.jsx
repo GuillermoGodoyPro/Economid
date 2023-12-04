@@ -13,7 +13,7 @@ const BorrarTransaccion = ({ setModal, animarModal, setAnimarModal, transaccionI
         }, 200);
     };
 
-    const handleBorrado = async e => {        
+    const handleBorrado = async e => {
         const config = {
             headers: {
                 "Content-Type": "application/json",

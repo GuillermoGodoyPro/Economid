@@ -36,7 +36,7 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                     console.log(data);
                     setTransacciones(transacciones.map((transaccion) => {
                         return transaccion.id === transaccionId ?
-                            { ...transaccion, estaActiva: data.estaActiva } : transaccion
+                            { ...transaccion, estaActiva: data.estaActiva } : transaccion;
                     }));
                     ocultarModal();
                 }, 2000);
@@ -59,7 +59,7 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                             onClick={ocultarModal}></i>
                     </div>
 
-                    <div className='textDelete text-center p-20 flex flex-col items-center'>
+                    <div className='textDelete text-center pb-10 pr-10 pl-10 pt-10 flex flex-col items-center'>
                         <div>
                             <h3 className="text-gray-800 text-lg">
                                 {texts.ON_DELETING_QUESTION}
@@ -71,6 +71,7 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                             </div>
                         </div>
                     </div>
+                    {msg && <Alerta alerta={alerta} />}
                     <div className="deletePopUpButtons flex flex-row justify-around">
                         <input
                             type="submit"
@@ -88,8 +89,7 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                         />
                     </div>
                 </div>
-                {msg && <Alerta alerta={alerta} />}
             </div>
         </div>
     );
-}
+};

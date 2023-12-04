@@ -59,4 +59,4 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
             }
         </div>
     );
-}
+};

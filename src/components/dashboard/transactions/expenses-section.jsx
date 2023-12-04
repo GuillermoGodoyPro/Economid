@@ -16,8 +16,8 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
                             <table>
                                 <thead>
                                     <tr>
-                                        <th className="text-left py-2 px-20 font-semibold text-violet-600">Transacción</th>
-                                        <th className="text-left py-2 px-20 font-semibold text-violet-600">Monto</th>
+                                        <th className="text-center py-2 px-20 font-semibold text-violet-600">Transacción</th>
+                                        <th className="text-center py-2 px-20 font-semibold text-violet-600">Monto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -26,7 +26,9 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
                                             <tr className="border-b border-gray-200" key={index}>
                                                 <td className="py-2 px-20">{transaccion.detalle}</td>
                                                 <td className="py-2 px-20 text-red-500 font-semibold font-mono">
-                                                    -${parseFloat(transaccion.monto).toFixed(2)}
+                                                    <div className="w-28 flex justify-center">
+                                                        -${parseFloat(transaccion.monto).toFixed(2)}
+                                                    </div>
                                                 </td>
                                             </tr>
                                         );
@@ -38,4 +40,4 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
             </div>
         </div>
     );
-}
+};
