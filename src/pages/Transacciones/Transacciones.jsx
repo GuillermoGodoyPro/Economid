@@ -1,8 +1,7 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import useAuth from "../../hooks/useAuth";
 import ModalTransaccion from "../../components/ModalTransaccion";
-import { ObtenerTodasUsuario } from "../../services/transacciones";
+import { ObtenerTodasUsuario, EliminarTransaccion  } from "../../services/transacciones";
 import { GetCategorias } from "../../services/categorias";
 import { GetBalanceByPEId } from "../../services/balance";
 
@@ -24,6 +23,28 @@ const Transacciones = () => {
             setAnimarModal(true);
         }, 400);
     };
+
+    const handleDelete = async (t_id) =>{
+        
+        if(t_id){
+         console.log(t_id)
+        }
+
+        try {
+            // Llamada a la función de servicio que elimina la transacción
+            await EliminarTransaccion(t_id);
+            
+            // Actualizar el estado de transacciones después de la eliminación
+            setTransacciones((prevTransacciones) =>
+                prevTransacciones.filter((transaccion) => transaccion.id !== t_id)
+            );
+        } catch (error) {
+            setError(error);
+        }
+
+
+
+    }
 
     const usuarioToken = localStorage.getItem("token");
     const config = {
@@ -115,11 +136,14 @@ const Transacciones = () => {
                                     <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                     <td className="py-2 px-4 text-gray-400">{transaccion.tipoTransaccion}</td>
                                     <td>
-                                        <i className="fa-regular fa-pen-to-square text-gray-600" alt="hola"></i>
-                                        <i
-                                            className="fa-regular fa-trash-can pl-2 text-red-600"
-
-                                        ></i>
+                                        <button>
+                                            <i className="fa-regular fa-pen-to-square text-gray-600" alt="hola"></i>
+                                        </button>
+                                        <button
+                                            onClick={ e => handleDelete(transaccion.id) }
+                                        >
+                                            <i className="fa-regular fa-trash-can pl-2 text-red-600"></i>
+                                        </button>
                                     </td>
                                 </tr>
                             );
