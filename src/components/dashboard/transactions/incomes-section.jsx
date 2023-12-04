@@ -1,5 +1,5 @@
 import { PulseLoader } from "react-spinners";
-import { type } from "../../../constants/myfinances-constants";
+import { texts, type } from "../../../constants/myfinances-constants";
 
 export const IncomesSection = ({ cargando, transacciones }) => {
     const ingresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.INGRESO);
@@ -12,30 +12,39 @@ export const IncomesSection = ({ cargando, transacciones }) => {
                         <div className="flex justify-center">
                             <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                         </div> :
-                        <div className="w-full flex justify-center">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th className="text-center py-2 px-20 font-semibold text-violet-600">Transacción</th>
-                                        <th className="text-center py-2 px-20 font-semibold text-violet-600">Monto</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {ingresos?.slice(-5).reverse().map((transaccion, index) => {
-                                        return (
-                                            <tr className="border-b border-gray-200" key={index}>
-                                                <td className="py-2 px-20">{transaccion.detalle}</td>
-                                                <td className="py-2 px-20 text-green-500 font-semibold font-mono">
-                                                    <div className="w-28 flex justify-center rounded-md bg-green-300">
+                        ingresos
+                            ?
+                            <div className="w-full flex justify-center">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th className="text-center py-2 px-20 font-semibold text-violet-600">Transacción</th>
+                                            <th className="text-center py-2 px-20 font-semibold text-violet-600">Monto</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {ingresos?.slice(-5).reverse().map((transaccion, index) => {
+                                            return (
+                                                <tr className="border-b border-gray-200" key={index}>
+                                                    <td className="py-2 px-20">{transaccion.detalle}</td>
+                                                    <td className="py-2 px-20 text-green-500 font-semibold font-mono">
+                                                        <div className="w-28 flex justify-center rounded-md bg-green-300">
                                                         +${parseFloat(transaccion.monto).toFixed(2)}
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </tbody>
-                            </table>
-                        </div>}
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </tbody>
+                                </table>
+                            </div>
+                            :
+                            <div className='pt-14 flex flex-col p-5 items-center text-center' >
+                                <h3 className="mb-10 text-lg">
+                                    {texts.WITH_NO_INCOMES}
+                                </h3>
+                            </div>
+                    }
                 </div>
             </div>
         </div>

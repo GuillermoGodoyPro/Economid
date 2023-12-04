@@ -3,6 +3,7 @@ import Alerta from "../Alerta";
 import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
 import { newTransaction } from "../../services/myfinances-api/transacciones";
+import { errors } from "../../constants/myfinances-constants";
 
 const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, idBalance, setTransacciones, setBalance, setBalanceId }) => {
 
@@ -78,15 +79,29 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
                 }, 1500);
             }
         } catch (error) {
-            if (error.message === errors.badRequests.BAD_REQUEST) {
-                setAlerta({
-                    msg: errors.badRequests.REQUIRED_FIELDS,
-                    error: true
-                });
-                setTimeout(() => {
-                    setLoading(false);
-                    setAlerta({});
-                }, 3000);
+            if (!error.errors) {
+                if (error.message === errors.badRequests.BAD_REQUEST) {
+                    setAlerta({
+                        msg: errors.badRequests.REQUIRED_FIELDS,
+                        error: true
+                    });
+                    setTimeout(() => {
+                        setLoading(false);
+                        setAlerta({});
+                    }, 3000);
+                }
+            }
+            else {
+                if (error.status === errors.badRequests.BAD_REQUEST_CODE) {
+                    setAlerta({
+                        msg: errors.badRequests.REQUIRED_FIELDS,
+                        error: true
+                    });
+                    setTimeout(() => {
+                        setLoading(false);
+                        setAlerta({});
+                    }, 3000);
+                }
             }
         }
     };
