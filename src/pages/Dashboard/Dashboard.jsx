@@ -76,12 +76,14 @@ const Dashboard = () => {
     const { msg } = alertaTransacciones;
     return (
         <div>
-            {alertaTransacciones ?
-                <div className="flex justify-end">
-                    <div className="fixed">
-                        {msg && <Alerta alerta={alertaTransacciones} />}
-                    </div>
-                </div> : <div></div>}
+            {
+                alertaTransacciones ?
+                    <div className="flex justify-end">
+                        <div className="fixed">
+                            {msg && <Alerta alerta={alertaTransacciones} />}
+                        </div>
+                    </div> : <div></div>
+            }
             <h2 className='mx-5 text-violet-800 font-bold uppercase '>Hola, {user.nombre}</h2>
             <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
                 <BalanceSection
@@ -97,7 +99,6 @@ const Dashboard = () => {
                     cargando={cargando}
                     setActiveGoals={setActiveGoals} />
             </div>
-
             <div className="bg-inherit p-10">
                 <AllTransactionsSection transacciones={transacciones} cargando={cargando} />
             </div>
