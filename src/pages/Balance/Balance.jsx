@@ -4,8 +4,6 @@ import useAuth from "../../context/useAuth";
 import { getAll } from "../../services/myfinances-api/transacciones";
 import { texts } from "../../constants/myfinances-constants";
 import Alerta from "../../components/Alerta";
-import { IncomesSection } from "../../components/dashboard/transactions/incomes-section";
-import { ExpensesSection } from "../../components/dashboard/transactions/expenses-section";
 import { BalanceIncomes } from "../../components/balance/incomes-component";
 import { BalanceExpenses } from "../../components/balance/expenses-component";
 import { BalanceComponent } from "../../components/balance/balance-component";
