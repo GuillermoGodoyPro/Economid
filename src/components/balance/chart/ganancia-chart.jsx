@@ -16,11 +16,8 @@ export const GananciaChart = ({transacciones}) => {
 
     
     const colores = [
-        "rgb(113, 50, 255)",
-        "rgb(139, 79, 255)",
-        "rgb(180, 130, 255)",
-        "rgb(213, 180, 255)",
-        "rgb(242, 230, 255)"
+        "rgb(84, 255, 50)",
+        "rgb(252, 52, 58)"
     ];
     
     return (        
