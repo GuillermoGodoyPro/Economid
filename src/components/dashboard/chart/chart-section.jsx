@@ -4,6 +4,7 @@ import { texts, type } from "../../../constants/myfinances-constants";
 
 export const ChartSection = ({ cargando, transacciones }) => {
     const egresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.EGRESO);
+    console.log(egresos)
     return (
         <div className="bg-gray-200 p-3 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex justify-center">
             {cargando ?

@@ -7,6 +7,7 @@ import Alerta from "../../components/Alerta";
 import { BalanceIncomes } from "../../components/balance/incomes-component";
 import { BalanceExpenses } from "../../components/balance/expenses-component";
 import { BalanceComponent } from "../../components/balance/balance-component";
+import { GananciaChart } from "../../components/balance/chart/ganancia-chart";
 import { getBalanceByUserId } from "../../services/myfinances-api/balance";
 
 const Balance = () => {
@@ -16,7 +17,8 @@ const Balance = () => {
     const [error, setError] = useState(null);
     const [alertaTransacciones, setAlertaTransacciones] = useState({});
     const [balance, setBalance] = useState(null);
-
+    
+    
     const user = getUserToken();
     const config = {
         headers: {
@@ -59,6 +61,9 @@ const Balance = () => {
         };
         fetchTransacciones();
         fetchBalance();
+
+        
+
     }, []);
     const { msg } = alertaTransacciones;
     return (
@@ -78,6 +83,12 @@ const Balance = () => {
                 <BalanceComponent cargando={cargando} balance={balance} />
             </div>
             {/* O acá */}
+
+            <GananciaChart transacciones={transacciones} />
+            
+
+            {/*  */}
+
         </div>
     );
 };
