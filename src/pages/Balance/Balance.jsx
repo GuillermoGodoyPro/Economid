@@ -28,7 +28,7 @@ const Balance = () => {
     useEffect(() => {
         const fetchTransacciones = async () => {
             try {
-                const { data: response, status } = await getAll(user.id, config);
+                const { data: response, status } = await getAll(user.id, 1, 1000, config);
                 if (status === 200) {
                     setTransacciones(response);
                     setLoading(false);

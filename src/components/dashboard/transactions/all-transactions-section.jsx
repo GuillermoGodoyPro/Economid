@@ -2,7 +2,7 @@ import { PulseLoader } from "react-spinners";
 import { type } from "../../../constants/myfinances-constants";
 
 export const AllTransactionsSection = ({ transacciones, cargando }) => {
-    const orderedTransactions = transacciones.slice(-5).reverse();
+    const orderedTransactions = transacciones?.slice(0, 5);
     return (
         <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
             <div className="flex justify-center mb-5">

@@ -40,7 +40,7 @@ const Transacciones = () => {
     useEffect(() => {
         const fetchTransacciones = async () => {
             try {
-                const { data: response } = await getAll(user.id, config);
+                const { data: response } = await getAll(user.id, 1, 1000, config);
                 setTransacciones(response);
                 setLoading(false);
             } catch (error) {
@@ -116,7 +116,8 @@ const Transacciones = () => {
                     cargando={cargando}
                     transacciones={transacciones}
                     setTransacciones={setTransacciones}
-                    auth={auth} />
+                    auth={auth}
+                    setAlertaTransacciones={setAlertaTransacciones}/>
             </div>
         </div>
     );

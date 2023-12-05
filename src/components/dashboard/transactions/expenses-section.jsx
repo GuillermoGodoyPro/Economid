@@ -23,7 +23,7 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {egresos?.slice(-5).reverse().map((transaccion, index) => {
+                                        {egresos?.slice(0, 5).map((transaccion, index) => {
                                             return (
                                                 <tr className="border-b border-gray-200" key={index}>
                                                     <td className="py-2 px-20">{transaccion.detalle}</td>
