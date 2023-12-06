@@ -1,24 +1,36 @@
 .container {
     display: flex;  
-    height:100%;
+    height:100%;  
+    margin: auto;
+    
     
 } 
 
-.mainContainer{
-    width: 100%;
-    
-    
-}
+
 
 
 .menu{
-    height:100em;
+    height:100%;
     background-color: violet;
+
     
 }
 
 .headerContainer{
     background-color: var(--crema);
+    position: fixed;
+    width: 100%;
+
+}
+
+.mainSinHeader{   
+
+    justify-content: center;
+    width: 90%;
+    margin: auto;
+    /* Esto debe ser !important para que se mantenga el margin auto / sino volver todo a 100% y margin: 6rem 0 2rem */
+    margin-top: 6rem !important;
+    margin-bottom: 2rem !important;
 
 
 }

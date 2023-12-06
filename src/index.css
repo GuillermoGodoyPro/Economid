@@ -13,14 +13,15 @@
     --violethover: #ae9cdfcb;
     --crema: #f5f5f3;
     --white: white;
-    --rojo: #e50914;
+    --rojo: #e50909b2;
+    --rojo-hover: #c40707b2;
     --negro: #141414;
     --gris: #303030;
     --gris-f: #757575;
     --gris-mod: #f5f5f5;
     --gris-popup: rgb(229 231 235);
     /* Tipografía */
-    --tipo-principal: Helvetica, Arial, sans-serif;
+    --tipo-principal: Monospace, Arial, sans-serif;
     --tipo-secundaria: Verdana;
 }
 
@@ -69,7 +70,6 @@ html {
 }
 
 /* Desactivamos estilos por defecto de las principales etiquetas de texto */
-h1,
 h2,
 h3,
 h4,
@@ -98,10 +98,17 @@ em {
     padding: 10rem 0;
 }
 
+.deletePopUp {
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+}
+
 @media (min-width: 768px) {
     .formulario {
         padding: 2rem 0;
         width: 60rem;
+
     }
 }
 
@@ -122,30 +129,42 @@ em {
     color: var(--negro);
 }
 
+.deletePopUp .textDelete {
+    color: var(--negro);
+}
+
+.deletePopUp.animar {
+    padding: 0;
+}
+
 i {
     cursor: pointer;
     font-size: 25px;
 }
-.fa-regular, .far {
+
+.fa-regular,
+.far {
     font-size: 25px;
 }
 
 .formulario label {
     color: var(--violetdark);
-    font-size: 1.2rem;
+    font-size: 1rem;
     text-align: center;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.4rem;
     text-transform: capitalize;
 }
 
 .formulario input[type="text"],
-.formulario input[type="number"] {
+.formulario input[type="number"],
+.formulario input[type="date"],
+select {
     background-color: var(--gris-popup);
     border-radius: 0.3rem;
-    padding: 0.5rem;
+    padding: 0.3rem;
     border: none;
     flex: 1;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: var(--negro);
 }
 
@@ -153,16 +172,55 @@ i {
     background-color: var(--violetdark);
     border: none;
     border-radius: 0.5rem;
-    padding: 1rem;
+    padding: 0.8rem;
     text-align: center;
-    margin-top: 2.7rem;
+    margin-top: 2.5rem;
     margin-bottom: 0.8rem;
     color: var(--white);
     font-weight: 700;
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    font-family: Arial, Helvetica, sans-serif;
     width: 100%;
-    transition: background-color 300ms ease;
+    transition: 300ms ease;
+}
+
+.deletePopUpButtons input[type="submit"].deleteButton {
+    background-color: var(--rojo);
+    margin: 2px;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    text-align: center;        
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 300ms ease;
+}
+
+.deletePopUpButtons input[type="submit"].backDeleteButton {
+    background-color: var(--violetlight);
+    margin: 2px;
+    border: none;
+    border-radius: 0.5rem;
+    padding: 0.8rem;
+    text-align: center;        
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    font-family: Arial, Helvetica, sans-serif;
+    transition: 300ms ease;
+}
+.deletePopUpButtons input[type="submit"].deleteButton:hover {
+    background-color: var(--rojo-hover);
+    cursor: pointer;   
+}
+.deletePopUpButtons input[type="submit"].backDeleteButton:hover {
+    background-color: var(--violetdark);
+    cursor: pointer;   
 }
 
 @media (min-width: 768px) {
@@ -173,32 +231,59 @@ i {
 }
 
 .formulario input[type="submit"]:hover {
-    background-color: #042a67;
+    background-color: #570467;
     cursor: pointer;
 }
 
 .modal {
     position: fixed;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.178);
+    background-color: rgba(0, 0, 0, 0.040);
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
+    cursor: auto;
+}
+
+.modalDelete {
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.007);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    cursor: auto;
 }
 
 .modalContainer {
     margin: 0 auto;
-    margin-top: 8rem;
+    margin-top: 2.5rem;
     justify-items: center;
     background-color: var(--crema);
     width: 30rem;
     border-radius: 0.5rem;
-    box-shadow: 0px 0px 30px -5px black;
+    box-shadow: 0 0 15px 1px black;
+}
+
+.modalDeleteContainer {
+    margin: 0 auto;
+    margin-top: 2.5rem;
+    background-color: var(--crema);
+    width: 30rem;    
+    border-radius: 0.5rem;
+    box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.175);
 }
 
 .modal .cerrar-modal {
+    border-radius: 1rem;
+    position: absolute;
+    right: 0.3rem;
+    top: 1rem;
+    width: 2rem;
+    height: 2rem;
+}
 
+.modalDelete .closeDeletePopUp {
     border-radius: 1rem;
     position: absolute;
     right: 0.3rem;
@@ -208,8 +293,15 @@ i {
 }
 
 .modal .formulario {
-    max-width: 40rem;
+    max-width: 30rem;
     width: 20rem;
+    transition-property: all;
+    transition-duration: 300ms;
+    transition-timing-function: ease-in;
+    opacity: 0;
+}
+
+.modalDelete .deletePopUp {    
     transition-property: all;
     transition-duration: 300ms;
     transition-timing-function: ease-in;
@@ -221,24 +313,82 @@ i {
     font-weight: bolder;
 }
 
+.modalDelete .textDelete label {
+    color: var(--violetdark);
+    font-weight: bolder;
+}
+
 body .modal {
+    overflow: hidden;
+}
+body .modalDelete {
     overflow: hidden;
 }
 
 .modal .formulario.animar {
     position: relative;
     opacity: 1;
+}
 
+.modalDelete .deletePopUp.animar {
+    position: relative;
+    opacity: 1;
 }
 
 .modal .formulario.cerrar {
     opacity: 0;
 }
 
-.modal .formulario.cerrar i .fa-regular{
+.modalDelete .deletePopUp.cerrar {
+    opacity: 0;
+}
+
+.modal .formulario.cerrar i.fa-regular,
+.modalDelete .deletePopUp.cerrar i.fa-regular {
     display: none;
 }
 
 .modal label {
     text-align: left;
+}
+
+.headerButtons .rounded-md {
+    border-radius: 0.375rem 0.375rem 0 0;
+}
+
+header {
+    text-align: center;
+}
+
+header p {
+    font-size: 10px;
+}
+
+.faq-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.faq-section h1 {
+    font-size: 30px;
+}
+
+.faq-section h3 {
+    font-weight: bold;
+    font-style: italic;
+    margin: 5px;
+}
+
+.headerStyle {
+    background: rgb(135, 119, 179);
+    background: radial-gradient(circle, rgba(174, 156, 223, 1) 30%, rgba(187, 170, 233, 1) 60%, rgba(135, 119, 179, 1) 90%);
+}
+
+.spinner {
+    text-align: center;
+}
+
+.deletePopUpButtons {
+    padding: 0;
 }
