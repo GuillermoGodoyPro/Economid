@@ -16,92 +16,116 @@ import { texts, type } from "../../../constants/myfinances-constants";
 
 
 export const GananciaChart = ({transacciones}) => {
+
+
+    /* Se obtienen los montos (ingresos y egresos) por mes */
+
+    const sumarMontos = (transacciones) => {
+        // Inicializar un objeto para almacenar los montos por mes
+        const montosPorMes = {};
+        
+        // Iterar sobre las transacciones
+        transacciones?.forEach((transaccion) => {
+            const fecha = new Date(transaccion.fecha);
+            const mesAnio = fecha.toLocaleString('es-ES', { month: 'long', year: 'numeric' });
+            const monto = transaccion.monto;
+        
+            // Determinar si es ingreso o egreso
+            if (!montosPorMes[mesAnio]) {
+            montosPorMes[mesAnio] = { mes: mesAnio, ingresos: 0, egresos: 0 };
+            }
+        
+            if (transaccion.tipoTransaccion === type.INGRESO) {
+            montosPorMes[mesAnio].ingresos += monto;
+            } else if (transaccion.tipoTransaccion === type.EGRESO) {
+            montosPorMes[mesAnio].egresos += monto;
+            }
+        });
+        
+        // Convertir el objeto a un array de objetos
+        const montosArray = Object.values(montosPorMes);
+        
+        return montosArray;
+    }; 
+
+    // Llamamos la función   
+    const montosTotales = sumarMontos(transacciones)
+
+    /* En esta parte se obtienen los resultados buscados */
+    const datosOrdenados = montosTotales.sort((a, b) => {
+        const fechaA = new Date(a.mes);
+        const fechaB = new Date(b.mes);
+        return fechaB - fechaA;
+    });
     
-    const ingresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.INGRESO); 
-    const egresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.EGRESO);
+    // Obtener las fechas acumuladas de los últimos 5 elementos (los más recientes)
+    const fechasAcumuladas = datosOrdenados.slice(0, 5).map(({ mes }) => mes);
+    /* TODO: testear si hay que poner el mismo slice en ingresosTotales y egresosTotales*/
 
-    // TODO:  Ver tema fechas. Posiblemente dentro de la fx sumarMontos, se puedan filtrar los totales por mes
-    const fechasIngresos = ingresos?.map(data => data.fecha);
-    const fechasEgresos = egresos?.map(data => data.fecha);
+    // Obtener un array con las sumas de ingresos y egresos por fecha acumulada
+    const ingresosTotales = montosTotales.map(({ ingresos }) => ingresos);
+    const egresosTotales = montosTotales.map(({ egresos }) => egresos);
 
-    const sumarMontos = (transacciones) => {       
-        return transacciones?.reduce((total, transaccion) => total + transaccion.monto, 0) || 0;
-    };
-
-    const totalIngresos = sumarMontos(ingresos).toFixed(2);
-    const totalEgresos = sumarMontos(egresos).toFixed(2);
-
-  /*   console.log(totalIngresos)
-    console.log(totalEgresos) */    
-
-    const detalles = egresos?.map(({ detalle }) => detalle);
-    const montos = totalIngresos
+    
     const colores = [
         "rgb(84, 255, 50)",
         "rgb(252, 52, 58)"
     ];
     
     return (        
-        <div>
+        <div className="mt-6 mb-60">
             <h2 className="text-center text-2xl leading-10 mt-6 font-semibold">Ganancias</h2>
 
-            <div className="chart-container">
-            <Bar 
-                width={730} height={250}
-                data={{
-                    
-                    labels: detalles,
-                    datasets: [
+            <div className="chart-container ">
+                <Bar 
+                    width={730} height={250}
+                    data={{
+                        labels: fechasAcumuladas,
+                        datasets: [
                         {
-                            label: "",
-                            data: montos,
-                            backgroundColor: colores,
+                            label: "Ingresos",
+                            data: ingresosTotales,
+                            backgroundColor: colores[0], // Color para ingresos
                             borderColor: "rgb(242, 230, 255)",
                             borderWidth: 1,
-                            hoverOffset: 25,
+                            hoverOffset: 15,
+                            borderRadius: 15,
+                        },
+                        {
+                            label: "Egresos",
+                            data: egresosTotales,
+                            backgroundColor: colores[1], // Color para egresos
+                            borderColor: "rgb(242, 230, 255)",
+                            borderWidth: 1,
+                            hoverOffset: 15,
                             borderRadius: 15,
                         }
-                    ]
-                }}
-                options={{
-                    title: {
-                        display: true,
-                        text: "Ultimos gastos por categoria"
-                    },
-                    layout: {
-                        padding: 16
-                    },
-                    plugins: {
-                        title: "hola",
-                        legend: {
-                            display: true,
-                            position: "bottom",
-                            align: "center"
+                        ]
+                    }}
+                    options={{
+                        layout: {
+                            padding: 1
+                        },
+                        plugins: {
+                            title: "",
+                            legend: {
+                                display: true,
+                                position: "bottom",
+                                align: "center"
+                            }
                         }
-                    }
 
-                }}
+                    }}
+                    
+
+                >
+                    
+                </Bar>                 
                 
-
-            >
-                
-            </Bar>                 
-               
-        </div>
+            </div>
 
 
-           {/*  {egresos?.slice(-5).reverse().map((transaccion, index) => {
-                return (
-                    <tr className="border-b border-gray-200" key={index}>
-                        <td className="py-2 px-20">{transaccion.detalle}</td>
-                        <td className="py-2 px-20 text-red-500 font-semibold font-mono">
-                            <div className="w-28 flex justify-center">
-                                -${parseFloat(transaccion.monto).toFixed(2)}
-                            </div>
-                        </td>
-                    </tr>
-                );
-            })} */}
+           
 
         </div>
 
