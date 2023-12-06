@@ -68,7 +68,7 @@ const Balance = () => {
     const { msg } = alertaTransacciones;
     return (
         <div className="flex flex-col items-center">
-            {alertaTransacciones ?
+            { alertaTransacciones ?
                 <div className="flex justify-end">
                     <div className="fixed">
                         {msg && <Alerta alerta={alertaTransacciones} />}
@@ -78,6 +78,7 @@ const Balance = () => {
                 <BalanceIncomes cargando={cargando} transacciones={transacciones} />
                 <BalanceExpenses cargando={cargando} transacciones={transacciones} />
             </div>
+
             {/* Se podria agregar el histograma usando chart.js acá */}
             <div className="bg-inherit rounded p-2 m-1 mb-0">
                 <BalanceComponent cargando={cargando} balance={balance} />

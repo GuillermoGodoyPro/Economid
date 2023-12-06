@@ -24,7 +24,7 @@ export const TransactionsPagination = ({  nPage, numbers, currentPage, setCurren
                             className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                             onClick={() => prevPage(currentPage)}
                         >
-                            <i class="fa-solid fa-arrow-left text-sm"
+                            <i className="fa-solid fa-arrow-left text-sm"
                                 style={currentPage === 1 ? { cursor: "not-allowed" } : { cursor: "pointer" }}></i>
                         </button>
                         {
@@ -41,7 +41,7 @@ export const TransactionsPagination = ({  nPage, numbers, currentPage, setCurren
                             className="inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
                             onClick={() => nextPage(currentPage)}
                         >
-                            <i class="fa-solid fa-arrow-right text-sm"></i>
+                            <i className="fa-solid fa-arrow-right text-sm"></i>
                         </button>
                     </nav>
                 </div>
