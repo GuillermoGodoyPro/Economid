@@ -45,6 +45,7 @@ export const AmountFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setMonto("");
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,

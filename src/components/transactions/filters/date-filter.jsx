@@ -49,6 +49,7 @@ export const DateFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setFecha("");
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,

@@ -45,6 +45,7 @@ export const StateFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setState("");
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,
