@@ -2,9 +2,8 @@ import { PulseLoader } from "react-spinners";
 import { type } from "../../constants/myfinances-constants";
 import { BorrarTransaccion } from "../pop-ups/ModalBorrarTransaccion";
 import { useState } from "react";
-// import { TransactionsPagination } from "../dashboard/transactions/transactions-pagination";
 
-export const TransactionsTable = ({ cargando, transacciones }) => {
+export const TransactionsTable = ({ cargando, transacciones, setTransacciones, auth }) => {
     const orderedTransactions = transacciones?.slice(0, 10);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
@@ -118,18 +117,6 @@ export const TransactionsTable = ({ cargando, transacciones }) => {
                         </tbody>
                     </table>
             }
-            {/* {
-                !cargando && metadata.totalCount > 10 ?
-                    <div className="w-full">
-                        <TransactionsPagination
-                            auth={auth}
-                            setTransacciones={setTransacciones}
-                            navigationNumbers={navigationNumbers}
-                            hasNextPage={hasNextPage}
-                            setHasNextPage={setHasNextPage}
-                        />
-                    </div> : <div></div>
-            } */}
         </div>
     );
 };
