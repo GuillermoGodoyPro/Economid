@@ -45,7 +45,11 @@ export const StateFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
-            setState(null);
+            setPayloadProps({
+                ...payloadProps,
+                userId: user.id,
+                estaActiva: null
+            });
             setAlerta({
                 msg: error.response.data,
                 error: true

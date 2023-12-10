@@ -45,6 +45,11 @@ export const AmountFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setPayloadProps({
+                ...payloadProps,
+                userId: user.id,
+                montoHasta: null
+            });
             setAlerta({
                 msg: error.response.data,
                 error: true

@@ -45,7 +45,11 @@ export const TypeFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
-            setTipo(null);
+            setPayloadProps({
+                ...payloadProps,
+                userId: user.id,
+                tipo: null
+            });
             setAlerta({
                 msg: error.response.data,
                 error: true

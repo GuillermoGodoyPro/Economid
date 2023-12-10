@@ -49,7 +49,11 @@ export const DateFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
-            setFecha(null);
+            setPayloadProps({
+                ...payloadProps,
+                userId: user.id,
+                fecha: null
+            });
             setAlerta({
                 msg: error.response.data,
                 error: true
