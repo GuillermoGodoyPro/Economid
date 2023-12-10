@@ -49,6 +49,7 @@ export const DateFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setFecha(null);
             setAlerta({
                 msg: error.response.data,
                 error: true
