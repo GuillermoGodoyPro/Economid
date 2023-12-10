@@ -12,6 +12,11 @@ export const errors = {
         BAD_REQUEST: "Request failed with status code 400",
         BAD_REQUEST_CODE: 400,
         REQUIRED_FIELDS: "Todos los campos son obligatorios"
+    },
+    notFounds: {
+        NOT_FOUND: "Request failed with status code 404",
+        NOT_FOUND_CODE: 404,
+        WITH_NO_INCOMES_EXPENSES: "No existen ingresos/egresos. Comience a crear transacciones..."
     }
 };
 export const texts = {

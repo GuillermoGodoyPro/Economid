@@ -60,7 +60,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
                                 return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                             }));
                             if (setCompletedGoals) {
-                                setCompletedGoals(completedGoals => [...completedGoals, data]);
+                                setCompletedGoals(completedGoals => [data, ...completedGoals]);
                             }
                         }, 500);
                     }

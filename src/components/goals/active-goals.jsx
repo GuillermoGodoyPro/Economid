@@ -25,7 +25,7 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                     <div className="flex justify-center">
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div> :
-                    goals.length || (goals.length && !error) ?
+                    activeGoals.length || (activeGoals.length && !error) ?
                         <div className="flex flex-wrap justify-around">
                             {activeGoals.map((goal, index) => {
                                 return (
@@ -38,10 +38,10 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                                                 {
                                                     !goal.montoActual ?
                                                         "$0" :
-                                                        `$${parseFloat(goal.montoActual)}`
+                                                        `$${parseFloat(goal.montoActual.toFixed(2))}`
                                                 }
                                                 <span className="font-semibold text-xs text-gray-500">
-                                                    {` / $${parseFloat(goal.montoFinal)}`}
+                                                    {` / $${parseFloat(goal.montoFinal.toFixed(2))}`}
                                                 </span>
                                             </span>
                                         </div>

@@ -11,9 +11,9 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
                     <div className="flex justify-around">
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div> :
-                    goals && !error ?
+                    completedGoals && !error ?
                         <div className="flex flex-wrap justify-around">
-                            {completedGoals.map((goal, index) => {
+                            {completedGoals.slice(0, 5).map((goal, index) => {
                                 return (
                                     <div
                                         className="w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-100"
@@ -21,9 +21,9 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
                                         <div className="flex justify-between items-center">
                                             <span className="font-semibold text-gray-500">{goal.titulo}</span>
                                             <span className="font-semibold text-xs text-violet-500 font-mono">
-                                                {`$${parseFloat(goal.montoActual)}`}
+                                                {`$${parseFloat(goal.montoActual.toFixed(2))}`}
                                                 <span className="font-semibold text-gray-500">
-                                                    {` / $${parseFloat(goal.montoFinal)}`}
+                                                    {` / $${parseFloat(goal.montoFinal.toFixed(2))}`}
                                                 </span>
                                             </span>
                                         </div>
@@ -57,6 +57,7 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
                         </div>
                         : <div></div>
             }
+
         </div>
     );
 };

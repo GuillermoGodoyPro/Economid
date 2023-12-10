@@ -4,6 +4,9 @@ import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
 import { newTransaction } from "../../services/myfinances-api/transacciones";
 import { errors } from "../../constants/myfinances-constants";
+import ReactDatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import es from "date-fns/locale/es";
 
 const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, idBalance, setTransacciones, setBalance, setBalanceId }) => {
 
@@ -122,11 +125,12 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
 
                     <div className='campo'>
                         <label htmlFor="Fecha">Fecha</label>
-                        <input
-                            id="fecha"
-                            type={"date"}
+                        <ReactDatePicker
+                            locale={es}
+                            className="bg-[#E5E7EB] rounded-md p-1"
                             value={fecha}
-                            onChange={e => setFecha(e.target.value)}
+                            placeholderText="Fecha"
+                            onChange={(date) => setFecha(date.toISOString().split("T")[0])}
                         />
                     </div>
 

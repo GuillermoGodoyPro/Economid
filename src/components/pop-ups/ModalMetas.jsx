@@ -56,7 +56,7 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                 });
                 setTimeout(() => {
                     setAlerta({});
-                    !activeGoals.length ? setActiveGoals([data]) : setActiveGoals([...activeGoals, data]);
+                    !activeGoals.length ? setActiveGoals([data]) : setActiveGoals([data, ...activeGoals]);
                     ocultarModal();
                 }, 1500);
             }

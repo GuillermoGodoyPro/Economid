@@ -18,6 +18,7 @@ const Metas = () => {
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [alerta, setAlerta] = useState({});
+    const [metadata, setMetadata] = useState({});
 
     const user = getUserToken();
     const handleGoals = () => {
@@ -37,10 +38,11 @@ const Metas = () => {
     useEffect(() => {
         const fetchGoals = async () => {
             try {
-                const { data, status } = await getAll(user.id, config);
+                const { data, status } = await getAll({userId: user.id}, 1, 6, config);
                 if (status === 200) {
-                    setActiveGoals(data);
-                    setCompletedGoals(data);
+                    setActiveGoals(data.data);
+                    setCompletedGoals(data.data);
+                    setMetadata(data.meta);
                     setLoading(false);
                     console.log(data);
                 }
@@ -85,8 +87,19 @@ const Metas = () => {
                     />
                 }
             </div>
-            <ActiveGoals goals={activeGoals} auth={auth} error={error} cargando={cargando} setActiveGoals={setActiveGoals} setCompletedGoals={setCompletedGoals} />
-            <CompletedGoals goals={completedGoals} error={error} cargando={cargando} />
+            <ActiveGoals
+                goals={activeGoals}
+                auth={auth}
+                error={error}
+                cargando={cargando}
+                setActiveGoals={setActiveGoals}
+                setCompletedGoals={setCompletedGoals}
+            />
+            <CompletedGoals
+                goals={completedGoals}
+                error={error}
+                cargando={cargando}
+            />
         </div>
     );
 };

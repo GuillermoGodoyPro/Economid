@@ -9,7 +9,12 @@ export async function agregarMonto(payload, config) {
     return data;
 }
 
-export async function getAll(userId, config) {
-    const data = await clienteAxios(`/MetaFinanciera/ObtenerPorUserId/${userId}`, config);
+export async function getAll(payload, page, pageSize, config) {
+    const data = await clienteAxios.post(`/MetaFinanciera/ObtenerPorUserId?page=${page}&pageSize=${pageSize}`, payload, config);
+    return data;
+}
+
+export async function getByState(payload, page, pageSize, config) {
+    const data = await clienteAxios.post(`/MetaFinanciera/ObtenerPorEstado?page=${page}&pageSize=${pageSize}`, payload, config);
     return data;
 }
