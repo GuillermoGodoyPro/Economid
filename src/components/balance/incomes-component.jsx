@@ -122,7 +122,7 @@ export const BalanceIncomes = ({ user, config }) => {
                             </div>
                     }
                     {
-                        !cargando && metadata.totalCount > 10 ?
+                        metadata.totalCount > 10 ?
                             <div className="w-full">
                                 <BalancePagination
                                     setTransactions={setIncomes}
@@ -131,6 +131,7 @@ export const BalanceIncomes = ({ user, config }) => {
                                     type={type.INGRESO}
                                     hasNextPage={hasNextPage}
                                     setHasNextPage={setHasNextPage}
+                                    setLoading={setLoading}
                                 />
                             </div> : <div></div>
                     }
