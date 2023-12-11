@@ -45,7 +45,6 @@ export const AmountFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
-            setMonto("");
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,
@@ -66,11 +65,11 @@ export const AmountFilter = ({
                 <label className="font-semibold text-violet-600">Monto Hasta</label>
                 <input
                     id="monto"
-                    type="text"
+                    type="number"
                     className="bg-[#E5E7EB] rounded-md p-1 font-mono"
                     placeholder="Ingresar monto"
                     value={monto.replace(",", ".")}
-                    onChange={e => handleAmountChange(e.target.value.trim())}
+                    onChange={e => handleAmountChange(e.target.value.replace(",", ".").trim())}
                 />
             </div>
         </div>

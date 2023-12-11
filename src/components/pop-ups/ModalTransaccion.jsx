@@ -148,10 +148,10 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, categorias, i
                         <label htmlFor="monto">Monto</label>
                         <input
                             id="monto"
-                            type="text"
+                            type="number"
                             placeholder="Ingresar monto"
                             value={monto.replace(",", ".")}
-                            onChange={e => setMonto(e.target.value)}
+                            onChange={e => setMonto(e.target.value.replace(",", ".").trim())}
                         />
                     </div>
 
