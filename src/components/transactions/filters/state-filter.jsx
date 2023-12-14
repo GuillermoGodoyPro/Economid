@@ -46,6 +46,7 @@ export const StateFilter = ({
             console.log(error);
             setLoading(false);
             setState("");
+            setTransacciones([]);
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,

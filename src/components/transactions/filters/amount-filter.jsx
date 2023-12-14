@@ -45,6 +45,7 @@ export const AmountFilter = ({
         } catch (error) {
             console.log(error);
             setLoading(false);
+            setTransacciones([]);
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,

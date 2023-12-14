@@ -50,6 +50,7 @@ export const DateFilter = ({
             console.log(error);
             setLoading(false);
             setFecha("");
+            setTransacciones([]);
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,

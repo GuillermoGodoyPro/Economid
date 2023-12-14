@@ -46,6 +46,7 @@ export const TypeFilter = ({
             console.log(error);
             setLoading(false);
             setTipo("");
+            setTransacciones([]);
             setPayloadProps({
                 ...payloadProps,
                 userId: user.id,
