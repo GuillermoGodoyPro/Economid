@@ -44,10 +44,10 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                                         {
                                             !almostCompletedGoal[0].montoActual ?
                                                 "$0" :
-                                                `$${parseFloat(almostCompletedGoal[0].montoActual)}`
+                                                `$${parseFloat(almostCompletedGoal[0].montoActual.toFixed(2))}`
                                         }
                                         <span className="font-semibold text-xs text-gray-500">
-                                            {` / $${parseFloat(almostCompletedGoal[0].montoFinal)}`}
+                                            {` / $${parseFloat(almostCompletedGoal[0].montoFinal.toFixed(2))}`}
                                         </span>
                                     </span>
                                 </div>

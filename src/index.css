@@ -191,7 +191,7 @@ select {
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
-    text-align: center;        
+    text-align: center;
     color: var(--white);
     font-size: 0.8rem;
     font-weight: 700;
@@ -206,7 +206,7 @@ select {
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
-    text-align: center;        
+    text-align: center;
     color: var(--white);
     font-size: 0.8rem;
     font-weight: 700;
@@ -214,13 +214,15 @@ select {
     font-family: Arial, Helvetica, sans-serif;
     transition: 300ms ease;
 }
+
 .deletePopUpButtons input[type="submit"].deleteButton:hover {
     background-color: var(--rojo-hover);
-    cursor: pointer;   
+    cursor: pointer;
 }
+
 .deletePopUpButtons input[type="submit"].backDeleteButton:hover {
     background-color: var(--violetdark);
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 @media (min-width: 768px) {
@@ -243,6 +245,7 @@ select {
     right: 0;
     bottom: 0;
     cursor: auto;
+    z-index: 1;
 }
 
 .modalDelete {
@@ -269,7 +272,7 @@ select {
     margin: 0 auto;
     margin-top: 2.5rem;
     background-color: var(--crema);
-    width: 30rem;    
+    width: 30rem;
     border-radius: 0.5rem;
     box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.175);
 }
@@ -301,7 +304,7 @@ select {
     opacity: 0;
 }
 
-.modalDelete .deletePopUp {    
+.modalDelete .deletePopUp {
     transition-property: all;
     transition-duration: 300ms;
     transition-timing-function: ease-in;
@@ -321,6 +324,7 @@ select {
 body .modal {
     overflow: hidden;
 }
+
 body .modalDelete {
     overflow: hidden;
 }
@@ -358,6 +362,7 @@ body .modalDelete {
 
 header {
     text-align: center;
+    z-index: 1 !important;
 }
 
 header p {
@@ -383,6 +388,7 @@ header p {
 .headerStyle {
     background: rgb(135, 119, 179);
     background: radial-gradient(circle, rgba(174, 156, 223, 1) 30%, rgba(187, 170, 233, 1) 60%, rgba(135, 119, 179, 1) 90%);
+    z-index: 1 !important;
 }
 
 .spinner {
@@ -391,4 +397,12 @@ header p {
 
 .deletePopUpButtons {
     padding: 0;
+}
+
+.t-table {
+    height: 560px;
+}
+
+.date-picker .react-datepicker-popper {
+    z-index: -1000 !important;
 }

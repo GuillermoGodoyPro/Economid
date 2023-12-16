@@ -1,12 +1,17 @@
 import clienteAxios from "../../config/clienteAxios";
 
-export async function getAll(userId, page, rows, config) {
-    const data = await clienteAxios(`/transaccion/ObtenerTodasUsuario/${userId}?page=${page}&rows=${rows}`, config);
+export async function getAll(payload, page, pageSize, config) {
+    const data = await clienteAxios.post(`/transaccion/ObtenerTodasUsuario?page=${page}&pageSize=${pageSize}`, payload, config);
     return data;
 }
 
-export async function filterByType(tipo, peid, config) {
-    const data = await clienteAxios(`/transaccion/FiltrarPorTipo/${tipo}/${peid}`, config);
+export async function filterTransactions(payload, page, pageSize, config) {
+    const data = await clienteAxios.post(`/transaccion/GetFilteredTransactions?page=${page}&pageSize=${pageSize}`, payload, config);
+    return data;
+}
+
+export async function filterByType(payload, page, pageSize, config) {
+    const data = await clienteAxios.post(`/transaccion/FiltrarPorTipo?page=${page}&pageSize=${pageSize}`, payload, config);
     return data;
 }
 

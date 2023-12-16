@@ -4,7 +4,7 @@ import { texts, type } from "../../../constants/myfinances-constants";
 export const IncomesSection = ({ cargando, transacciones }) => {
     const ingresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.INGRESO);
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 w-full mx-2">
+        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2">
             <div>
                 <h2 className='p-1 text-center font-semibold text-violet-600'>Ultimos Ingresos</h2>
                 <div>

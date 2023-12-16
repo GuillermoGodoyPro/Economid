@@ -9,17 +9,36 @@ import { getBalanceByUserId } from "../../services/myfinances-api/balance";
 import { TransactionsTable } from "../../components/transactions/transactions-table";
 import { texts } from "../../constants/myfinances-constants";
 import Alerta from "../../components/Alerta";
+import { DateFilter } from "../../components/transactions/filters/date-filter";
+import { TransactionsPagination } from "../../components/dashboard/transactions/transactions-pagination";
+import { TypeFilter } from "../../components/transactions/filters/type-filter";
+import { StateFilter } from "../../components/transactions/filters/state-filter";
+import { AmountFilter } from "../../components/transactions/filters/amount-filter";
 
 const Transacciones = () => {
     const { auth } = useAuth();
     const [transacciones, setTransacciones] = useState([]);
+    const [metadata, setMetadata] = useState({});
     const [bId, setBalanceId] = useState();
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [categorias, setCategorias] = useState([""]);
-    const [alertaTransacciones, setAlertaTransacciones] = useState({});
+    const [alerta, setAlerta] = useState({});
+    const [hasNextPage, setHasNextPage] = useState(true);
+    const [tipo, setTipo] = useState("");
+    const [fecha, setFecha] = useState("");
+    const [monto, setMonto] = useState("");
+    const [state, setState] = useState(null);
+    const [currentPage, setCurrentPage] = useState(1);
+    const [payloadProps, setPayloadProps] = useState({
+        userId: null,
+        tipo: null,
+        fecha: null,
+        montoHasta: null,
+        estaActiva: null
+    });
 
     const handleModalClosing = () => {
         setModal(true);
@@ -29,7 +48,6 @@ const Transacciones = () => {
     };
 
     const user = getUserToken();
-
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -37,21 +55,46 @@ const Transacciones = () => {
         }
     };
 
+    const handleFiltersReset = async () => {
+        setLoading(true);
+        try {
+            const { data: response } = await getAll({ userId: user.id }, 1, 10, config);
+            setLoading(false);
+            setTransacciones(response.data);
+            setMetadata(response.meta);
+            setCurrentPage(1);
+            setHasNextPage(response.meta.hasNextPage);
+            setTipo("");
+            setFecha("");
+            setMonto("");
+            setState("");
+            setPayloadProps({
+                tipo: null,
+                fecha: null,
+                montoHasta: null,
+                estaActiva: null
+            });
+        } catch (error) {
+            setError(error);
+        }
+    };
+
     useEffect(() => {
         const fetchTransacciones = async () => {
             try {
-                const { data: response } = await getAll(user.id, 1, 1000, config);
-                setTransacciones(response);
+                const { data: response } = await getAll({ userId: user.id }, 1, 10, config);
+                setTransacciones(response.data);
+                setMetadata(response.meta);
                 setLoading(false);
             } catch (error) {
                 setError(error);
                 setLoading(false);
-                setAlertaTransacciones({
+                setAlerta({
                     msg: texts.WITH_NO_TRANSACTIONS,
                     error: true
                 });
                 setTimeout(() => {
-                    setAlertaTransacciones({});
+                    setAlerta({});
                 }, 3000);
             }
         };
@@ -80,36 +123,85 @@ const Transacciones = () => {
         fetchBalanceId();
     }, []);
 
-    const { msg } = alertaTransacciones;
+    const { msg } = alerta;
 
     return (
         <div className="bg-inherit p-10">
-            {alertaTransacciones ?
-                <div className="flex justify-end">
+            {alerta ?
+                <div className="flex justify-center mb-20">
                     <div className="fixed">
-                        {msg && <Alerta alerta={alertaTransacciones} />}
+                        {msg && <Alerta alerta={alerta} />}
                     </div>
                 </div> : <div></div>}
-            <div className='flex bottom-1 pb-8' >
-                <button
-                    type="button"
-                    className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500'
-                    onClick={handleModalClosing}
-                >
-                    Nueva Transacción
-                </button>
+            <div className="flex justify-between items-center mb-5">
+                <div className='flex items-center'>
+                    <button
+                        type="button"
+                        className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500'
+                        onClick={handleModalClosing}
+                    >
+                        Nueva Transacción
+                    </button>
 
-                {modal &&
-                    <ModalTransaccion
-                        setModal={setModal}
-                        animarModal={animarModal}
-                        setAnimarModal={setAnimarModal}
-                        categorias={categorias}
-                        idBalance={bId}
+                    {modal &&
+                        <ModalTransaccion
+                            setModal={setModal}
+                            animarModal={animarModal}
+                            setAnimarModal={setAnimarModal}
+                            categorias={categorias}
+                            idBalance={bId}
+                            setTransacciones={setTransacciones}
+                            transacciones={transacciones}
+                        />
+                    }
+                </div>
+                <div className="flex justify-center items-center">
+                    <AmountFilter
+                        setLoading={setLoading}
+                        setAlerta={setAlerta}
+                        setCurrentPage={setCurrentPage}
                         setTransacciones={setTransacciones}
-                        transacciones={transacciones}
-                    />
-                }
+                        setMetadata={setMetadata}
+                        setPayloadProps={setPayloadProps}
+                        setMonto={setMonto}
+                        monto={monto}
+                        payloadProps={payloadProps} />
+                    <DateFilter
+                        setTransacciones={setTransacciones}
+                        setAlerta={setAlerta}
+                        setLoading={setLoading}
+                        setMetadata={setMetadata}
+                        setCurrentPage={setCurrentPage}
+                        setPayloadProps={setPayloadProps}
+                        fecha={fecha}
+                        setFecha={setFecha}
+                        payloadProps={payloadProps} />
+                    <TypeFilter
+                        setLoading={setLoading}
+                        setAlerta={setAlerta}
+                        setCurrentPage={setCurrentPage}
+                        setTransacciones={setTransacciones}
+                        setMetadata={setMetadata}
+                        setPayloadProps={setPayloadProps}
+                        setTipo={setTipo}
+                        tipo={tipo}
+                        payloadProps={payloadProps} />
+                    <StateFilter
+                        setLoading={setLoading}
+                        setAlerta={setAlerta}
+                        setCurrentPage={setCurrentPage}
+                        setTransacciones={setTransacciones}
+                        setMetadata={setMetadata}
+                        setPayloadProps={setPayloadProps}
+                        setState={setState}
+                        state={state}
+                        payloadProps={payloadProps} />
+                </div>
+                <button
+                    className="text-white text-sm bg-red-500 p-3 rounded-md uppercase font-semibold p-absolute shadow-md hover:shadow-red-600"
+                    onClick={() => handleFiltersReset()}>
+                    Borrar Filtros
+                </button>
             </div>
             <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
                 <TransactionsTable
@@ -117,7 +209,23 @@ const Transacciones = () => {
                     transacciones={transacciones}
                     setTransacciones={setTransacciones}
                     auth={auth}
-                    setAlertaTransacciones={setAlertaTransacciones}/>
+                    metadata={metadata}
+                />
+                {
+                    metadata.totalCount > 10 ?
+                        <div className="w-full">
+                            <TransactionsPagination
+                                setTransacciones={setTransacciones}
+                                metadata={metadata}
+                                hasNextPage={hasNextPage}
+                                setHasNextPage={setHasNextPage}
+                                setLoading={setLoading}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                                payloadProps={payloadProps}
+                            />
+                        </div> : <div></div>
+                }
             </div>
         </div>
     );

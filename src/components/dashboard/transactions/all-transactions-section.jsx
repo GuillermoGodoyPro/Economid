@@ -16,7 +16,6 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                     :
                     <div className="flex justify-center">
                         <table className="w-full">
-
                             <thead>
                                 <tr>
                                     <th className="text-left py-2 px-20 font-semibold text-violet-600">Detalle</th>

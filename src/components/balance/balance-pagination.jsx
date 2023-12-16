@@ -1,32 +1,16 @@
 import { useState } from "react";
-import { filterTransactions, getAll } from "../../../services/myfinances-api/transacciones";
-import { getUserToken } from "../../../services/token/tokenService";
-import useAuth from "../../../context/useAuth";
+import { getUserToken } from "../../services/token/tokenService";
+import { filterByType } from "../../services/myfinances-api/transacciones";
 
-export const TransactionsPagination = ({
-    setTransacciones,
-    hasNextPage,
-    setHasNextPage,
-    setLoading,
-    currentPage,
-    setCurrentPage,
-    metadata,
-    payloadProps
-}) => {
-    const { auth } = useAuth();
+export const BalancePagination = ({ setTransactions, auth, navigationNumbers, type, hasNextPage, setHasNextPage, setLoading }) => {
     const [error, setError] = useState(null);
-    const generatePageNumbers = (pageNumber) => {
-        let navigationNumbers = [];
-        for (let i = 1; i <= pageNumber; i++) navigationNumbers.push(i);
-        return navigationNumbers;
-    };
-    const pageNumber = Math.ceil(metadata.totalCount / metadata.pageSize);
-    const navigationNumbers = generatePageNumbers(pageNumber);
+    const [currentPage, setCurrentPage] = useState(1);
 
     const changePage = (page) => {
         setCurrentPage(page);
         handleChangePage(page);
     };
+
     const nextPage = (page) => {
         if (hasNextPage) {
             setCurrentPage(page + 1);
@@ -42,27 +26,22 @@ export const TransactionsPagination = ({
     const handleChangePage = async (page) => {
         setLoading(true);
         const user = getUserToken();
+
         const config = {
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${auth}`
             }
         };
-        const fetchTransacciones = async () => {
+        const fetchTransactions = async () => {
             const payload = {
                 userId: user.id,
-                tipo: payloadProps.tipo,
-                fecha: payloadProps.fecha,
-                montoHasta: payloadProps.montoHasta,
-                estaActiva: payloadProps.estaActiva
+                tipo: type
             };
             try {
-                const { data: response } =
-                payloadProps.tipo || payloadProps.fecha || payloadProps.montoHasta || payloadProps.estaActiva
-                    ? await filterTransactions(payload, page, 10, config)
-                    : await getAll({userId: user.id}, page, 10, config);
+                const { data: response } = await filterByType(payload, page, 10, config);
                 setLoading(false);
-                setTransacciones(response.data);
+                setTransactions(response.data);
                 if (!response.meta.hasNextPage) {
                     setHasNextPage(false);
                 }
@@ -71,9 +50,10 @@ export const TransactionsPagination = ({
                 }
             } catch (error) {
                 setError(error);
+                setLoading(false);
             }
         };
-        fetchTransacciones();
+        fetchTransactions();
     };
     return (
         <div className="flex items-center justify-between border-t border-gray-200 bg-inherit px-4 py-3 sm:px-6">

@@ -150,7 +150,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                         <div className="text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400">
                                             <div className="flex flex-col items-center font-semibold mb-4 text-violet-600">
                                                 <h3 className="w-24 text-white shadow-md font-semibold text-center rounded-3xl bg-green-400 font-mono">
-                                                    <span className="mr-1">USD</span>
+                                                    <span className="mr-1">ARS</span>
                                                     {dolarValue}
                                                 </h3>
                                             </div>

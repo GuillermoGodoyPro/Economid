@@ -2,19 +2,12 @@ import { PulseLoader } from "react-spinners";
 import { type } from "../../constants/myfinances-constants";
 import { BorrarTransaccion } from "../pop-ups/ModalBorrarTransaccion";
 import { useState } from "react";
-import { TransactionsPagination } from "../dashboard/transactions/transactions-pagination";
 
 export const TransactionsTable = ({ cargando, transacciones, setTransacciones, auth }) => {
+    const orderedTransactions = transacciones?.slice(0, 10);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [transaccionId, setTransaccionId] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 10;
-    const lastIndex = currentPage * pageSize;
-    const firstIndex = lastIndex - pageSize;
-    const paginatedTransactions = transacciones.slice(firstIndex, lastIndex);
-    const pageNumber = Math.ceil(transacciones.length / pageSize);
-    const numbers = [...Array(pageNumber + 1).keys()].slice(1);
 
     const handleDeletingModal = (tId) => {
         setModal(true);
@@ -24,7 +17,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
         }, 400);
     };
     return (
-        <div>
+        <div className="t-table">
             {
                 cargando ?
                     <div className="flex justify-center">
@@ -43,7 +36,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                             </tr>
                         </thead>
                         <tbody>
-                            {paginatedTransactions?.map((transaccion, index) => {
+                            {orderedTransactions?.map((transaccion, index) => {
                                 return (
                                     <tr className="border-b border-gray-200" key={index}>
 
@@ -123,17 +116,6 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                             })}
                         </tbody>
                     </table>
-            }
-            {
-                !cargando ?
-                    <div className="w-full">
-                        <TransactionsPagination
-                            currentPage={currentPage}
-                            nPage={pageNumber}                            
-                            numbers={numbers}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </div> : <div></div>
             }
         </div>
     );

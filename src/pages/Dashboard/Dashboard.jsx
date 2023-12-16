@@ -32,9 +32,9 @@ const Dashboard = () => {
     useEffect(() => {
         const fetchTransacciones = async () => {
             try {
-                const { data: response, status } = await getAll(user.id, 1, 10, config);
+                const { data: response, status } = await getAll({ userId: user.id }, 1, 10, config);
                 if (status === 200) {
-                    const activeTransactions = response.filter((t) => t.estaActiva);
+                    const activeTransactions = response.data.filter((t) => t.estaActiva);
                     setTransacciones(activeTransactions);
                     setLoading(false);
                 }
@@ -52,9 +52,9 @@ const Dashboard = () => {
         };
         const fetchGoals = async () => {
             try {
-                const { data, status } = await getAllGoals(user.id, config);
+                const { data, status } = await getAllGoals({userId: user.id}, 1, 5, config);
                 if (status === 200) {
-                    setActiveGoals(data);
+                    setActiveGoals(data.data);
                     setLoading(false);
                 }
             } catch (error) {
@@ -75,7 +75,7 @@ const Dashboard = () => {
 
     const { msg } = alertaTransacciones;
     return (
-        <div>
+        <div className="flex flex-col items-around p-10">
             {
                 alertaTransacciones ?
                     <div className="flex justify-end">
@@ -102,7 +102,7 @@ const Dashboard = () => {
             <div className="bg-inherit p-10">
                 <AllTransactionsSection transacciones={transacciones} cargando={cargando} />
             </div>
-            <div className=" bg-inherit rounded p-4 m-1 mx-8 mb-0 flex justify-between">
+            <div className=" bg-inherit rounded flex justify-center">
                 <IncomesSection cargando={cargando} transacciones={transacciones} />
                 <ExpensesSection cargando={cargando} transacciones={transacciones} />
             </div>
