@@ -13,7 +13,6 @@ const Balance = () => {
     const [error, setError] = useState(null);
     const [balance, setBalance] = useState(null);
     
-    
     const user = getUserToken();
     const config = {
         headers: {
@@ -40,6 +39,9 @@ const Balance = () => {
         
 
     }, []);
+
+    console.log(user)
+
     return (
         <div className="flex flex-col items-center">
             <div className="bg-inherit rounded p-2 m-1 mb-0 flex justify-around">
@@ -53,7 +55,7 @@ const Balance = () => {
             </div>
             {/* O acá */}
 
-            <GananciaChart transacciones={transacciones} />
+            {/* <GananciaChart transacciones={balance.transacciones} /> */}
             
 
             {/*  */}
