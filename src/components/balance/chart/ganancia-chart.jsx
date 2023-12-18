@@ -17,15 +17,17 @@ import { texts, type } from "../../../constants/myfinances-constants";
 
 export const GananciaChart = ({transacciones}) => {
 
-
+    console.log(transacciones)
     /* Se obtienen los montos (ingresos y egresos) por mes */
 
     const sumarMontos = (transacciones) => {
         // Inicializar un objeto para almacenar los montos por mes
         const montosPorMes = {};
         
+
         // Iterar sobre las transacciones
         transacciones?.forEach((transaccion) => {
+            
             const fecha = new Date(transaccion.fecha);
             const mesAnio = fecha.toLocaleString('es-ES', { month: 'long', year: 'numeric' });
             const monto = transaccion.monto;
@@ -55,7 +57,7 @@ export const GananciaChart = ({transacciones}) => {
     const datosOrdenados = montosTotales.sort((a, b) => {
         const fechaA = new Date(a.mes);
         const fechaB = new Date(b.mes);
-        return fechaB - fechaA;
+        return fechaA - fechaB;
     });
     
     // Obtener las fechas acumuladas de los últimos 5 elementos (los más recientes)
@@ -66,6 +68,11 @@ export const GananciaChart = ({transacciones}) => {
     const ingresosTotales = montosTotales.map(({ ingresos }) => ingresos);
     const egresosTotales = montosTotales.map(({ egresos }) => egresos);
 
+    /* const ingresos = transacciones.map(({ ingresos }) => ingresos);
+    const egresos = transacciones.map(({ egresos }) => egresos);
+
+    const totalAhorrado = ingresos - egresos
+    console.log(totalAhorrado) */
     
     const colores = [
         "rgb(84, 255, 50)",
