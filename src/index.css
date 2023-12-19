@@ -6,19 +6,18 @@
 /* Aquí definimos las Custom properties */
 :root {
 
-
-
     --violetlight: #4f339ccb;
     --violetdark: #372174cb;
     --violethover: #ae9cdfcb;
     --crema: #f5f5f3;
-    --white: white;
+    --blanco: #ffffff;
     --rojo: #e50909b2;
     --rojo-hover: #c40707b2;
     --negro: #141414;
     --gris: #303030;
     --gris-f: #757575;
     --gris-mod: #f5f5f5;
+    --blue-mod: #15084e;
     --gris-popup: rgb(229 231 235);
     /* Tipografía */
     --tipo-principal: Monospace, Arial, sans-serif;
@@ -96,6 +95,7 @@ em {
     width: 100%;
     margin: 0 auto;
     padding: 10rem 0;
+    
 }
 
 .deletePopUp {
