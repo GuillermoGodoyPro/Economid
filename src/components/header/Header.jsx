@@ -129,7 +129,6 @@ const Header = () => {
                     </div>
 
                     <div className="flex">
-
                         <Link
                             to="usuario"
                             className='p-[0.9rem] mb-1 mr-2 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
@@ -141,27 +140,17 @@ const Header = () => {
                             </div>
                         </Link>
                         <Tooltip anchorSelect="#clickable" clickable >
-                            <p className="text-violet-400 uppercase">Apariencia</p>
+                           
                             <button
                                 type="button"
-                                className='p-[0.56rem] mb-1 text-violet-400 rounded-xl '
-                                onClick={darkMode}
-                            >
-                                { dark ? 
-                                    <i className="fa-regular fa-sun"></i>
-                                :
-                                    <i className="fa-solid fa-moon"></i>
-                                } {/* fa-beat */}
-                                
-                                
+                                className=' uppercase '                                
+                                onClick={handleClick}
+                            >           
+                                cerrar sesión
                             </button>
+                        </Tooltip>                       
 
-                            
-                        </Tooltip>
-
-                       
-
-                        <button
+                       {/*  <button
                             type="button"
                             className='p-[0.56rem] mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
                             data-tooltip-id="my-tooltip"
@@ -176,6 +165,19 @@ const Header = () => {
                                         <i className="fa-solid fa-power-off"></i>
                                     </div>
                             }
+                        </button> */}
+                        <button
+                                className='p-[0.56rem] px-3 mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
+                                data-tooltip-id="my-tooltip"
+                                data-tooltip-content="APARIENCIA"
+                                onClick={darkMode}
+                            >
+                                { dark ? 
+                                    <i className="fa-regular fa-sun"></i>
+                                :
+                                    <i className="fa-solid fa-moon"></i>
+                                } {/* fa-beat */}                              
+                                
                         </button>
                         <Tooltip id="my-tooltip" />
                     </div>
