@@ -207,9 +207,9 @@ const Transacciones = () => {
                 <TransactionsTable
                     cargando={cargando}
                     transacciones={transacciones}
-                    setTransacciones={setTransacciones}
-                    auth={auth}
+                    setTransacciones={setTransacciones}                    
                     metadata={metadata}
+                    idBalance={bId}
                 />
                 {
                     metadata.totalCount > 10 ?
