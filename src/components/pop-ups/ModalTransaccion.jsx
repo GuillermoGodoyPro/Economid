@@ -19,7 +19,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
     const [detalle, setDetalle] = useState("");
     const [monto, setMonto] = useState("");
     const [tipoTransaccion, setTipoTransaccion] = useState("Ingreso");
-    const [categoriaId, setCategoria] = useState(categorias[0].id);
+    const [categoriaId, setCategorias] = useState(categorias[0].id);
     const user = getUserToken();
     const config = {
         headers: {

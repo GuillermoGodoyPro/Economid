@@ -1,15 +1,48 @@
-import React from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { getUserToken } from "../../services/token/tokenService";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
 const Header = () => {
     const user = getUserToken();
     const navigate = useNavigate();
     const [cargando, setCargando] = useState(false);
+    
+    /* Inicio código para darkmode */
+    const darkInit = localStorage.getItem("colorScheme") === "true";
+    const key = "colorScheme"
+
+    const [dark, setDark] = useState(darkInit)
+
+    useEffect(() => {
+        // Actualizar los estilos cuando dark cambie
+        if(dark){
+            document.documentElement.style.setProperty('--crema', '#f5f5f3');
+            document.documentElement.style.setProperty('--blanco', '#ffffff');
+            document.documentElement.style.setProperty('--gris', '#303030');
+            document.documentElement.style.setProperty('--violetlight', '#4f339ccb');
+        } else {
+            document.documentElement.style.setProperty('--crema', '#09051b');
+            document.documentElement.style.setProperty('--blanco', '#cac2e9');
+            document.documentElement.style.setProperty('--gris', '#13159e');
+            document.documentElement.style.setProperty('--violetlight', '#865ef7c9');
+        }
+
+        // Almacenar en el localStorage
+        localStorage.setItem(key, dark.toString());    
+    }, [dark]) 
+
+    const darkMode = () => {
+        // Utilizar la versión de función del setState para garantizar el valor más reciente
+        setDark(valAntDark => !valAntDark);
+    }
+    
+
+
+    /* Fin del código para darkmode */
+
 
     const handleClick = () => {
         setCargando(true);
@@ -19,6 +52,7 @@ const Header = () => {
         }, 1000);
     };
 
+    
     return (
         <>
             <header className='headerStyle bg-violet-200 md:justify-between'>
@@ -99,15 +133,33 @@ const Header = () => {
                         <Link
                             to="usuario"
                             className='p-[0.9rem] mb-1 mr-2 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
+                            id="clickable"                                                               
                             data-tooltip-id="my-tooltip"
-                            data-tooltip-content="Mi Perfil"
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
                                 <i className={`fa-solid fa-${user.nombre ? user.nombre.charAt(0).toLowerCase() : "x"}`}></i>
                             </div>
                         </Link>
+                        <Tooltip anchorSelect="#clickable" clickable >
+                            <p className="text-violet-400 uppercase">Apariencia</p>
+                            <button
+                                type="button"
+                                className='p-[0.56rem] mb-1 text-violet-400 rounded-xl '
+                                onClick={darkMode}
+                            >
+                                { dark ? 
+                                    <i className="fa-regular fa-sun"></i>
+                                :
+                                    <i className="fa-solid fa-moon"></i>
+                                } {/* fa-beat */}
+                                
+                                
+                            </button>
 
+                            
+                        </Tooltip>
 
+                       
 
                         <button
                             type="button"

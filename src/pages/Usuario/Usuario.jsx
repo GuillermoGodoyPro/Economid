@@ -43,7 +43,7 @@ const Usuario = () => {
 
     const darkMode = () => {
         // Utilizar la versión de función del setState para garantizar el valor más reciente
-        setDark(prevDark => !prevDark);
+        setDark(valAntDark => !valAntDark);
     }
     
     
@@ -55,25 +55,27 @@ const Usuario = () => {
             <div className={styles.container2} >
 
                 <div >
-                    <div className="flex justify-center">
-                        <button
-                            type="button"
-                            className='p-[0.56rem] mb-1 text-violet-900 rounded-xl '
-                            onClick={darkMode}
-                        >
-                            { dark ? 
-                                <i className="fa-regular fa-sun"></i>
-                            :
-                                <i className="fa-solid fa-moon"></i>
-                            } {/* fa-beat */}
-                            
-                            
-                        </button>
-                    </div>                        
+                                  
                     <h1 className={styles.title}>NOMBRE</h1>
                     <p>{user.nombre}</p>
                     <h1 className={styles.title}>APELLIDO</h1>
                     <p>{user.apellido}</p>
+                    <h1 className={styles.title}>APARIENCIA</h1>
+                        <div className="flex justify-center">
+                            <button
+                                type="button"
+                                className='p-[0.56rem] mb-1 text-violet-900 rounded-xl '
+                                onClick={darkMode}
+                            >
+                                { dark ? 
+                                    <i className="fa-regular fa-sun"></i>
+                                :
+                                    <i className="fa-solid fa-moon"></i>
+                                } {/* fa-beat */}
+                                
+                                
+                            </button>
+                        </div>          
                     <h1 className={styles.title}>CORREO ELECTRÓNICO</h1>
                     <p>{user.email}</p>
                     <h1 className={styles.title}>TELÉFONO</h1>
