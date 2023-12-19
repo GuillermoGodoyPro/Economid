@@ -24,3 +24,8 @@ export async function deleteTransaction(id, config) {
     const data = await clienteAxios.delete(`/transaccion/BorrarTransaccion/${id}`, config);
     return data;
 }
+
+export async function modifyTransaction(id, payload, config) {
+    const data = await clienteAxios.put(`/transaccion/ModificarTransaccion/${id}`, payload, config);
+    return data;
+}

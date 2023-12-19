@@ -1,21 +1,54 @@
 import { PulseLoader } from "react-spinners";
 import { type } from "../../constants/myfinances-constants";
 import { BorrarTransaccion } from "../pop-ups/ModalBorrarTransaccion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { ModificarTransaccion } from "../pop-ups/ModalModificarTransaccion";
+import useAuth from "../../context/useAuth";
+import { getCategories } from "../../services/myfinances-api/categorias";
 
-export const TransactionsTable = ({ cargando, transacciones, setTransacciones, auth }) => {
+export const TransactionsTable = ({ cargando, transacciones, setTransacciones, idBalance }) => {
+    const { auth } = useAuth();
     const orderedTransactions = transacciones?.slice(0, 10);
-    const [modal, setModal] = useState(false);
+    const [error, setError] = useState(null);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [modifyModal, setModifyModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [transaccionId, setTransaccionId] = useState(0);
+    const [toModifyTransact, setTransaccion] = useState({});
+    const [categorias, setCategorias] = useState([""]);
 
+    const handleModifyModal = (tId, t) => {
+        setModifyModal(true);
+        setTransaccionId(tId);
+        setTransaccion(t);
+        setTimeout(() => {
+            setAnimarModal(true);
+        }, 400);
+    };
     const handleDeletingModal = (tId) => {
-        setModal(true);
+        setDeleteModal(true);
         setTransaccionId(tId);
         setTimeout(() => {
             setAnimarModal(true);
         }, 400);
     };
+    useEffect(() => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth}`
+            }
+        };
+        const fetchCategorias = async () => {
+            try {
+                const { data: response } = await getCategories(config);
+                setCategorias(response);
+            } catch (error) {
+                setError(error);
+            }
+        };
+        fetchCategorias();
+    }, [])
     return (
         <div className="t-table">
             {
@@ -42,19 +75,41 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
 
                                         <td className="py-2 px-4 text-gray-800">{transaccion.detalle}</td>
                                         {
-                                            transaccion.tipoTransaccion === type.EGRESO ?
-                                                <td className="py-2 px-4 text-red-500 font-semibold font-mono">
-                                                    -${parseFloat(transaccion.monto).toFixed(2)}
-                                                </td> :
-                                                <td className="py-2 px-4 text-green-500 font-semibold font-mono">
-                                                    <div className="w-28 flex justify-center rounded-md bg-green-200">
-                                                        +${parseFloat(transaccion.monto).toFixed(2)}
-                                                    </div>
-                                                </td>
+                                            transaccion.tipoTransaccion === type.EGRESO
+                                                ?
+                                                !transaccion.estaActiva
+                                                    ?
+                                                    <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
+                                                        -${parseFloat(transaccion.monto).toFixed(2)}
+                                                    </td>
+                                                    :
+                                                    <td className="py-2 px-4 text-red-500 font-semibold font-mono">
+                                                        -${parseFloat(transaccion.monto).toFixed(2)}
+                                                    </td>
+                                                :
+                                                !transaccion.estaActiva
+                                                    ?
+                                                    <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
+                                                        <div className="w-28 flex justify-center rounded-md bg-gray-200">
+                                                            +${parseFloat(transaccion.monto).toFixed(2)}
+                                                        </div>
+                                                    </td>
+                                                    :
+                                                    <td className="py-2 px-4 text-green-500 font-semibold font-mono">
+                                                        <div className="w-28 flex justify-center rounded-md bg-green-200">
+                                                            +${parseFloat(transaccion.monto).toFixed(2)}
+                                                        </div>
+                                                    </td>
                                         }
                                         {
-                                            transaccion.fecha ?
-                                                <td className="py-2 px-4 text-gray-600 font-semibold">{new Date(transaccion.fecha).toLocaleDateString()}</td> :
+                                            transaccion.fecha
+                                                ?
+                                                !transaccion.estaActiva
+                                                    ?
+                                                    <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                    :
+                                                    <td className="py-2 px-4 text-gray-600 font-semibold">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                :
                                                 <td></td>
                                         }
                                         {
@@ -87,10 +142,27 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                                                 </td>
                                         }
                                         <td>
-                                            <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
-                                                data-tooltip-id="my-tooltip"
-                                                data-tooltip-content="Modificar"></i>
-
+                                            <button disabled={!transaccion.estaActiva}>
+                                                <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
+                                                    data-tooltip-id="my-tooltip"
+                                                    data-tooltip-content="Modificar"
+                                                    onClick={e => handleModifyModal(transaccion.id, transaccion)}
+                                                    style={!transaccion.estaActiva ? { cursor: "not-allowed" } : { cursor: "pointer" }}>
+                                                </i>
+                                            </button>
+                                            {
+                                                modifyModal && <ModificarTransaccion
+                                                    setAnimarModal={setAnimarModal}
+                                                    setModal={setModifyModal}
+                                                    animarModal={animarModal}
+                                                    transaccionId={transaccionId}
+                                                    transaccion={toModifyTransact}
+                                                    setTransaccion={setTransaccion}
+                                                    setTransacciones={setTransacciones}
+                                                    idBalance={idBalance}
+                                                    categorias={categorias}
+                                                />
+                                            }
                                             <button disabled={!transaccion.estaActiva}>
                                                 <i className="fa-solid fa-ban pl-2 text-red-600"
                                                     data-tooltip-id="my-tooltip"
@@ -100,9 +172,9 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                                                 </i>
                                             </button>
                                             {
-                                                modal && <BorrarTransaccion
+                                                deleteModal && <BorrarTransaccion
                                                     setAnimarModal={setAnimarModal}
-                                                    setModal={setModal}
+                                                    setModal={setDeleteModal}
                                                     animarModal={animarModal}
                                                     auth={auth}
                                                     transaccionId={transaccionId}
