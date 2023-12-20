@@ -1,14 +1,14 @@
 import { PulseLoader } from "react-spinners";
 import { texts, type } from "../../../constants/myfinances-constants";
 import useDark from "../../../context/useDark";
- 
+
 export const IncomesSection = ({ cargando, transacciones }) => {
     const ingresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.INGRESO);
     const { dark } = useDark();
 
     return (
-        <div className={(dark ? 
-            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2" 
+        <div className={(dark ?
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2"
             : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2"
         )}>
             <div>
@@ -32,10 +32,10 @@ export const IncomesSection = ({ cargando, transacciones }) => {
                                         {ingresos?.slice(0, 5).map((transaccion, index) => {
                                             return (
                                                 <tr className="border-b border-gray-200" key={index}>
-                                                    <td className={(dark ? 
-                                                        "text-gray-600 py-2 px-20 font-bold" 
+                                                    <td className={(dark ?
+                                                        "text-gray-600 py-2 px-20 font-bold"
                                                         :
-                                                        "text-gray-500 py-2 px-20 font-bold" 
+                                                        "text-gray-500 py-2 px-20 font-bold"
                                                     )}
                                                     >{transaccion.detalle}</td>
                                                     <td className="py-2 px-20 text-green-500 font-semibold font-mono">

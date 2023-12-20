@@ -69,9 +69,9 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
         fetchDollars();
     }, []);
     return (
-        <div className={(dark ? 
-        "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around" 
-        : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+        <div className={(dark ?
+            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+            : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
         )}>
             {
                 cargando ?
@@ -153,7 +153,10 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                 <br />
                                 {
                                     dolarValue && dolarDate ?
-                                        <div className="text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400">
+                                        <div className={(dark ?
+                                            "text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400"
+                                            : "text-center rounded-2xl p-3 m-3 bg-violet-200 shadow-md hover:shadow-green-400"
+                                        )}>
                                             <div className="flex flex-col items-center font-semibold mb-4 text-violet-600">
                                                 <h3 className="w-24 text-white shadow-md font-semibold text-center rounded-3xl bg-green-400 font-mono">
                                                     <span className="mr-1">ARS</span>

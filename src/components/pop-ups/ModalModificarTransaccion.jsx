@@ -81,7 +81,7 @@ export const ModificarTransaccion = ({
                 setTimeout(() => {
                     setAlerta({});
                     setTransaccion(data);
-                    setTransacciones(transacciones => transacciones.map((transaccion) => 
+                    setTransacciones(transacciones => transacciones.map((transaccion) =>
                         transaccion.id === transaccionId ? data : transaccion
                     ));
                     ocultarModal();
@@ -202,4 +202,4 @@ export const ModificarTransaccion = ({
             </div>
         </div>
     );
-}
+};

@@ -6,14 +6,14 @@ import useDark from "../../../context/useDark";
 export const ChartSection = ({ cargando, transacciones }) => {
     const egresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.EGRESO);
     const filteredExpenses = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.EGRESO);
-    
+
     const { dark } = useDark();
 
     return (
-        <div className={(dark ? 
-            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around" 
+        <div className={(dark ?
+            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
             : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
-            )}
+        )}
         >
             {cargando ?
                 <div className="flex justify-center">

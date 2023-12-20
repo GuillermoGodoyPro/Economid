@@ -50,7 +50,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
             }
         };
         fetchCategorias();
-    }, [])
+    }, []);
     return (
         <div className="t-table">
             {
@@ -75,18 +75,18 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                 return (
                                     <tr className="border-b border-gray-200" key={index}>
 
-                                        <td className={(dark ? 
-                                                "py-2 px-4 text-gray-800 font-semibold" 
-                                                :
-                                                "py-2 px-4 text-gray-200 font-semibold"
-                                            )}
+                                        <td className={(dark ?
+                                            "py-2 px-4 text-gray-800 font-semibold"
+                                            :
+                                            "py-2 px-4 text-gray-200 font-semibold"
+                                        )}
                                         >{transaccion.detalle}</td>
                                         {
                                             transaccion.tipoTransaccion === type.EGRESO
                                                 ?
                                                 !transaccion.estaActiva
                                                     ?
-                                                    <td className={(dark ? 
+                                                    <td className={(dark ?
                                                         "py-2 px-4 text-gray-400 font-semibold font-mono"
                                                         :
                                                         "py-2 px-4 text-gray-100 font-semibold font-mono"
@@ -117,13 +117,13 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                 ?
                                                 !transaccion.estaActiva
                                                     ?
-                                                    <td className={(dark ? 
+                                                    <td className={(dark ?
                                                         "py-2 px-4 text-gray-300  font-mono"
                                                         :
                                                         "py-2 px-4 text-gray-600 font-semibold font-mono"
                                                     )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                                     :
-                                                    <td className={(dark ? 
+                                                    <td className={(dark ?
                                                         "py-2 px-4 text-gray-400 font-semibold font-mono"
                                                         :
                                                         "py-2 px-4 text-gray-200 font-semibold font-mono"

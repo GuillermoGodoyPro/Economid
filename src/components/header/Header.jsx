@@ -2,7 +2,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { getUserToken } from "../../services/token/tokenService";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PulseLoader } from "react-spinners";
 import useDark from "../../context/useDark";
 
@@ -13,16 +13,15 @@ const Header = () => {
     const navigate = useNavigate();
     const [cargando, setCargando] = useState(false);
 
-    const darkInit = localStorage.getItem("colorScheme") 
     const { dark , changeDarkMode } = useDark();
-    
+
     /* Inicio código para darkmode */
-    
+
     const darkMode = () => {
         // Llamamos a la función desde aca
-        changeDarkMode()       
-    }
- 
+        changeDarkMode();
+    };
+
 
     const handleClick = () => {
         setCargando(true);
@@ -32,7 +31,7 @@ const Header = () => {
         }, 1000);
     };
 
-    
+
     return (
         <>
             <header className='headerStyle bg-violet-200 md:justify-between'>
@@ -44,17 +43,17 @@ const Header = () => {
                     >
                         <i className="fa-solid fa-dragon"></i>
                     </Link>
-                    
+
                     <div className="flex headerButtons">
                         <NavLink
                             to="index"
                             className={({ isActive, isPending}) =>
-                                                                
+
                                 isPending ? "text-violet-600 hover:text-violet-800 font-bold"
-                                :
-                                isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
-                                :
-                                "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                                    :
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                        :
+                                        "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -66,11 +65,11 @@ const Header = () => {
                         <NavLink
                             to="transacciones"
                             className={({ isActive, isPending }) =>
-                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
-                            :
-                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
-                            :
-                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                                isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                                    :
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                        :
+                                        "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -82,11 +81,11 @@ const Header = () => {
                         <NavLink
                             to="metas"
                             className={({ isActive, isPending }) =>
-                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
-                            :
-                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
-                            :
-                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                                isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                                    :
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                        :
+                                        "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -99,11 +98,11 @@ const Header = () => {
                         <NavLink
                             to="balance"
                             className={({ isActive, isPending }) =>
-                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
-                            :
-                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
-                            :
-                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                                isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                                    :
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                        :
+                                        "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -115,11 +114,11 @@ const Header = () => {
                         <NavLink
                             to="ayuda"
                             className={({ isActive, isPending }) =>
-                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
-                            :
-                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
-                            :
-                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"                            }
+                                isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                                    :
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                        :
+                                        "p-4 text-md text-violet-600 hover:text-violet-800 font-bold" }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
                                 <i className="fa-solid fa-circle-question"></i>
@@ -133,24 +132,24 @@ const Header = () => {
                             type="button"
                             className='p-[0.56rem] pr-3 text-violet-800 rounded-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-100'
                             onClick={darkMode}
-                            
+
                         >
-                            { dark ? 
-                                <i 
+                            { dark ?
+                                <i
                                     className="fa-regular fa-sun "
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="Apariencia"
                                 ></i>
-                            :
+                                :
                                 <i
                                     className="fa-solid fa-moon"
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="Apariencia"
                                 ></i>
                             } {/* fa-beat */}
-                        <Tooltip id="my-tooltip" />              
-                            
-                            
+                            <Tooltip id="my-tooltip" />
+
+
                         </button>
 
 
@@ -164,9 +163,9 @@ const Header = () => {
                                 <i className={`fa-solid fa-${user.nombre ? user.nombre.charAt(0).toLowerCase() : "x"}`}></i>
                             </div>
                         </Link>
-                        <Tooltip id="my-tooltip" />              
+                        <Tooltip id="my-tooltip" />
 
-                        
+
 
                         <button
                             type="button"
@@ -184,10 +183,10 @@ const Header = () => {
                                     </div>
                             }
                         </button>
-                        <Tooltip id="my-tooltip" />              
+                        <Tooltip id="my-tooltip" />
 
-                     
-                       
+
+
                     </div>
                 </div>
             </header>

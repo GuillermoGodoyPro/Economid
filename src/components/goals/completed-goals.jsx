@@ -6,10 +6,10 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
     const { dark } = useDark();
 
     return (
-        <div className={(dark ? 
+        <div className={(dark ?
             "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max"
             : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max"
-            )}
+        )}
         >
             <h3 className="font-semibold text-violet-600">Metas Completadas</h3>
 

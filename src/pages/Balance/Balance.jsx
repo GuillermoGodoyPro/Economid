@@ -14,7 +14,7 @@ const Balance = () => {
     const [error, setError] = useState(null);
     const [balance, setBalance] = useState(null);
     const [transacciones, setTransacciones] = useState([]);
-    
+
     const user = getUserToken();
     const config = {
         headers: {
@@ -23,7 +23,7 @@ const Balance = () => {
         }
     };
 
-   
+
     useEffect(() => {
         const fetchBalance = async () => {
             try {
@@ -41,14 +41,14 @@ const Balance = () => {
         const fetchTransacciones = async () => {
             try {
                 const { data: response, status } = await getAll({ userId: user.id }, 1, 10, config);
-                if (status === 200) {                   
+                if (status === 200) {
                     setTransacciones(response.data);
                     setLoading(false);
                 }
             } catch (error) {
                 setError(error);
                 setLoading(false);
-               /*  setAlertaTransacciones({
+                /*  setAlertaTransacciones({
                     msg: texts.WITH_NO_TRANSACTIONS,
                     error: true
                 }); */
@@ -56,12 +56,12 @@ const Balance = () => {
                     setAlertaTransacciones({});
                 }, 3000); */
             }
-        };    
-        
+        };
+
         fetchTransacciones();
         fetchBalance();
 
-        
+
 
     }, []);
 
@@ -79,8 +79,8 @@ const Balance = () => {
             </div>
             {/* O acá */}
 
-            <GananciaChart transacciones={transacciones} /> 
-            
+            <GananciaChart transacciones={transacciones} />
+
 
             {/*  */}
 

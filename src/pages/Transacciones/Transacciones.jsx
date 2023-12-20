@@ -1,4 +1,3 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import { getUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
@@ -207,7 +206,7 @@ const Transacciones = () => {
                 <TransactionsTable
                     cargando={cargando}
                     transacciones={transacciones}
-                    setTransacciones={setTransacciones}                    
+                    setTransacciones={setTransacciones}
                     metadata={metadata}
                     idBalance={bId}
                 />

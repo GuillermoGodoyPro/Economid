@@ -32,11 +32,11 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                     orderedTransactions.map((transaccion, index) => {
                                         return (
                                             <tr className="border-b border-gray-200" key={index}>
-                                                <td className={(dark ? 
-                                                    "text-gray-600 py-2 px-20 font-semibold" 
+                                                <td className={(dark ?
+                                                    "text-gray-600 py-2 px-20 font-semibold"
                                                     :
-                                                    "text-gray-300 py-2 px-20 font-semibold" 
-                                                    )}
+                                                    "text-gray-300 py-2 px-20 font-semibold"
+                                                )}
                                                 >{transaccion.detalle}</td>
                                                 {
                                                     transaccion.tipoTransaccion === type.EGRESO ?
@@ -51,11 +51,11 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                                 }
                                                 {
                                                     transaccion.fecha ?
-                                                        <td className={(dark ? 
+                                                        <td className={(dark ?
                                                             "py-2 px-20 text-gray-600"
                                                             :
                                                             "py-2 px-20 text-gray-300"
-                                                            )}
+                                                        )}
                                                         >{new Date(transaccion.fecha).toLocaleDateString()}</td> :
                                                         <td></td>
                                                 }
