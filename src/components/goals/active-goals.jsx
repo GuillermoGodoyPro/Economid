@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { GoalAmount } from "../pop-ups/ModalMontoMeta";
 import { PulseLoader } from "react-spinners";
+import useDark from "../../context/useDark";
 
 export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setCompletedGoals }) => {
     const activeGoals = goals?.filter(({ completada }) => !completada);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
+    const { dark } = useDark();
+
 
     const handleAddingModal = (goalId) => {
         setModal(true);
@@ -17,7 +20,11 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
     };
 
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center">
+        <div className={(dark ? 
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            )}
+        >
             <h3 className="font-semibold text-violet-600">Metas Activas</h3>
 
             {

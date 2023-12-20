@@ -24,7 +24,6 @@ const Dashboard = () => {
     const [alertaMeta, setAlertaMeta] = useState({});
     const [alertaTransacciones, setAlertaTransacciones] = useState({});
     
-    const darkInit = localStorage.getItem("colorScheme") === "true"
     const { dark } = useDark();
 
     
@@ -92,7 +91,12 @@ const Dashboard = () => {
                         </div>
                     </div> : <div></div>
             }
-            <h2 className='mx-5 text-violet-800 font-bold uppercase '>Hola, {user.nombre}</h2>
+            <h2 className={(dark ? 
+                'mx-5 text-violet-800 font-bold uppercase '
+                :
+                'mx-5 text-violet-500 font-bold uppercase '
+            )}
+            >Hola, {user.nombre}</h2>
             <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
                 <BalanceSection
                     auth={auth}

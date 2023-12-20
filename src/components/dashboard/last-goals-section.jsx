@@ -30,7 +30,8 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
         <div className={(dark ? 
             "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around" 
             : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
-            )}>
+            )}
+        >
             {
                 cargando ?
                     <div className="flex justify-center">

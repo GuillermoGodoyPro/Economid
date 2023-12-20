@@ -169,14 +169,14 @@ select {
 }
 
 .formulario input[type="submit"] {
-    background-color: var(--violetdark);
+    background-color: var(--violetlight);
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
     text-align: center;
     margin-top: 2.5rem;
     margin-bottom: 0.8rem;
-    color: var(--white);
+    color: var(--blanco);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -207,7 +207,7 @@ select {
     border-radius: 0.5rem;
     padding: 0.8rem;
     text-align: center;
-    color: var(--white);
+    color: var(--blanco);
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -233,7 +233,9 @@ select {
 }
 
 .formulario input[type="submit"]:hover {
-    background-color: #570467;
+    background-color: var(--violethover);
+    color: var(--blanco);
+
     cursor: pointer;
 }
 
@@ -312,7 +314,7 @@ select {
 }
 
 .modal .campo label {
-    color: var(--violetdark);
+    color: var(--violetlight);
     font-weight: bolder;
 }
 

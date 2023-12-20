@@ -1,7 +1,10 @@
 import { PulseLoader } from "react-spinners";
 import { type } from "../../../constants/myfinances-constants";
+import useDark from "../../../context/useDark";
 
 export const AllTransactionsSection = ({ transacciones, cargando }) => {
+    const { dark } = useDark();
+
     const orderedTransactions = transacciones?.slice(0, 5);
     return (
         <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
@@ -29,7 +32,12 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                     orderedTransactions.map((transaccion, index) => {
                                         return (
                                             <tr className="border-b border-gray-200" key={index}>
-                                                <td className="py-2 px-20 font-semibold">{transaccion.detalle}</td>
+                                                <td className={(dark ? 
+                                                    "text-gray-600 py-2 px-20 font-semibold" 
+                                                    :
+                                                    "text-gray-300 py-2 px-20 font-semibold" 
+                                                    )}
+                                                >{transaccion.detalle}</td>
                                                 {
                                                     transaccion.tipoTransaccion === type.EGRESO ?
                                                         <td className="py-2 px-20 text-red-500 font-semibold font-mono">-${parseFloat(transaccion.monto).toFixed(2)}</td> :
@@ -43,7 +51,12 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                                 }
                                                 {
                                                     transaccion.fecha ?
-                                                        <td className="py-2 px-20 text-gray-600">{new Date(transaccion.fecha).toLocaleDateString()}</td> :
+                                                        <td className={(dark ? 
+                                                            "py-2 px-20 text-gray-600"
+                                                            :
+                                                            "py-2 px-20 text-gray-300"
+                                                            )}
+                                                        >{new Date(transaccion.fecha).toLocaleDateString()}</td> :
                                                         <td></td>
                                                 }
                                                 {

@@ -8,6 +8,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { getCategories } from "../../services/myfinances-api/categorias";
+import useDark from "../../context/useDark";
 
 const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, setTransacciones, setBalance, setBalanceId, categorias }) => {
 
@@ -21,6 +22,8 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
     const [tipoTransaccion, setTipoTransaccion] = useState("Ingreso");
     const [categoriaId, setCategorias] = useState(categorias[0].id);
     const user = getUserToken();
+    const { dark } = useDark();
+
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -197,7 +200,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
                         </select>
                     </div>
 
-                    <input
+                    <input                        
                         type="submit"
                         value={!cargando ? "Enviar" : "Enviando..."}
                         disabled={cargando}

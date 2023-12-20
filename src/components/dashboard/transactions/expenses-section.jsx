@@ -33,7 +33,11 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
                                         {egresos?.slice(0, 5).map((transaccion, index) => {
                                             return (
                                                 <tr className="border-b border-gray-200" key={index}>
-                                                    <td className="py-2 px-20">{transaccion.detalle}</td>
+                                                    <td className={(dark ? 
+                                                        "text-gray-600 py-2 px-20 font-bold" 
+                                                        :
+                                                        "text-gray-500 py-2 px-20 font-bold" 
+                                                    )}>{transaccion.detalle}</td>
                                                     <td className="py-2 px-20 text-red-500 font-semibold font-mono">
                                                         <div className="w-28 flex justify-center">
                                                             -${parseFloat(transaccion.monto).toFixed(2)}

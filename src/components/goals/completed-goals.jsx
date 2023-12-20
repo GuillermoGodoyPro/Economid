@@ -1,9 +1,16 @@
 import { PulseLoader } from "react-spinners";
+import useDark from "../../context/useDark";
 
 export const CompletedGoals = ({ goals, error, cargando }) => {
     const completedGoals = goals?.filter(({ completada }) => completada);
+    const { dark } = useDark();
+
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max">
+        <div className={(dark ? 
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max"
+            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max"
+            )}
+        >
             <h3 className="font-semibold text-violet-600">Metas Completadas</h3>
 
             {

@@ -5,6 +5,7 @@ import { texts, type } from "../../constants/myfinances-constants";
 import Alerta from "../Alerta";
 import { BalancePagination } from "./balance-pagination";
 import useAuth from "../../context/useAuth";
+import useDark from "../../context/useDark";
 
 export const BalanceIncomes = ({ user, config }) => {
     const { auth } = useAuth();
@@ -15,6 +16,8 @@ export const BalanceIncomes = ({ user, config }) => {
     const [metadata, setMetadata] = useState({});
     const [hasNextPage, setHasNextPage] = useState(true);
     const pageNumber = Math.ceil(metadata.totalCount / metadata.pageSize);
+    const { dark } = useDark();
+
 
     const generatePageNumbers = (pageNumber) => {
         let navigationNumbers = [];
@@ -58,7 +61,11 @@ export const BalanceIncomes = ({ user, config }) => {
     }, []);
     const { msg } = incomesAlert;
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2">
+        <div className={(dark ? 
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
+            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
+            )}
+        >
             <div>
                 <h2 className='p-1 text-center font-semibold text-violet-600'>Ingresos</h2>
                 {

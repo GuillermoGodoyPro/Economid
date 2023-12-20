@@ -1,9 +1,16 @@
 import { PulseLoader } from "react-spinners";
 import { texts } from "../../constants/myfinances-constants";
+import useDark from "../../context/useDark";
 
 export const BalanceComponent = ({cargando, balance}) => {
+    const { dark } = useDark();
+
     return (
-        <div className="bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-96">
+        <div className={(dark ? 
+            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-96"
+            : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-96"
+            )}
+        >
             {
                 cargando ?
                     <div className="flex justify-center">
