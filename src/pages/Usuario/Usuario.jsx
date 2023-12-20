@@ -8,6 +8,7 @@ const Usuario = () => {
     const [modalModificarPerfil, setModalPerfil] = useState(false);
     const [animarModalPerfil, setAnimarModalPerfil] = useState(false);
 
+
     const handleModificarPerfil = () => {
         setModalPerfil(true);
 
@@ -17,13 +18,16 @@ const Usuario = () => {
         }, 400);
     };
 
+
+
     return (
 
-        <div>
+        <div className={styles.containers} >
 
             <div className={styles.container2} >
 
-                <div>
+                <div >
+
                     <h1 className={styles.title}>NOMBRE</h1>
                     <p>{user.nombre}</p>
                     <h1 className={styles.title}>APELLIDO</h1>

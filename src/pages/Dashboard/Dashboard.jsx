@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import useAuth from "../../context/useAuth";
+
 import { getAll } from "../../services/myfinances-api/transacciones";
 import { getAll as getAllGoals } from "../../services/myfinances-api/metaFinanciera";
 import { getUserToken } from "../../services/token/tokenService";
@@ -11,6 +12,8 @@ import { ExpensesSection } from "../../components/dashboard/transactions/expense
 import { LastGoal } from "../../components/dashboard/last-goals-section";
 import Alerta from "../../components/Alerta";
 import { texts } from "../../constants/myfinances-constants";
+import useDark from "../../context/useDark";
+
 
 const Dashboard = () => {
     const { auth } = useAuth();
@@ -21,6 +24,9 @@ const Dashboard = () => {
     const [alertaMeta, setAlertaMeta] = useState({});
     const [alertaTransacciones, setAlertaTransacciones] = useState({});
 
+    const { dark } = useDark();
+
+
     const user = getUserToken();
     const config = {
         headers: {
@@ -28,6 +34,7 @@ const Dashboard = () => {
             Authorization: `Bearer ${auth}`
         }
     };
+
 
     useEffect(() => {
         const fetchTransacciones = async () => {
@@ -84,7 +91,12 @@ const Dashboard = () => {
                         </div>
                     </div> : <div></div>
             }
-            <h2 className='mx-5 text-violet-800 font-bold uppercase '>Hola, {user.nombre}</h2>
+            <h2 className={(dark ?
+                "mx-5 text-violet-800 font-bold uppercase "
+                :
+                "mx-5 text-violet-500 font-bold uppercase "
+            )}
+            >Hola, {user.nombre}</h2>
             <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
                 <BalanceSection
                     auth={auth}

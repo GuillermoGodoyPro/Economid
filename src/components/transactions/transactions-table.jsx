@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { ModificarTransaccion } from "../pop-ups/ModalModificarTransaccion";
 import useAuth from "../../context/useAuth";
 import { getCategories } from "../../services/myfinances-api/categorias";
+import useDark from "../../context/useDark";
 
 export const TransactionsTable = ({ cargando, transacciones, setTransacciones, idBalance }) => {
     const { auth } = useAuth();
@@ -16,6 +17,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
     const [transaccionId, setTransaccionId] = useState(0);
     const [toModifyTransact, setTransaccion] = useState({});
     const [categorias, setCategorias] = useState([""]);
+    const { dark } = useDark();
 
     const handleModifyModal = (tId, t) => {
         setModifyModal(true);
@@ -48,7 +50,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
             }
         };
         fetchCategorias();
-    }, [])
+    }, []);
     return (
         <div className="t-table">
             {
@@ -73,13 +75,22 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                 return (
                                     <tr className="border-b border-gray-200" key={index}>
 
-                                        <td className="py-2 px-4 text-gray-800">{transaccion.detalle}</td>
+                                        <td className={(dark ?
+                                            "py-2 px-4 text-gray-800 font-semibold"
+                                            :
+                                            "py-2 px-4 text-gray-200 font-semibold"
+                                        )}
+                                        >{transaccion.detalle}</td>
                                         {
                                             transaccion.tipoTransaccion === type.EGRESO
                                                 ?
                                                 !transaccion.estaActiva
                                                     ?
-                                                    <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
+                                                    <td className={(dark ?
+                                                        "py-2 px-4 text-gray-400 font-semibold font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-100 font-semibold font-mono"
+                                                    )}>
                                                         -${parseFloat(transaccion.monto).toFixed(2)}
                                                     </td>
                                                     :
@@ -106,9 +117,17 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                 ?
                                                 !transaccion.estaActiva
                                                     ?
-                                                    <td className="py-2 px-4 text-gray-400">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                    <td className={(dark ?
+                                                        "py-2 px-4 text-gray-300  font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-600 font-semibold font-mono"
+                                                    )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                                     :
-                                                    <td className="py-2 px-4 text-gray-600 font-semibold">{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                    <td className={(dark ?
+                                                        "py-2 px-4 text-gray-400 font-semibold font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-200 font-semibold font-mono"
+                                                    )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                                 :
                                                 <td></td>
                                         }

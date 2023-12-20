@@ -6,19 +6,18 @@
 /* Aquí definimos las Custom properties */
 :root {
 
-
-
     --violetlight: #4f339ccb;
     --violetdark: #372174cb;
     --violethover: #ae9cdfcb;
     --crema: #f5f5f3;
-    --white: white;
+    --blanco: #ffffff;
     --rojo: #e50909b2;
     --rojo-hover: #c40707b2;
     --negro: #141414;
     --gris: #303030;
     --gris-f: #757575;
     --gris-mod: #f5f5f5;
+    --blue-mod: #15084e;
     --gris-popup: rgb(229 231 235);
     /* Tipografía */
     --tipo-principal: Monospace, Arial, sans-serif;
@@ -96,6 +95,7 @@ em {
     width: 100%;
     margin: 0 auto;
     padding: 10rem 0;
+    
 }
 
 .deletePopUp {
@@ -169,14 +169,14 @@ select {
 }
 
 .formulario input[type="submit"] {
-    background-color: var(--violetdark);
+    background-color: var(--violetlight);
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
     text-align: center;
     margin-top: 2.5rem;
     margin-bottom: 0.8rem;
-    color: var(--white);
+    color: var(--blanco);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -207,7 +207,7 @@ select {
     border-radius: 0.5rem;
     padding: 0.8rem;
     text-align: center;
-    color: var(--white);
+    color: var(--blanco);
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
@@ -233,7 +233,9 @@ select {
 }
 
 .formulario input[type="submit"]:hover {
-    background-color: #570467;
+    background-color: var(--violethover);
+    color: var(--blanco);
+
     cursor: pointer;
 }
 
@@ -312,7 +314,7 @@ select {
 }
 
 .modal .campo label {
-    color: var(--violetdark);
+    color: var(--violetlight);
     font-weight: bolder;
 }
 
