@@ -65,7 +65,6 @@ const Balance = () => {
 
     }, []);
 
-    console.log(user)
 
     return (
         <div className="flex flex-col items-center">

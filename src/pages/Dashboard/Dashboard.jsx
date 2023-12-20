@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import useAuth from "../../context/useAuth";
+
 import { getAll } from "../../services/myfinances-api/transacciones";
 import { getAll as getAllGoals } from "../../services/myfinances-api/metaFinanciera";
 import { getUserToken } from "../../services/token/tokenService";
@@ -11,6 +12,8 @@ import { ExpensesSection } from "../../components/dashboard/transactions/expense
 import { LastGoal } from "../../components/dashboard/last-goals-section";
 import Alerta from "../../components/Alerta";
 import { texts } from "../../constants/myfinances-constants";
+import useDark from "../../context/useDark";
+
 
 const Dashboard = () => {
     const { auth } = useAuth();
@@ -20,7 +23,11 @@ const Dashboard = () => {
     const [error, setError] = useState(null);
     const [alertaMeta, setAlertaMeta] = useState({});
     const [alertaTransacciones, setAlertaTransacciones] = useState({});
+    
+    const darkInit = localStorage.getItem("colorScheme") === "true"
+    const { dark } = useDark();
 
+    
     const user = getUserToken();
     const config = {
         headers: {
@@ -28,6 +35,7 @@ const Dashboard = () => {
             Authorization: `Bearer ${auth}`
         }
     };
+
 
     useEffect(() => {
         const fetchTransacciones = async () => {

@@ -4,45 +4,25 @@ import "react-tooltip/dist/react-tooltip.css";
 import { getUserToken } from "../../services/token/tokenService";
 import { useEffect, useState } from "react";
 import { PulseLoader } from "react-spinners";
+import useDark from "../../context/useDark";
+
+
 
 const Header = () => {
     const user = getUserToken();
     const navigate = useNavigate();
     const [cargando, setCargando] = useState(false);
+
+    const darkInit = localStorage.getItem("colorScheme") 
+    const { dark , changeDarkMode } = useDark();
     
     /* Inicio código para darkmode */
-    const darkInit = localStorage.getItem("colorScheme") === "true";
-    const key = "colorScheme"
-
-    const [dark, setDark] = useState(darkInit)
-
-    useEffect(() => {
-        // Actualizar los estilos cuando dark cambie
-        if(dark){
-            document.documentElement.style.setProperty('--crema', '#f5f5f3');
-            document.documentElement.style.setProperty('--blanco', '#ffffff');
-            document.documentElement.style.setProperty('--gris', '#303030');
-            document.documentElement.style.setProperty('--violetlight', '#4f339ccb');
-        } else {
-            document.documentElement.style.setProperty('--crema', '#09051b');
-            document.documentElement.style.setProperty('--blanco', '#cac2e9');
-            document.documentElement.style.setProperty('--gris', '#13159e');
-            document.documentElement.style.setProperty('--violetlight', '#865ef7c9');
-        }
-
-        // Almacenar en el localStorage
-        localStorage.setItem(key, dark.toString());    
-    }, [dark]) 
-
-    const darkMode = () => {
-        // Utilizar la versión de función del setState para garantizar el valor más reciente
-        setDark(valAntDark => !valAntDark);
-    }
     
-
-
-    /* Fin del código para darkmode */
-
+    const darkMode = () => {
+        // Llamamos a la función desde aca
+        changeDarkMode()       
+    }
+ 
 
     const handleClick = () => {
         setCargando(true);
@@ -64,12 +44,17 @@ const Header = () => {
                     >
                         <i className="fa-solid fa-dragon"></i>
                     </Link>
-
+                    
                     <div className="flex headerButtons">
                         <NavLink
                             to="index"
-                            className={({ isActive, isPending }) =>
-                                isPending ? "text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100 rounded-md p-4 text-md text-violet-600 hover:text-violet-800 font-bold" : " p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                            className={({ isActive, isPending}) =>
+                                                                
+                                isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                                :
+                                isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                :
+                                "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -81,7 +66,11 @@ const Header = () => {
                         <NavLink
                             to="transacciones"
                             className={({ isActive, isPending }) =>
-                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  rounded-md p-4 text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                            :
+                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                            :
+                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -93,7 +82,11 @@ const Header = () => {
                         <NavLink
                             to="metas"
                             className={({ isActive, isPending }) =>
-                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  rounded-md p-4 text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                            :
+                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                            :
+                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -106,7 +99,11 @@ const Header = () => {
                         <NavLink
                             to="balance"
                             className={({ isActive, isPending }) =>
-                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "p-4 bg-gray-100 rounded-md text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
+                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                            :
+                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                            :
+                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
@@ -118,8 +115,11 @@ const Header = () => {
                         <NavLink
                             to="ayuda"
                             className={({ isActive, isPending }) =>
-                                isPending ? " text-md text-violet-600 hover:text-violet-800 font-bold" : isActive ? "bg-gray-100  p-4 rounded-md text-md text-violet-600 hover:text-violet-800 font-bold" : "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
-                            }
+                            isPending ? "text-violet-600 hover:text-violet-800 font-bold"
+                            :
+                            isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                            :
+                            "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"                            }
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
                                 <i className="fa-solid fa-circle-question"></i>
@@ -129,28 +129,46 @@ const Header = () => {
                     </div>
 
                     <div className="flex">
+                        <button
+                            type="button"
+                            className='p-[0.56rem] pr-3 text-violet-800 rounded-xl transition ease-in-out delay-50 hover:-translate-y-1 duration-100'
+                            onClick={darkMode}
+                            
+                        >
+                            { dark ? 
+                                <i 
+                                    className="fa-regular fa-sun "
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="Apariencia"
+                                ></i>
+                            :
+                                <i
+                                    className="fa-solid fa-moon"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="Apariencia"
+                                ></i>
+                            } {/* fa-beat */}
+                        <Tooltip id="my-tooltip" />              
+                            
+                            
+                        </button>
+
+
                         <Link
                             to="usuario"
                             className='p-[0.9rem] mb-1 mr-2 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
-                            id="clickable"                                                               
                             data-tooltip-id="my-tooltip"
+                            data-tooltip-content="Perfil"
                         >
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
                                 <i className={`fa-solid fa-${user.nombre ? user.nombre.charAt(0).toLowerCase() : "x"}`}></i>
                             </div>
                         </Link>
-                        <Tooltip anchorSelect="#clickable" clickable >
-                           
-                            <button
-                                type="button"
-                                className=' uppercase '                                
-                                onClick={handleClick}
-                            >           
-                                cerrar sesión
-                            </button>
-                        </Tooltip>                       
+                        <Tooltip id="my-tooltip" />              
 
-                       {/*  <button
+                        
+
+                        <button
                             type="button"
                             className='p-[0.56rem] mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
                             data-tooltip-id="my-tooltip"
@@ -165,21 +183,11 @@ const Header = () => {
                                         <i className="fa-solid fa-power-off"></i>
                                     </div>
                             }
-                        </button> */}
-                        <button
-                                className='p-[0.56rem] px-3 mb-1 text-violet-600 font-bold uppercase bg-gray-100  rounded-xl'
-                                data-tooltip-id="my-tooltip"
-                                data-tooltip-content="APARIENCIA"
-                                onClick={darkMode}
-                            >
-                                { dark ? 
-                                    <i className="fa-regular fa-sun"></i>
-                                :
-                                    <i className="fa-solid fa-moon"></i>
-                                } {/* fa-beat */}                              
-                                
                         </button>
-                        <Tooltip id="my-tooltip" />
+                        <Tooltip id="my-tooltip" />              
+
+                     
+                       
                     </div>
                 </div>
             </header>

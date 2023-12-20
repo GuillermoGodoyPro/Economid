@@ -1,10 +1,17 @@
 import { PulseLoader } from "react-spinners";
 import { texts, type } from "../../../constants/myfinances-constants";
+import useDark from "../../../context/useDark";
 
 export const ExpensesSection = ({ cargando, transacciones }) => {
     const egresos = transacciones?.filter(({ tipoTransaccion }) => tipoTransaccion === type.EGRESO);
+    const { dark } = useDark();
+    
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2">
+        <div className={(dark ? 
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2" 
+            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2"
+        )}>
+
             <div>
                 <h2 className='p-1 text-center font-semibold justify-around text-violet-600'>Ultimos Gastos</h2>
                 <div className="bg-inherit rounded-lg  border">

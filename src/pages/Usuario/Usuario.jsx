@@ -21,7 +21,7 @@ const Usuario = () => {
             document.documentElement.style.setProperty('--gris', '#303030');
             document.documentElement.style.setProperty('--violetlight', '#4f339ccb');
         } else {
-            document.documentElement.style.setProperty('--crema', '#09051b');
+            document.documentElement.style.setProperty('--crema', 'rgb(55 65 81)');
             document.documentElement.style.setProperty('--blanco', '#cac2e9');
             document.documentElement.style.setProperty('--gris', '#13159e');
             document.documentElement.style.setProperty('--violetlight', '#865ef7c9');
