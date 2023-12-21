@@ -145,14 +145,9 @@ const Header = () => {
                                     className="fa-regular fa-sun "
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="Apariencia"
-                                ></i>       
-                               
-                            } {/* fa-beat */}
-                            <Tooltip id="my-tooltip" />
-
-
+                                ></i>
+                            }
                         </button>
-
 
                         <Link
                             to="usuario"
@@ -163,10 +158,7 @@ const Header = () => {
                             <div className="transition ease-in-out delay-50 hover:-translate-y-1 duration-100">
                                 <i className={`fa-solid fa-${user.nombre ? user.nombre.charAt(0).toLowerCase() : "x"}`}></i>
                             </div>
-                        </Link>
-                        <Tooltip id="my-tooltip" />
-
-
+                        </Link>                        
 
                         <button
                             type="button"
@@ -185,9 +177,6 @@ const Header = () => {
                             }
                         </button>
                         <Tooltip id="my-tooltip" />
-
-
-
                     </div>
                 </div>
             </header>
