@@ -1,4 +1,3 @@
-/* import {HistogramaChart} from './histograma-chart'*/
 import {
     BarElement,
     CategoryScale, // x
@@ -11,30 +10,24 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-ChartJS.register( CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title);
-import { /* texts, */ type } from "../../../constants/myfinances-constants";
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title);
+import { type } from "../../../constants/myfinances-constants";
 import useDark from "../../../context/useDark";
 
 
-export const GananciaChart = ({transacciones}) => {
+export const GananciaChart = ({ transacciones }) => {
     const { dark } = useDark();
+    const transaccionesActivas = transacciones?.filter(({ estaActiva }) => estaActiva);
 
-    console.log(transacciones);
-    /* Se obtienen los montos (ingresos y egresos) por mes */
-
-    const sumarMontos = (transacciones) => {
-        // Inicializar un objeto para almacenar los montos por mes
+    const sumarMontos = (transaccionesActivas) => {
         const montosPorMes = {};
 
-
-        // Iterar sobre las transacciones
-        transacciones?.forEach((transaccion) => {
+        transaccionesActivas?.forEach((transaccion) => {
 
             const fecha = new Date(transaccion.fecha);
             const mesAnio = fecha.toLocaleString("es-ES", { month: "long", year: "numeric" });
             const monto = transaccion.monto;
 
-            // Determinar si es ingreso o egreso
             if (!montosPorMes[mesAnio]) {
                 montosPorMes[mesAnio] = { mes: mesAnio, ingresos: 0, egresos: 0 };
             }
@@ -46,35 +39,19 @@ export const GananciaChart = ({transacciones}) => {
             }
         });
 
-        // Convertir el objeto a un array de objetos
         const montosArray = Object.values(montosPorMes);
-
         return montosArray;
     };
-
-    // Llamamos la función
-    const montosTotales = sumarMontos(transacciones);
-
-    /* En esta parte se obtienen los resultados buscados */
+    const montosTotales = sumarMontos(transaccionesActivas);
     const datosOrdenados = montosTotales.sort((a, b) => {
         const fechaA = new Date(a.mes);
         const fechaB = new Date(b.mes);
         return fechaA - fechaB;
     });
 
-    // Obtener las fechas acumuladas de los últimos 5 elementos (los más recientes)
     const fechasAcumuladas = datosOrdenados.slice(0, 5).map(({ mes }) => mes);
-    /* TODO: testear si hay que poner el mismo slice en ingresosTotales y egresosTotales*/
-
-    // Obtener un array con las sumas de ingresos y egresos por fecha acumulada
     const ingresosTotales = montosTotales.map(({ ingresos }) => ingresos);
     const egresosTotales = montosTotales.map(({ egresos }) => egresos);
-
-    /* const ingresos = transacciones.map(({ ingresos }) => ingresos);
-    const egresos = transacciones.map(({ egresos }) => egresos);
-
-    const totalAhorrado = ingresos - egresos
-    console.log(totalAhorrado) */
 
     const colores = [
         "rgb(84, 255, 50)",
@@ -128,21 +105,10 @@ export const GananciaChart = ({transacciones}) => {
                                 align: "center"
                             }
                         }
-
                     }}
-
-
                 >
-
                 </Bar>
-
             </div>
-
-
-
-
         </div>
-
-
     );
 };
