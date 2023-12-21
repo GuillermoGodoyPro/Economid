@@ -14,7 +14,7 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
 
             <div>
                 <h2 className='p-1 text-center font-semibold justify-around text-violet-600'>Ultimos Gastos</h2>
-                <div className="bg-inherit rounded-lg  border">
+                <div className="bg-inherit rounded-lg  ">
                     {cargando ?
                         <div className="flex justify-center">
                             <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
@@ -32,7 +32,7 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
                                     <tbody>
                                         {egresos?.slice(0, 5).map((transaccion, index) => {
                                             return (
-                                                <tr className="border-b border-gray-200" key={index}>
+                                                <tr className=" border-gray-200" key={index}>
                                                     <td className={(dark ?
                                                         "text-gray-600 py-2 px-20 font-bold"
                                                         :

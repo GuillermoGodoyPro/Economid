@@ -1,4 +1,5 @@
 import useAuth from "../../../context/useAuth";
+import useDark from "../../../context/useDark";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
 import { getUserToken } from "../../../services/token/tokenService";
 
@@ -15,6 +16,8 @@ export const TypeFilter = ({
 }) => {
     const { auth } = useAuth();
     const user = getUserToken();
+    const { dark } = useDark();
+
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -64,11 +67,18 @@ export const TypeFilter = ({
     return (
         <div className='flex flex-col mx-2'>
             <div className="campo flex flex-col font-mono font-sm text-left p-2">
-                <label className="font-semibold text-violet-600">Tipo</label>
+                <label className={(dark ?
+                        "font-semibold text-violet-600"
+                        : "font-semibold text-violet-400"
+                    )}                
+                >Tipo</label>
                 <select
                     name="tipo"
                     id="tipo"
-                    className="bg-[#E5E7EB] rounded-md p-1 font-mono"
+                    className={(dark ?
+                        "bg-[#E5E7EB] rounded-md p-1 font-mono"
+                        : "bg-gray-600 text-gray-400 font-semibold rounded-md p-1 font-mono"
+                    )}    
                     value={tipo}
                     onChange={e => handleTypeChange(e.target.value)}
                 >

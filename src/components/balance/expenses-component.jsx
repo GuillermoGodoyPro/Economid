@@ -77,7 +77,7 @@ export const BalanceExpenses = ({ user, config }) => {
                             </div>
                         </div> : <div></div>
                 }
-                <div className="bg-inherit rounded-lg  border">
+                <div className="bg-inherit rounded-lg">
                     {cargando ?
                         <div className="flex justify-center">
                             <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
@@ -96,7 +96,7 @@ export const BalanceExpenses = ({ user, config }) => {
                                     <tbody>
                                         {expenses?.map((transaccion, index) => {
                                             return (
-                                                <tr className="border-b border-gray-200" key={index}>
+                                                <tr className=" border-gray-200" key={index}>
                                                     <td className="py-2 px-10">{transaccion.detalle}</td>
                                                     <td className="py-2 px-10 text-red-500 font-semibold font-mono">
                                                         <div className="w-28 flex justify-center">

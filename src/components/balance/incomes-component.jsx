@@ -95,7 +95,7 @@ export const BalanceIncomes = ({ user, config }) => {
                                     <tbody>
                                         {incomes?.map((transaccion, index) => {
                                             return (
-                                                <tr className="border-b border-gray-200" key={index}>
+                                                <tr className=" border-gray-200" key={index}>
                                                     <td className="py-2 px-10">{transaccion.detalle}</td>
                                                     <td className="py-2 px-10 text-green-500 font-semibold font-mono">
                                                         <div className="w-28 flex justify-center rounded-md bg-green-300">

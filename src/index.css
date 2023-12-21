@@ -390,7 +390,7 @@ header p {
 .headerStyle {
     background: rgb(135, 119, 179);
     background: radial-gradient(circle, rgba(174, 156, 223, 1) 30%, rgba(187, 170, 233, 1) 60%, rgba(135, 119, 179, 1) 90%);
-    z-index: 1 !important;
+    z-index: 1000 !important;
 }
 
 .spinner {

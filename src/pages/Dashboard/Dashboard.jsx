@@ -111,8 +111,19 @@ const Dashboard = () => {
                     cargando={cargando}
                     setActiveGoals={setActiveGoals} />
             </div>
-            <div className="bg-inherit p-10">
-                <AllTransactionsSection transacciones={transacciones} cargando={cargando} />
+            <div className={(dark ?
+                    "bg-inherit p-10"
+                    :
+                    "bg-inherit p-10"
+                )}
+            >
+                <AllTransactionsSection
+                    className={(dark ?
+                        "bg-inherit p-10"
+                        :
+                        "bg-gray-600 p-10"
+                    )}
+                transacciones={transacciones} cargando={cargando} />
             </div>
             <div className=" bg-inherit rounded flex justify-center">
                 <IncomesSection cargando={cargando} transacciones={transacciones} />

@@ -7,9 +7,19 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
 
     const orderedTransactions = transacciones?.slice(0, 5);
     return (
-        <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
+        <div className={(dark ?
+                "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+                :
+                "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+            )}
+        >
             <div className="flex justify-center mb-5">
-                <h3 className="font-bold text-violet-600">Ultimas Transacciones</h3>
+                <h3 className={(dark ?
+                        "font-bold text-violet-600"
+                        :
+                        "font-bold text-violet-400"
+                    )}
+                >Ultimas Transacciones</h3>
             </div>
             {
                 cargando ?
@@ -21,17 +31,43 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                         <table className="w-full">
                             <thead>
                                 <tr>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Detalle</th>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Monto</th>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Fecha</th>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Tipo</th>
+                                    <th className={(dark ?
+                                            "text-left py-2 px-20 font-semibold text-violet-600"
+                                            :
+                                            "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                        )}
+                                    >Detalle</th>
+                                    <th className={(dark ?
+                                            "text-left py-2 px-20 font-semibold text-violet-600"
+                                            :
+                                            "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                        )}
+                                    >Monto</th>
+                                    <th className={(dark ?
+                                            "text-left py-2 px-20 font-semibold text-violet-600"
+                                            :
+                                            "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                        )}
+                                    >Fecha</th>
+                                    <th className={(dark ?
+                                            "text-left py-2 px-20 font-semibold text-violet-600"
+                                            :
+                                            "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                        )}
+                                    >Tipo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     orderedTransactions.map((transaccion, index) => {
                                         return (
-                                            <tr className="border-b border-gray-200" key={index}>
+                                            <tr className={(dark ?
+                                                    "border-b border-gray-200"
+                                                    :
+                                                    "bg-gray-600 border-b border-gray-500"
+                                                )}
+                                                key={index}
+                                            >
                                                 <td className={(dark ?
                                                     "text-gray-600 py-2 px-20 font-semibold"
                                                     :

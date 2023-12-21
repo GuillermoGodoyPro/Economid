@@ -59,21 +59,61 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div>
                     :
-                    <table className="w-full border-collapse">
+                    <table className={(dark ?
+                            "w-full border-collapse"
+                            :
+                            "bg-gray-600 rounded-lg w-full "
+                        )}
+                    >
                         <thead>
                             <tr>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Detalle</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Estado</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Operación</th>
+                                <th className={(dark ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                    )}
+                                >Detalle</th>
+                                <th className={(dark ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                    )}
+                                >Monto</th>
+                                <th className={(dark ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                    )}
+                                >Fecha</th>
+                                <th className={(dark ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                    )}
+                                >Tipo</th>
+                                <th className={(dark ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                    )}
+                                >Estado</th>
+                                <th className={(dark ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                    )}
+                                >Operación</th>
                             </tr>
                         </thead>
                         <tbody>
                             {orderedTransactions?.map((transaccion, index) => {
                                 return (
-                                    <tr className="border-b border-gray-200" key={index}>
+                                    <tr className={(dark ?
+                                        "border-b border-gray-200 "
+                                        :
+                                        "border-b border-gray-500 "
+                                        )}
+                                    key={index}>
 
                                         <td className={(dark ?
                                             "py-2 px-4 text-gray-800 font-semibold"
@@ -89,7 +129,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                     <td className={(dark ?
                                                         "py-2 px-4 text-gray-400 font-semibold font-mono"
                                                         :
-                                                        "py-2 px-4 text-gray-100 font-semibold font-mono"
+                                                        "py-2 px-4 text-gray-300 font-semibold font-mono"
                                                     )}>
                                                         -${parseFloat(transaccion.monto).toFixed(2)}
                                                     </td>
@@ -120,7 +160,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                     <td className={(dark ?
                                                         "py-2 px-4 text-gray-300  font-mono"
                                                         :
-                                                        "py-2 px-4 text-gray-600 font-semibold font-mono"
+                                                        "py-2 px-4 text-gray-500  font-mono"
                                                     )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                                     :
                                                     <td className={(dark ?
