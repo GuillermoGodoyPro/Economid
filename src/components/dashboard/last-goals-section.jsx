@@ -29,7 +29,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
     return (
         <div className={(dark === "light" ?
             "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
-            : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+            : "bg-gray-600 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
         )}
         >
             {
@@ -39,13 +39,17 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                     </div> :
                     almostCompletedGoal.length ?
                         <div className="flex flex-col items-center justify-center">
-                            <h3 className='text-xl font-semibold text-violet-600 antialiased'>
+                            <h3 className={(dark === "light" ?
+                                    'text-xl font-semibold text-violet-600 antialiased'
+                                    : 'text-xl font-semibold text-violet-400 antialiased'
+                                )}
+                            >
                                 Ultima Meta
                             </h3>
                             <div
                                 className={(dark === "light" ?
                                     "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
-                                    : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                    : "w-64 h-64 m-3 rounded-lg bg-gray-300 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
                                 )}>
                                 <div className="flex justify-between items-center">
                                     <span className="font-semibold text-gray-500">{almostCompletedGoal[0].titulo}</span>
