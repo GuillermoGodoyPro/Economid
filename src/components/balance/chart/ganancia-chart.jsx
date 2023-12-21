@@ -83,22 +83,27 @@ export const GananciaChart = ({transacciones}) => {
 
     return (
         <div className={(dark === "light" ?
-            "mt-6 mb-60"
-            :
-            "bg-violet-300  rounded-lg px-6 mt-6 mb-60"
-        )}
+                "mt-6 mb-60"
+                :
+                "bg-gray-800 rounded-lg px-6 mt-6 mb-60"
+            )}
         >
-            <h2 className="text-center text-2xl leading-10 mt-6 font-semibold">Ganancias</h2>
+            <h2 className={(dark === "light" ?
+                    "text-center text-2xl leading-10 mt-6 font-semibold"
+                    :
+                    "text-violet-400 text-center text-2xl leading-10 mt-6 font-semibold"
+                )}
+            >Ganancias</h2>
 
-            <div className="chart-container ">
-                <Bar
+            <div className=" chart-container ">
+                <Bar                    
                     width={730} height={250}
                     data={{
                         labels: fechasAcumuladas,
                         datasets: [
                             {
                                 label: "Ingresos",
-                                data: ingresosTotales,
+                                data: ingresosTotales,                                       
                                 backgroundColor: colores[0], // Color para ingresos
                                 borderColor: "rgb(242, 230, 255)",
                                 borderWidth: 1,
@@ -118,7 +123,7 @@ export const GananciaChart = ({transacciones}) => {
                     }}
                     options={{
                         layout: {
-                            padding: 1
+                            padding: 1,
                         },
                         plugins: {
                             title: "",
