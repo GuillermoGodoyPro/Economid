@@ -51,7 +51,7 @@ const Header = () => {
 
                                 isPending ? "text-violet-600 hover:text-violet-800 font-bold"
                                     :
-                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-300 text-violet-400  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
                                         :
                                         "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
@@ -67,7 +67,7 @@ const Header = () => {
                             className={({ isActive, isPending }) =>
                                 isPending ? "text-violet-600 hover:text-violet-800 font-bold"
                                     :
-                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-300 text-violet-400  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
                                         :
                                         "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
@@ -83,7 +83,7 @@ const Header = () => {
                             className={({ isActive, isPending }) =>
                                 isPending ? "text-violet-600 hover:text-violet-800 font-bold"
                                     :
-                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-300 text-violet-400  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
                                         :
                                         "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
@@ -100,7 +100,7 @@ const Header = () => {
                             className={({ isActive, isPending }) =>
                                 isPending ? "text-violet-600 hover:text-violet-800 font-bold"
                                     :
-                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-300 text-violet-400  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
                                         :
                                         "p-4 text-md text-violet-600 hover:text-violet-800 font-bold"
                             }
@@ -116,7 +116,7 @@ const Header = () => {
                             className={({ isActive, isPending }) =>
                                 isPending ? "text-violet-600 hover:text-violet-800 font-bold"
                                     :
-                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-400 text-violet-600  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
+                                    isActive ? (!dark ? "bg-gray-700 hover:text-violet-300 text-violet-400  " : "bg-gray-100 hover:text-violet-800 text-violet-600  ") + "rounded-md p-4 text-md font-bold"
                                         :
                                         "p-4 text-md text-violet-600 hover:text-violet-800 font-bold" }
                         >
