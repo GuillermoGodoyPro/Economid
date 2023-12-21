@@ -11,9 +11,9 @@ export const ChartSection = ({ cargando, transacciones }) => {
 
     return (
         <div className={(dark === "light" ?
-                "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
-                : "bg-gray-600 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
-            )}
+            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+            : "bg-gray-600 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+        )}
         >
             {cargando ?
                 <div className="flex justify-center">
@@ -25,9 +25,9 @@ export const ChartSection = ({ cargando, transacciones }) => {
                             <div>
                                 <div className="flex justify-center">
                                     <h2 className={(dark === "light" ?
-                                            'text-xl font-semibold text-violet-600'
-                                            : 'text-xl font-semibold text-violet-400'
-                                        )}
+                                        "text-xl font-semibold text-violet-600"
+                                        : "text-xl font-semibold text-violet-400"
+                                    )}
                                     >
                                         Ultimos Gastos
                                     </h2>
