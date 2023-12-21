@@ -69,7 +69,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
         fetchDollars();
     }, []);
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
             : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
         )}>
@@ -153,7 +153,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                 <br />
                                 {
                                     dolarValue && dolarDate ?
-                                        <div className={(dark ?
+                                        <div className={(dark === "light" ?
                                             "text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400"
                                             : "text-center rounded-2xl p-3 m-3 bg-green-200 shadow-md hover:shadow-green-400"
                                         )}>

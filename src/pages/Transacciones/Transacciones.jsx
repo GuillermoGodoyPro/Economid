@@ -128,11 +128,11 @@ const Transacciones = () => {
     const { msg } = alerta;
 
     return (
-        <div className={(dark ?
-                "bg-inherit p-10"
-                :
-                "bg-inherit p-10"
-            )}
+        <div className={(dark === "light" ?
+            "bg-inherit p-10"
+            :
+            "bg-inherit p-10"
+        )}
         >
             {alerta ?
                 <div className="flex justify-center mb-20">
@@ -210,11 +210,11 @@ const Transacciones = () => {
                     Borrar Filtros
                 </button>
             </div>
-            <div className={(dark ?
-                    "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
-                    :
-                    "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
-                )}
+            <div className={(dark === "light" ?
+                "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+                :
+                "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+            )}
             >
                 <TransactionsTable
                     cargando={cargando}

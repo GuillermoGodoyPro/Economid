@@ -61,7 +61,7 @@ export const BalanceIncomes = ({ user, config }) => {
     }, []);
     const { msg } = incomesAlert;
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
             : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
         )}

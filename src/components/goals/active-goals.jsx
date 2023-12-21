@@ -20,10 +20,10 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
     };
 
     return (
-        <div className={(dark ?
-                "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
-                : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
-            )}
+        <div className={(dark === "light" ?
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+        )}
         >
             <h3 className="font-semibold text-violet-600">Metas Activas</h3>
 
@@ -37,10 +37,10 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                             {activeGoals.map((goal, index) => {
                                 return (
                                     <div
-                                        className={(dark ?
-                                                "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
-                                                : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
-                                            )}
+                                        className={(dark === "light" ?
+                                            "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                            : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                        )}
                                         key={index}>
                                         <div className="flex justify-between items-center">
                                             <span className="font-semibold text-gray-500">{goal.titulo}</span>

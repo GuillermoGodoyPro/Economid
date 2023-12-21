@@ -27,7 +27,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
         }, 400);
     };
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
             : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
         )}
@@ -43,7 +43,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                                 Ultima Meta
                             </h3>
                             <div
-                                className={(dark ?
+                                className={(dark === "light" ?
                                     "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
                                     : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
                                 )}>

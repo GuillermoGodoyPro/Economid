@@ -4,16 +4,16 @@ const DarkContext = createContext();
 
 const DarkProvider = ({ children }) => {
 
-    const darkInit = localStorage.getItem("colorScheme") === "true";
+    const theme = localStorage.getItem("colorScheme");
+    const darkInit = theme ?? "light";
     const [dark, setDark] = useState(darkInit);
 
     // Se actualiza el estilo al iniciar la app
     useEffect(() => {
         setDark((estadoDarkMode) => {
-            const nuevoEstoDarkMode = estadoDarkMode;
 
             // Actualizar estilos y almacenar en localStorage
-            if (nuevoEstoDarkMode) {
+            if (estadoDarkMode === "light") {
                 document.documentElement.style.setProperty("--crema", "#f5f5f3");
                 document.documentElement.style.setProperty("--blanco", "#ffffff");
                 document.documentElement.style.setProperty("--gris", "#303030");
@@ -25,19 +25,18 @@ const DarkProvider = ({ children }) => {
                 document.documentElement.style.setProperty("--gris", "#13159e");
                 document.documentElement.style.setProperty("--violetlight", "#865ef7c9");
             }
-            localStorage.setItem("colorScheme", nuevoEstoDarkMode.toString());
+            localStorage.setItem("colorScheme", estadoDarkMode);
 
-            return nuevoEstoDarkMode;
+            return estadoDarkMode;
         });
 
     }, []);
 
     const changeDarkMode = () => {
-        setDark((estadoDarkMode) => {
-            const nuevoEstoDarkMode = !estadoDarkMode;
-
+        setDark((estado) => {
+            estado = dark === "dark" ? "light" : "dark";
             // Actualizar estilos y almacenar en localStorage
-            if (nuevoEstoDarkMode) {
+            if (estado === "light") {
                 document.documentElement.style.setProperty("--crema", "#f5f5f3");
                 document.documentElement.style.setProperty("--blanco", "#ffffff");
                 document.documentElement.style.setProperty("--gris", "#303030");
@@ -49,12 +48,10 @@ const DarkProvider = ({ children }) => {
                 document.documentElement.style.setProperty("--gris", "#13159e");
                 document.documentElement.style.setProperty("--violetlight", "#865ef7c9");
             }
-            localStorage.setItem("colorScheme", nuevoEstoDarkMode.toString());
+            localStorage.setItem("colorScheme", estado);
 
-            return nuevoEstoDarkMode;
+            return estado;
         });
-
-
     };
 
     return (
