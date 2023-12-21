@@ -82,11 +82,11 @@ export const GananciaChart = ({transacciones}) => {
     ];
 
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "mt-6 mb-60"
             :
             "bg-violet-300  rounded-lg px-6 mt-6 mb-60"
-            )}
+        )}
         >
             <h2 className="text-center text-2xl leading-10 mt-6 font-semibold">Ganancias</h2>
 

@@ -7,13 +7,17 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
     const { dark } = useDark();
 
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2"
-            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2"
+            : "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-2"
         )}>
 
             <div>
-                <h2 className='p-1 text-center font-semibold justify-around text-violet-600'>Ultimos Gastos</h2>
+                <h2 className={(dark === "light" ?
+                    "font-bold text-center p-1 text-violet-600"
+                    :
+                    "font-bold text-center p-1 text-violet-400"
+                )}>Ultimos Gastos</h2>
                 <div className="bg-inherit rounded-lg  ">
                     {cargando ?
                         <div className="flex justify-center">
@@ -25,18 +29,26 @@ export const ExpensesSection = ({ cargando, transacciones }) => {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th className="text-center py-2 px-20 font-semibold text-violet-600">Transacción</th>
-                                            <th className="text-center py-2 px-20 font-semibold text-violet-600">Monto</th>
+                                            <th className={(dark === "light" ?
+                                                "font-bold text-center p-1 text-violet-600"
+                                                :
+                                                "font-bold text-center p-1 text-violet-400"
+                                            )}>Transacción</th>
+                                            <th className={(dark === "light" ?
+                                                "font-bold text-center p-1 text-violet-600"
+                                                :
+                                                "font-bold text-center p-1 text-violet-400"
+                                            )}>Monto</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {egresos?.slice(0, 5).map((transaccion, index) => {
                                             return (
                                                 <tr className=" border-gray-200" key={index}>
-                                                    <td className={(dark ?
+                                                    <td className={(dark === "light" ?
                                                         "text-gray-600 py-2 px-20 font-bold"
                                                         :
-                                                        "text-gray-500 py-2 px-20 font-bold"
+                                                        "text-gray-300 py-2 px-20 font-bold"
                                                     )}>{transaccion.detalle}</td>
                                                     <td className="py-2 px-20 text-red-500 font-semibold font-mono">
                                                         <div className="w-28 flex justify-center">

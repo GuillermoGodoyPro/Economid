@@ -67,18 +67,18 @@ export const StateFilter = ({
     return (
         <div className='flex flex-col mx-2'>
             <div className="campo flex flex-col font-mono font-sm text-left p-2">
-                <label className={(dark ?
-                        "font-semibold text-violet-600"
-                        : "font-semibold text-violet-400"
-                    )}                
+                <label className={(dark === "light" ?
+                    "font-semibold text-violet-600"
+                    : "font-semibold text-violet-400"
+                )}
                 >Estado</label>
                 <select
                     name="estado"
                     id="estado"
-                    className={(dark ?
+                    className={(dark === "light" ?
                         "bg-[#E5E7EB] rounded-md p-1 font-mono"
                         : "bg-gray-600 text-gray-400 font-semibold rounded-md p-1 font-mono"
-                    )}  
+                    )}
                     defaultValue={"Filtrar por estado"}
                     onChange={e => handleStateChange(e.target.value)}
                 >

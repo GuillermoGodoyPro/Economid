@@ -91,10 +91,10 @@ const Dashboard = () => {
                         </div>
                     </div> : <div></div>
             }
-            <h2 className={(dark ?
+            <h2 className={(dark === "light" ?
                 "mx-5 text-violet-800 font-bold uppercase "
                 :
-                "mx-5 text-violet-500 font-bold uppercase "
+                "mx-5 text-gray-200 font-bold uppercase "
             )}
             >Hola, {user.nombre}</h2>
             <div className="p-2 m-6 mb-0 bg-inherit rounded flex justify-between">
@@ -111,19 +111,19 @@ const Dashboard = () => {
                     cargando={cargando}
                     setActiveGoals={setActiveGoals} />
             </div>
-            <div className={(dark ?
-                    "bg-inherit p-10"
-                    :
-                    "bg-inherit p-10"
-                )}
+            <div className={(dark === "light" ?
+                "bg-inherit p-10"
+                :
+                "bg-inherit p-10"
+            )}
             >
                 <AllTransactionsSection
-                    className={(dark ?
+                    className={(dark === "light" ?
                         "bg-inherit p-10"
                         :
                         "bg-gray-600 p-10"
                     )}
-                transacciones={transacciones} cargando={cargando} />
+                    transacciones={transacciones} cargando={cargando} />
             </div>
             <div className=" bg-inherit rounded flex justify-center">
                 <IncomesSection cargando={cargando} transacciones={transacciones} />

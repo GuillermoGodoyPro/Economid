@@ -69,18 +69,18 @@ export const DateFilter = ({
     };
     return (
         <div className="flex flex-col mx-2 font-mono font-sm text-left p-2">
-            <label className={(dark ?
-                    "font-semibold text-violet-600"
-                    : "font-semibold text-violet-400"
-                )}            
+            <label className={(dark === "light" ?
+                "font-semibold text-violet-600"
+                : "font-semibold text-violet-400"
+            )}
             >Fecha</label>
             <ReactDatePicker
                 showIcon
                 locale={es}
-                className={(dark ?
+                className={(dark === "light" ?
                     "bg-[#E5E7EB] rounded-md p-1 font-mono"
                     : "bg-gray-600 rounded-md p-1 font-mono"
-                )}          
+                )}
                 value={fecha}
                 placeholderText="Filtrar por fecha"
                 onChange={(date) => handleDateChange(date.toISOString().split("T")[0])}

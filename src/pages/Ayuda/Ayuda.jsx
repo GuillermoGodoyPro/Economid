@@ -4,7 +4,7 @@ const Ayuda = () => {
     const { dark } = useDark();
 
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "faq-section bg-gray-200 p-4 rounded-lg shadow-md m-20"
             : "faq-section bg-violet-300 p-4 rounded-lg shadow-md m-20"
         )}

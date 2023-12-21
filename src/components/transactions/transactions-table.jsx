@@ -59,63 +59,63 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div>
                     :
-                    <table className={(dark ?
-                            "w-full border-collapse"
-                            :
-                            "bg-gray-600 rounded-lg w-full "
-                        )}
+                    <table className={(dark === "light" ?
+                        "w-full border-collapse"
+                        :
+                        "bg-gray-600 rounded-lg w-full "
+                    )}
                     >
                         <thead>
                             <tr>
-                                <th className={(dark ?
+                                <th className={(dark === "light" ?
                                     "text-left py-2 px-4 font-semibold text-violet-600"
                                     :
                                     "text-left py-2 px-4 font-semibold text-violet-400"
-                                    )}
+                                )}
                                 >Detalle</th>
-                                <th className={(dark ?
+                                <th className={(dark === "light" ?
                                     "text-left py-2 px-4 font-semibold text-violet-600"
                                     :
                                     "text-left py-2 px-4 font-semibold text-violet-400"
-                                    )}
+                                )}
                                 >Monto</th>
-                                <th className={(dark ?
+                                <th className={(dark === "light" ?
                                     "text-left py-2 px-4 font-semibold text-violet-600"
                                     :
                                     "text-left py-2 px-4 font-semibold text-violet-400"
-                                    )}
+                                )}
                                 >Fecha</th>
-                                <th className={(dark ?
+                                <th className={(dark === "light" ?
                                     "text-left py-2 px-4 font-semibold text-violet-600"
                                     :
                                     "text-left py-2 px-4 font-semibold text-violet-400"
-                                    )}
+                                )}
                                 >Tipo</th>
-                                <th className={(dark ?
+                                <th className={(dark === "light" ?
                                     "text-left py-2 px-4 font-semibold text-violet-600"
                                     :
                                     "text-left py-2 px-4 font-semibold text-violet-400"
-                                    )}
+                                )}
                                 >Estado</th>
-                                <th className={(dark ?
+                                <th className={(dark === "light" ?
                                     "text-left py-2 px-4 font-semibold text-violet-600"
                                     :
                                     "text-left py-2 px-4 font-semibold text-violet-400"
-                                    )}
+                                )}
                                 >Operación</th>
                             </tr>
                         </thead>
                         <tbody>
                             {orderedTransactions?.map((transaccion, index) => {
                                 return (
-                                    <tr className={(dark ?
+                                    <tr className={(dark === "light" ?
                                         "border-b border-gray-200 "
                                         :
                                         "border-b border-gray-500 "
-                                        )}
+                                    )}
                                     key={index}>
 
-                                        <td className={(dark ?
+                                        <td className={(dark === "light" ?
                                             "py-2 px-4 text-gray-800 font-semibold"
                                             :
                                             "py-2 px-4 text-gray-200 font-semibold"
@@ -126,7 +126,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                 ?
                                                 !transaccion.estaActiva
                                                     ?
-                                                    <td className={(dark ?
+                                                    <td className={(dark === "light" ?
                                                         "py-2 px-4 text-gray-400 font-semibold font-mono"
                                                         :
                                                         "py-2 px-4 text-gray-300 font-semibold font-mono"
@@ -157,13 +157,13 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                 ?
                                                 !transaccion.estaActiva
                                                     ?
-                                                    <td className={(dark ?
+                                                    <td className={(dark === "light" ?
                                                         "py-2 px-4 text-gray-300  font-mono"
                                                         :
                                                         "py-2 px-4 text-gray-500  font-mono"
                                                     )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
                                                     :
-                                                    <td className={(dark ?
+                                                    <td className={(dark === "light" ?
                                                         "py-2 px-4 text-gray-400 font-semibold font-mono"
                                                         :
                                                         "py-2 px-4 text-gray-200 font-semibold font-mono"

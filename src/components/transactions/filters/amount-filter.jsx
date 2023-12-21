@@ -68,18 +68,18 @@ export const AmountFilter = ({
     return (
         <div className='flex flex-col mx-2'>
             <div className="campo flex flex-col font-mono font-sm text-left p-2">
-                <label className={(dark ?
+                <label className={(dark === "light" ?
                     "font-semibold text-violet-600"
                     : "font-semibold text-violet-400"
                 )}
-        >Monto Hasta</label>
+                >Monto Hasta</label>
                 <input
                     id="monto"
                     type="number"
-                    className={(dark ?
+                    className={(dark === "light" ?
                         "bg-[#E5E7EB] rounded-md p-1 font-mono"
                         : "bg-gray-600 rounded-md p-1 font-mono"
-                    )}          
+                    )}
                     placeholder="Ingresar monto"
                     value={monto.replace(",", ".")}
                     onChange={e => handleAmountChange(e.target.value.replace(",", ".").trim())}

@@ -10,7 +10,7 @@ export const ChartSection = ({ cargando, transacciones }) => {
     const { dark } = useDark();
 
     return (
-        <div className={(dark ?
+        <div className={(dark === "light" ?
             "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
             : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
         )}
