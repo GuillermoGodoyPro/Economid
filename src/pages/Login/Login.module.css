@@ -6,19 +6,20 @@
     font-weight: 700;
     font-size: 2rem;
     text-transform: capitalize;
-    color: var(--violetlight);
+    color: rgb(167 139 250);
 }
 
 .title {
     font-weight: 700;
     font-size: 1.9rem;
     text-transform: capitalize;
-    color: var(--violetlight);
+    color: rgb(167 139 250);
+    
 
 }
 
 .form{
-    background-color: var(--blanco);    
+    background-color: var(--blanco-gris);    
     
     margin: 1.5rem 0;
     
@@ -37,8 +38,7 @@
     font-size: 1.25rem;     
     font-weight: bold;
 
-    color: var(--violetlight);
-
+    color: rgb(167 139 250);
 }
 
 .input{
@@ -71,7 +71,7 @@
     width: 100%;   
     
     padding: 0.75rem 0;
-    color: var(--blanco);
+    color: white;
 
     text-transform: uppercase;
     font-weight: bold;
@@ -89,13 +89,21 @@
     justify-content: center;
     padding-top: 0.30rem;
     padding-bottom: 0.30rem;
-    color: var(--violetlight) ;
-    background-color: var(--blanco);
+    color: rgb(167 139 250);
+    background-color: var(--blanco-gris); 
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     font-weight: bold;  
     text-align: center;
     align-items: center;  
     border-radius: 0.5rem;
+}
+nav p {
+    font-weight: 400;
+    
+}
+.nav .link {
+    font-weight: 600;
+
 }
 
 .nav .link:hover {

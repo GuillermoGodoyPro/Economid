@@ -20,7 +20,10 @@ export const BalanceComponent = ({cargando, balance}) => {
                     balance ?
                         <div className='flex flex-col p-5 justify-center text-center'>
                             <div>
-                                <h3 className='text-xl font-semibold text-violet-600 antialiased'>
+                                <h3 className={(dark === "light" ?
+                                    'text-xl font-semibold text-violet-600 antialiased'
+                                    :'text-xl font-semibold text-violet-400 antialiased'
+                                )}>
                                     Balance
                                 </h3>
                                 {

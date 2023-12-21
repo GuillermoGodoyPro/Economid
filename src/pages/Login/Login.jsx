@@ -115,15 +115,19 @@ const Login = () => {
 
             <div className={styles.nav}>
                 <nav>
+
+                    <p>
+                        ¿Aún no tienes tu cuenta?
+                    </p>
                     <Link
                         className={styles.link} to="/signup">
-                        Registrarse
+                        Regístrate
                     </Link>
-                    <Link
+                    {/* <Link
                         className={styles.link} to="/forgotpassword"
                     >
                         Recuperar contraseña
-                    </Link>
+                    </Link> */}
 
                     {/* <Link
                 className={styles.link} to="/dashboard">
