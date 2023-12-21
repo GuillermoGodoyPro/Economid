@@ -10,7 +10,7 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
         <div className={(dark === "light" ?
             "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
             :
-            "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+            "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 "
         )}
         >
             <div className="flex justify-center mb-5">

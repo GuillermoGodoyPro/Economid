@@ -64,11 +64,15 @@ export const BalanceExpenses = ({ user, config }) => {
     return (
         <div className={(dark === "light" ?
             "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
-            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
+            : "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 mx-2"
         )}
         >
             <div>
-                <h2 className='p-1 text-center font-semibold text-violet-600'>Gastos</h2>
+                <h2 className={(dark === "light" ?
+                        'p-1 text-center font-semibold text-violet-600'
+                        : 'p-1 text-center font-semibold text-violet-400'
+                    )}
+                >Gastos</h2>
                 {
                     expensesAlert ?
                         <div className="flex justify-center">
@@ -88,16 +92,31 @@ export const BalanceExpenses = ({ user, config }) => {
                                 <table>
                                     <thead>
                                         <tr>
-                                            <th className="text-center py-2 px-10 font-semibold text-violet-600">Transacción</th>
-                                            <th className="text-center py-2 px-10 font-semibold text-violet-600">Monto</th>
-                                            <th className="text-center py-2 px-10 font-semibold text-violet-600">Estado</th>
+                                            <th className={(dark === "light" ?
+                                                "text-center py-2 px-10 font-semibold text-violet-600"
+                                                    : "text-center py-2 px-10 font-semibold text-violet-400"
+                                                )}
+                                            >Transacción</th>
+                                            <th className={(dark === "light" ?
+                                                "text-center py-2 px-10 font-semibold text-violet-600"
+                                                    : "text-center py-2 px-10 font-semibold text-violet-400"
+                                                )}
+                                            >Monto</th>
+                                            <th className={(dark === "light" ?
+                                                "text-center py-2 px-10 font-semibold text-violet-600"
+                                                    : "text-center py-2 px-10 font-semibold text-violet-400"
+                                                )}
+                                            >Estado</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         {expenses?.map((transaccion, index) => {
                                             return (
                                                 <tr className=" border-gray-200" key={index}>
-                                                    <td className="py-2 px-10">{transaccion.detalle}</td>
+                                                    <td className={(dark === "light" ?
+                                                            "py-2 px-10 text-gray-800"
+                                                            : "text-gray-100 font-semibold py-2 px-10"
+                                                        )}>{transaccion.detalle}</td>
                                                     <td className="py-2 px-10 text-red-500 font-semibold font-mono">
                                                         <div className="w-28 flex justify-center">
                                                             -${parseFloat(transaccion.monto).toFixed(2)}

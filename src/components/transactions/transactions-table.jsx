@@ -175,14 +175,14 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                             transaccion.tipoTransaccion === type.EGRESO ?
                                                 <td className="py-2 px-4 text-gray-400">
                                                     {transaccion.tipoTransaccion}
-                                                    <span className="text-red-500 font-bold ml-2">
+                                                    <span className="text-red-500 font-bold ml-2 pointer-events-none">
                                                         <i className="fa-solid fa-arrow-trend-down"></i>
                                                     </span>
                                                 </td>
                                                 :
                                                 <td className="py-2 px-4 text-gray-400">
                                                     {transaccion.tipoTransaccion}
-                                                    <span className="text-green-500 font-bold ml-2">
+                                                    <span className="text-green-500 font-bold ml-2 pointer-events-none">
                                                         <i className="fa-solid fa-arrow-trend-up"></i>
                                                     </span>
                                                 </td>
@@ -202,7 +202,11 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                         }
                                         <td>
                                             <button disabled={!transaccion.estaActiva}>
-                                                <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
+                                                <i className={(dark === "light" ?
+                                                    "fa-regular fa-pen-to-square text-gray-600 m-3"
+                                                    :
+                                                    "fa-regular fa-pen-to-square text-gray-800 m-3"
+                                                )}
                                                     data-tooltip-id="my-tooltip"
                                                     data-tooltip-content="Modificar"
                                                     onClick={e => handleModifyModal(transaccion.id, transaccion)}

@@ -15,12 +15,13 @@ const DarkProvider = ({ children }) => {
             // Actualizar estilos y almacenar en localStorage
             if (estadoDarkMode === "light") {
                 document.documentElement.style.setProperty("--crema", "#f5f5f3");
+                document.documentElement.style.setProperty("--blanco-gris", "#ffffff");
                 document.documentElement.style.setProperty("--blanco", "#ffffff");
                 document.documentElement.style.setProperty("--gris", "#303030");
                 document.documentElement.style.setProperty("--violetlight", "#4f339ccb");
-
             } else {
                 document.documentElement.style.setProperty("--crema", "rgb(55 65 81)");
+                document.documentElement.style.setProperty("--blanco-gris", "rgb(75 85 99)");
                 document.documentElement.style.setProperty("--blanco", "#cac2e9");
                 document.documentElement.style.setProperty("--gris", "#13159e");
                 document.documentElement.style.setProperty("--violetlight", "#865ef7c9");

@@ -71,7 +71,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
     return (
         <div className={(dark === "light" ?
             "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
-            : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+            : "bg-gray-600 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
         )}>
             {
                 cargando ?
@@ -98,7 +98,11 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                         </select>
                                     </div>
                                 </div>
-                                <h3 className='text-xl font-semibold text-violet-600 antialiased'>
+                                <h3 className={(dark === "light" ?
+                                        'text-xl font-semibold text-violet-600 antialiased'
+                                        : 'text-xl font-semibold text-violet-400 antialiased'
+                                    )}
+                                >
                                     Saldo
                                 </h3>
                                 {
@@ -110,7 +114,11 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                                     <span className="mr-1">$</span>
                                                     {parseFloat(balance.data.saldo_Total).toFixed(2)}
                                                 </h1> :
-                                                <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                <h1 className={(dark === "light" ?
+                                                        'text-gray-600 font-bold text-5xl font-mono'
+                                                        :'text-gray-200 font-bold text-5xl font-mono'
+                                                    )}
+                                                >
                                                     <span className="mr-1">$</span>
                                                     {parseFloat(balance.data.saldo_Total).toFixed(2)}
                                                 </h1> :
