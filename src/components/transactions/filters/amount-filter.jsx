@@ -1,4 +1,5 @@
 import useAuth from "../../../context/useAuth";
+import useDark from "../../../context/useDark";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
 import { getUserToken } from "../../../services/token/tokenService";
 
@@ -15,6 +16,8 @@ export const AmountFilter = ({
 }) => {
     const { auth } = useAuth();
     const user = getUserToken();
+    const { dark } = useDark();
+
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -60,14 +63,23 @@ export const AmountFilter = ({
             }, 3000);
         }
     };
+
+
     return (
         <div className='flex flex-col mx-2'>
             <div className="campo flex flex-col font-mono font-sm text-left p-2">
-                <label className="font-semibold text-violet-600">Monto Hasta</label>
+                <label className={(dark ?
+                    "font-semibold text-violet-600"
+                    : "font-semibold text-violet-400"
+                )}
+        >Monto Hasta</label>
                 <input
                     id="monto"
                     type="number"
-                    className="bg-[#E5E7EB] rounded-md p-1 font-mono"
+                    className={(dark ?
+                        "bg-[#E5E7EB] rounded-md p-1 font-mono"
+                        : "bg-gray-600 rounded-md p-1 font-mono"
+                    )}          
                     placeholder="Ingresar monto"
                     value={monto.replace(",", ".")}
                     onChange={e => handleAmountChange(e.target.value.replace(",", ".").trim())}

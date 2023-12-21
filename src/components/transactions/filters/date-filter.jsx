@@ -4,6 +4,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
+import useDark from "../../../context/useDark";
 
 export const DateFilter = ({
     setTransacciones,
@@ -17,6 +18,7 @@ export const DateFilter = ({
     payloadProps
 }) => {
     const { auth } = useAuth();
+    const { dark } = useDark();
 
     const user = getUserToken();
     const config = {
@@ -67,11 +69,18 @@ export const DateFilter = ({
     };
     return (
         <div className="flex flex-col mx-2 font-mono font-sm text-left p-2">
-            <label className="font-semibold text-violet-600">Fecha</label>
+            <label className={(dark ?
+                    "font-semibold text-violet-600"
+                    : "font-semibold text-violet-400"
+                )}            
+            >Fecha</label>
             <ReactDatePicker
                 showIcon
                 locale={es}
-                className="bg-[#E5E7EB] rounded-md p-1 font-mono"
+                className={(dark ?
+                    "bg-[#E5E7EB] rounded-md p-1 font-mono"
+                    : "bg-gray-600 rounded-md p-1 font-mono"
+                )}          
                 value={fecha}
                 placeholderText="Filtrar por fecha"
                 onChange={(date) => handleDateChange(date.toISOString().split("T")[0])}

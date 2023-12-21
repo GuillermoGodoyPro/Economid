@@ -13,9 +13,11 @@ import { Bar } from "react-chartjs-2";
 
 ChartJS.register( CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title);
 import { /* texts, */ type } from "../../../constants/myfinances-constants";
+import useDark from "../../../context/useDark";
 
 
 export const GananciaChart = ({transacciones}) => {
+    const { dark } = useDark();
 
     console.log(transacciones);
     /* Se obtienen los montos (ingresos y egresos) por mes */
@@ -80,7 +82,12 @@ export const GananciaChart = ({transacciones}) => {
     ];
 
     return (
-        <div className="mt-6 mb-60">
+        <div className={(dark ?
+            "mt-6 mb-60"
+            :
+            "bg-violet-300  rounded-lg px-6 mt-6 mb-60"
+            )}
+        >
             <h2 className="text-center text-2xl leading-10 mt-6 font-semibold">Ganancias</h2>
 
             <div className="chart-container ">

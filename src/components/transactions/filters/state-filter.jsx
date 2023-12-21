@@ -1,4 +1,5 @@
 import useAuth from "../../../context/useAuth";
+import useDark from "../../../context/useDark";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
 import { getUserToken } from "../../../services/token/tokenService";
 
@@ -15,6 +16,8 @@ export const StateFilter = ({
 }) => {
     const { auth } = useAuth();
     const user = getUserToken();
+    const { dark } = useDark();
+
     const config = {
         headers: {
             "Content-Type": "application/json",
@@ -64,11 +67,18 @@ export const StateFilter = ({
     return (
         <div className='flex flex-col mx-2'>
             <div className="campo flex flex-col font-mono font-sm text-left p-2">
-                <label className="font-semibold text-violet-600">Estado</label>
+                <label className={(dark ?
+                        "font-semibold text-violet-600"
+                        : "font-semibold text-violet-400"
+                    )}                
+                >Estado</label>
                 <select
                     name="estado"
                     id="estado"
-                    className="bg-[#E5E7EB] rounded-md p-1 font-mono"
+                    className={(dark ?
+                        "bg-[#E5E7EB] rounded-md p-1 font-mono"
+                        : "bg-gray-600 text-gray-400 font-semibold rounded-md p-1 font-mono"
+                    )}  
                     defaultValue={"Filtrar por estado"}
                     onChange={e => handleStateChange(e.target.value)}
                 >

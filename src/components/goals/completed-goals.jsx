@@ -23,7 +23,10 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
                             {completedGoals.slice(0, 5).map((goal, index) => {
                                 return (
                                     <div
-                                        className="w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-100"
+                                        className={(dark ?
+                                                "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-100"
+                                                : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-100"
+                                            )}
                                         key={index}>
                                         <div className="flex justify-between items-center">
                                             <span className="font-semibold text-gray-500">{goal.titulo}</span>

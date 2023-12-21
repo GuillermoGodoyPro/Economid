@@ -34,9 +34,9 @@ const Header = () => {
 
     return (
         <>
-            <header className='headerStyle bg-violet-200 md:justify-between'>
+            <header className=' bg-violet-200 md:justify-between headerStyle'>
 
-                <div className=' px-4 pt-2  flex items-center justify-between'>
+                <div className=' px-4 pt-2 flex items-center justify-between'>
                     <Link
                         to="index"
                         className=" text-violet-900 ml-2 overflow-hidden flex justify-center"
@@ -136,16 +136,17 @@ const Header = () => {
                         >
                             { dark ?
                                 <i
-                                    className="fa-regular fa-sun "
+                                    className="fa-solid fa-moon"
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="Apariencia"
                                 ></i>
                                 :
                                 <i
-                                    className="fa-solid fa-moon"
+                                    className="fa-regular fa-sun "
                                     data-tooltip-id="my-tooltip"
                                     data-tooltip-content="Apariencia"
-                                ></i>
+                                ></i>       
+                               
                             } {/* fa-beat */}
                             <Tooltip id="my-tooltip" />
 

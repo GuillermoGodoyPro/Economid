@@ -31,7 +31,7 @@ export const IncomesSection = ({ cargando, transacciones }) => {
                                     <tbody>
                                         {ingresos?.slice(0, 5).map((transaccion, index) => {
                                             return (
-                                                <tr className="border-b border-gray-200" key={index}>
+                                                <tr className="border-gray-200" key={index}>
                                                     <td className={(dark ?
                                                         "text-gray-600 py-2 px-20 font-bold"
                                                         :

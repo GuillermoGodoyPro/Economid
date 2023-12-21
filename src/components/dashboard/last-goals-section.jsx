@@ -12,7 +12,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
     const { dark } = useDark();
-
+    /* test */
     const handleAddingModal = (goalId) => {
         setModal(true);
         setGoalId(goalId);

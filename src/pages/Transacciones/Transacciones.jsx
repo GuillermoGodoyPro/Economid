@@ -13,6 +13,7 @@ import { TransactionsPagination } from "../../components/dashboard/transactions/
 import { TypeFilter } from "../../components/transactions/filters/type-filter";
 import { StateFilter } from "../../components/transactions/filters/state-filter";
 import { AmountFilter } from "../../components/transactions/filters/amount-filter";
+import useDark from "../../context/useDark";
 
 const Transacciones = () => {
     const { auth } = useAuth();
@@ -31,6 +32,8 @@ const Transacciones = () => {
     const [monto, setMonto] = useState("");
     const [state, setState] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
+    const { dark } = useDark();
+
     const [payloadProps, setPayloadProps] = useState({
         userId: null,
         tipo: null,
@@ -125,7 +128,12 @@ const Transacciones = () => {
     const { msg } = alerta;
 
     return (
-        <div className="bg-inherit p-10">
+        <div className={(dark ?
+                "bg-inherit p-10"
+                :
+                "bg-inherit p-10"
+            )}
+        >
             {alerta ?
                 <div className="flex justify-center mb-20">
                     <div className="fixed">
@@ -202,7 +210,12 @@ const Transacciones = () => {
                     Borrar Filtros
                 </button>
             </div>
-            <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
+            <div className={(dark ?
+                    "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+                    :
+                    "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+                )}
+            >
                 <TransactionsTable
                     cargando={cargando}
                     transacciones={transacciones}
