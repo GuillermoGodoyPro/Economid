@@ -1,67 +1,174 @@
 import { PulseLoader } from "react-spinners";
 import { type } from "../../constants/myfinances-constants";
 import { BorrarTransaccion } from "../pop-ups/ModalBorrarTransaccion";
-import { useState } from "react";
-import { TransactionsPagination } from "../dashboard/transactions/transactions-pagination";
+import { useEffect, useState } from "react";
+import { ModificarTransaccion } from "../pop-ups/ModalModificarTransaccion";
+import useAuth from "../../context/useAuth";
+import { getCategories } from "../../services/myfinances-api/categorias";
+import useDark from "../../context/useDark";
 
-export const TransactionsTable = ({ cargando, transacciones, setTransacciones, auth }) => {
-    const [modal, setModal] = useState(false);
+export const TransactionsTable = ({ cargando, transacciones, setTransacciones, idBalance }) => {
+    const { auth } = useAuth();
+    const orderedTransactions = transacciones?.slice(0, 10);
+    const [error, setError] = useState(null);
+    const [deleteModal, setDeleteModal] = useState(false);
+    const [modifyModal, setModifyModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [transaccionId, setTransaccionId] = useState(0);
-    const [currentPage, setCurrentPage] = useState(1);
-    const pageSize = 10;
-    const lastIndex = currentPage * pageSize;
-    const firstIndex = lastIndex - pageSize;
-    const paginatedTransactions = transacciones.slice(firstIndex, lastIndex);
-    const pageNumber = Math.ceil(transacciones.length / pageSize);
-    const numbers = [...Array(pageNumber + 1).keys()].slice(1);
+    const [toModifyTransact, setTransaccion] = useState({});
+    const [categorias, setCategorias] = useState([""]);
+    const { dark } = useDark();
 
+    const handleModifyModal = (tId, t) => {
+        setModifyModal(true);
+        setTransaccionId(tId);
+        setTransaccion(t);
+        setTimeout(() => {
+            setAnimarModal(true);
+        }, 400);
+    };
     const handleDeletingModal = (tId) => {
-        setModal(true);
+        setDeleteModal(true);
         setTransaccionId(tId);
         setTimeout(() => {
             setAnimarModal(true);
         }, 400);
     };
+    useEffect(() => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth}`
+            }
+        };
+        const fetchCategorias = async () => {
+            try {
+                const { data: response } = await getCategories(config);
+                setCategorias(response);
+            } catch (error) {
+                setError(error);
+            }
+        };
+        fetchCategorias();
+    }, []);
     return (
-        <div>
+        <div className="t-table">
             {
                 cargando ?
                     <div className="flex justify-center">
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div>
                     :
-                    <table className="w-full border-collapse">
+                    <table className={(dark === "light" ?
+                        "w-full border-collapse"
+                        :
+                        "bg-gray-600 rounded-lg w-full "
+                    )}
+                    >
                         <thead>
                             <tr>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Detalle</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Monto</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Fecha</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Tipo</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Estado</th>
-                                <th className="text-left py-2 px-4 font-semibold text-violet-600">Operación</th>
+                                <th className={(dark === "light" ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                )}
+                                >Detalle</th>
+                                <th className={(dark === "light" ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                )}
+                                >Monto</th>
+                                <th className={(dark === "light" ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                )}
+                                >Fecha</th>
+                                <th className={(dark === "light" ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                )}
+                                >Tipo</th>
+                                <th className={(dark === "light" ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                )}
+                                >Estado</th>
+                                <th className={(dark === "light" ?
+                                    "text-left py-2 px-4 font-semibold text-violet-600"
+                                    :
+                                    "text-left py-2 px-4 font-semibold text-violet-400"
+                                )}
+                                >Operación</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {paginatedTransactions?.map((transaccion, index) => {
+                            {orderedTransactions?.map((transaccion, index) => {
                                 return (
-                                    <tr className="border-b border-gray-200" key={index}>
+                                    <tr className={(dark === "light" ?
+                                        "border-b border-gray-200 "
+                                        :
+                                        "border-b border-gray-500 "
+                                    )}
+                                    key={index}>
 
-                                        <td className="py-2 px-4 text-gray-800">{transaccion.detalle}</td>
+                                        <td className={(dark === "light" ?
+                                            "py-2 px-4 text-gray-800 font-semibold"
+                                            :
+                                            "py-2 px-4 text-gray-200 font-semibold"
+                                        )}
+                                        >{transaccion.detalle}</td>
                                         {
-                                            transaccion.tipoTransaccion === type.EGRESO ?
-                                                <td className="py-2 px-4 text-red-500 font-semibold font-mono">
-                                                    -${parseFloat(transaccion.monto).toFixed(2)}
-                                                </td> :
-                                                <td className="py-2 px-4 text-green-500 font-semibold font-mono">
-                                                    <div className="w-28 flex justify-center rounded-md bg-green-200">
-                                                        +${parseFloat(transaccion.monto).toFixed(2)}
-                                                    </div>
-                                                </td>
+                                            transaccion.tipoTransaccion === type.EGRESO
+                                                ?
+                                                !transaccion.estaActiva
+                                                    ?
+                                                    <td className={(dark === "light" ?
+                                                        "py-2 px-4 text-gray-400 font-semibold font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-300 font-semibold font-mono"
+                                                    )}>
+                                                        -${parseFloat(transaccion.monto).toFixed(2)}
+                                                    </td>
+                                                    :
+                                                    <td className="py-2 px-4 text-red-500 font-semibold font-mono">
+                                                        -${parseFloat(transaccion.monto).toFixed(2)}
+                                                    </td>
+                                                :
+                                                !transaccion.estaActiva
+                                                    ?
+                                                    <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
+                                                        <div className="w-28 flex justify-center rounded-md bg-gray-200">
+                                                            +${parseFloat(transaccion.monto).toFixed(2)}
+                                                        </div>
+                                                    </td>
+                                                    :
+                                                    <td className="py-2 px-4 text-green-500 font-semibold font-mono">
+                                                        <div className="w-28 flex justify-center rounded-md bg-green-200">
+                                                            +${parseFloat(transaccion.monto).toFixed(2)}
+                                                        </div>
+                                                    </td>
                                         }
                                         {
-                                            transaccion.fecha ?
-                                                <td className="py-2 px-4 text-gray-600 font-semibold">{new Date(transaccion.fecha).toLocaleDateString()}</td> :
+                                            transaccion.fecha
+                                                ?
+                                                !transaccion.estaActiva
+                                                    ?
+                                                    <td className={(dark === "light" ?
+                                                        "py-2 px-4 text-gray-300  font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-500  font-mono"
+                                                    )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                    :
+                                                    <td className={(dark === "light" ?
+                                                        "py-2 px-4 text-gray-400 font-semibold font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-200 font-semibold font-mono"
+                                                    )}>{new Date(transaccion.fecha).toLocaleDateString()}</td>
+                                                :
                                                 <td></td>
                                         }
                                         {
@@ -94,10 +201,27 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                                                 </td>
                                         }
                                         <td>
-                                            <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
-                                                data-tooltip-id="my-tooltip"
-                                                data-tooltip-content="Modificar"></i>
-
+                                            <button disabled={!transaccion.estaActiva}>
+                                                <i className="fa-regular fa-pen-to-square text-gray-600 m-3"
+                                                    data-tooltip-id="my-tooltip"
+                                                    data-tooltip-content="Modificar"
+                                                    onClick={e => handleModifyModal(transaccion.id, transaccion)}
+                                                    style={!transaccion.estaActiva ? { cursor: "not-allowed" } : { cursor: "pointer" }}>
+                                                </i>
+                                            </button>
+                                            {
+                                                modifyModal && <ModificarTransaccion
+                                                    setAnimarModal={setAnimarModal}
+                                                    setModal={setModifyModal}
+                                                    animarModal={animarModal}
+                                                    transaccionId={transaccionId}
+                                                    transaccion={toModifyTransact}
+                                                    setTransaccion={setTransaccion}
+                                                    setTransacciones={setTransacciones}
+                                                    idBalance={idBalance}
+                                                    categorias={categorias}
+                                                />
+                                            }
                                             <button disabled={!transaccion.estaActiva}>
                                                 <i className="fa-solid fa-ban pl-2 text-red-600"
                                                     data-tooltip-id="my-tooltip"
@@ -107,9 +231,9 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                                                 </i>
                                             </button>
                                             {
-                                                modal && <BorrarTransaccion
+                                                deleteModal && <BorrarTransaccion
                                                     setAnimarModal={setAnimarModal}
-                                                    setModal={setModal}
+                                                    setModal={setDeleteModal}
                                                     animarModal={animarModal}
                                                     auth={auth}
                                                     transaccionId={transaccionId}
@@ -123,17 +247,6 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, a
                             })}
                         </tbody>
                     </table>
-            }
-            {
-                !cargando ?
-                    <div className="w-full">
-                        <TransactionsPagination
-                            currentPage={currentPage}
-                            nPage={pageNumber}                            
-                            numbers={numbers}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </div> : <div></div>
             }
         </div>
     );

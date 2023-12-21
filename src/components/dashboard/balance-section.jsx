@@ -6,6 +6,7 @@ import { useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import { getDollarExchangeRate } from "../../services/dolar/cotizacion-api";
 import { texts } from "../../constants/myfinances-constants";
+import useDark from "../../context/useDark";
 
 export const BalanceSection = ({ auth, userId, setTransacciones }) => {
     const [cargando, setLoading] = useState(true);
@@ -18,6 +19,8 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
     const [dolarValue, setDolarValue] = useState(null);
     const [dolarDate, setDolarDate] = useState(null);
     const [divisa, setDivisa] = useState("ARS");
+
+    const { dark } = useDark();
 
     const handleModalTransaccion = () => {
         setModal(true);
@@ -66,7 +69,10 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
         fetchDollars();
     }, []);
     return (
-        <div className="bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around">
+        <div className={(dark === "light" ?
+            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+            : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+        )}>
             {
                 cargando ?
                     <div className="flex justify-center">
@@ -147,10 +153,13 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                 <br />
                                 {
                                     dolarValue && dolarDate ?
-                                        <div className="text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400">
+                                        <div className={(dark === "light" ?
+                                            "text-center rounded-2xl p-3 m-3 bg-green-100 shadow-md hover:shadow-green-400"
+                                            : "text-center rounded-2xl p-3 m-3 bg-green-200 shadow-md hover:shadow-green-400"
+                                        )}>
                                             <div className="flex flex-col items-center font-semibold mb-4 text-violet-600">
                                                 <h3 className="w-24 text-white shadow-md font-semibold text-center rounded-3xl bg-green-400 font-mono">
-                                                    <span className="mr-1">USD</span>
+                                                    <span className="mr-1">ARS</span>
                                                     {dolarValue}
                                                 </h3>
                                             </div>

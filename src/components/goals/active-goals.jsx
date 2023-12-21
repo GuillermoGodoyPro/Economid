@@ -1,12 +1,15 @@
 import { useState } from "react";
 import { GoalAmount } from "../pop-ups/ModalMontoMeta";
 import { PulseLoader } from "react-spinners";
+import useDark from "../../context/useDark";
 
 export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setCompletedGoals }) => {
     const activeGoals = goals?.filter(({ completada }) => !completada);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
+    const { dark } = useDark();
+
 
     const handleAddingModal = (goalId) => {
         setModal(true);
@@ -17,7 +20,11 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
     };
 
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center">
+        <div className={(dark === "light" ?
+            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+        )}
+        >
             <h3 className="font-semibold text-violet-600">Metas Activas</h3>
 
             {
@@ -25,12 +32,15 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                     <div className="flex justify-center">
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div> :
-                    goals.length || (goals.length && !error) ?
+                    activeGoals.length || (activeGoals.length && !error) ?
                         <div className="flex flex-wrap justify-around">
                             {activeGoals.map((goal, index) => {
                                 return (
                                     <div
-                                        className="w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                        className={(dark === "light" ?
+                                            "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                            : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                        )}
                                         key={index}>
                                         <div className="flex justify-between items-center">
                                             <span className="font-semibold text-gray-500">{goal.titulo}</span>
@@ -38,10 +48,10 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                                                 {
                                                     !goal.montoActual ?
                                                         "$0" :
-                                                        `$${parseFloat(goal.montoActual)}`
+                                                        `$${parseFloat(goal.montoActual.toFixed(2))}`
                                                 }
                                                 <span className="font-semibold text-xs text-gray-500">
-                                                    {` / $${parseFloat(goal.montoFinal)}`}
+                                                    {` / $${parseFloat(goal.montoFinal.toFixed(2))}`}
                                                 </span>
                                             </span>
                                         </div>

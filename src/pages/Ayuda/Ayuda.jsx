@@ -1,8 +1,14 @@
-import React from "react";
+import useDark from "../../context/useDark";
 
 const Ayuda = () => {
+    const { dark } = useDark();
+
     return (
-        <div className="faq-section bg-gray-200 p-4 rounded-lg shadow-md m-20">
+        <div className={(dark === "light" ?
+            "faq-section bg-gray-200 p-4 rounded-lg shadow-md m-20"
+            : "faq-section bg-violet-300 p-4 rounded-lg shadow-md m-20"
+        )}
+        >
             <h1 className='p-1 text-violet-600 justify-around mb-4 font-bold'>Preguntas Frecuentes - MyFinances</h1>
             <h3>1. ¿Cómo puedo comenzar a utilizar MyFinances?</h3>
             <p>Bienvenido a MyFinances! Para comenzar, regístrate con tu correo electrónico, completa la configuración de tu cuenta y crea tu perfil economico estableciendo tu meta financiera y presupuesto mensual!. Después de eso, estarás listo para comenzar a registrar tus transacciones y administrar tus finanzas de manera efectiva.</p>

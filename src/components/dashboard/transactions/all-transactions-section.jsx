@@ -1,12 +1,25 @@
 import { PulseLoader } from "react-spinners";
 import { type } from "../../../constants/myfinances-constants";
+import useDark from "../../../context/useDark";
 
 export const AllTransactionsSection = ({ transacciones, cargando }) => {
+    const { dark } = useDark();
+
     const orderedTransactions = transacciones?.slice(0, 5);
     return (
-        <div className="bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border">
+        <div className={(dark === "light" ?
+            "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+            :
+            "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400 border"
+        )}
+        >
             <div className="flex justify-center mb-5">
-                <h3 className="font-bold text-violet-600">Ultimas Transacciones</h3>
+                <h3 className={(dark === "light" ?
+                    "font-bold text-violet-600"
+                    :
+                    "font-bold text-violet-400"
+                )}
+                >Ultimas Transacciones</h3>
             </div>
             {
                 cargando ?
@@ -16,21 +29,51 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                     :
                     <div className="flex justify-center">
                         <table className="w-full">
-
                             <thead>
                                 <tr>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Detalle</th>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Monto</th>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Fecha</th>
-                                    <th className="text-left py-2 px-20 font-semibold text-violet-600">Tipo</th>
+                                    <th className={(dark === "light" ?
+                                        "text-left py-2 px-20 font-semibold text-violet-600"
+                                        :
+                                        "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                    )}
+                                    >Detalle</th>
+                                    <th className={(dark === "light" ?
+                                        "text-left py-2 px-20 font-semibold text-violet-600"
+                                        :
+                                        "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                    )}
+                                    >Monto</th>
+                                    <th className={(dark === "light" ?
+                                        "text-left py-2 px-20 font-semibold text-violet-600"
+                                        :
+                                        "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                    )}
+                                    >Fecha</th>
+                                    <th className={(dark === "light" ?
+                                        "text-left py-2 px-20 font-semibold text-violet-600"
+                                        :
+                                        "bg-gray-600 text-left py-2 px-20 font-semibold text-violet-400"
+                                    )}
+                                    >Tipo</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {
                                     orderedTransactions.map((transaccion, index) => {
                                         return (
-                                            <tr className="border-b border-gray-200" key={index}>
-                                                <td className="py-2 px-20 font-semibold">{transaccion.detalle}</td>
+                                            <tr className={(dark === "light" ?
+                                                "border-b border-gray-200"
+                                                :
+                                                "bg-gray-600 border-b border-gray-500"
+                                            )}
+                                                key={index}
+                                            >
+                                                <td className={(dark === "light" ?
+                                                    "text-gray-600 py-2 px-20 font-semibold"
+                                                    :
+                                                    "text-gray-300 py-2 px-20 font-semibold"
+                                                )}
+                                                >{transaccion.detalle}</td>
                                                 {
                                                     transaccion.tipoTransaccion === type.EGRESO ?
                                                         <td className="py-2 px-20 text-red-500 font-semibold font-mono">-${parseFloat(transaccion.monto).toFixed(2)}</td> :
@@ -44,7 +87,12 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                                 }
                                                 {
                                                     transaccion.fecha ?
-                                                        <td className="py-2 px-20 text-gray-600">{new Date(transaccion.fecha).toLocaleDateString()}</td> :
+                                                        <td className={(dark === "light" ?
+                                                            "py-2 px-20 text-gray-600"
+                                                            :
+                                                            "py-2 px-20 text-gray-300"
+                                                        )}
+                                                        >{new Date(transaccion.fecha).toLocaleDateString()}</td> :
                                                         <td></td>
                                                 }
                                                 {

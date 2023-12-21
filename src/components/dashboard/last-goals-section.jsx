@@ -3,6 +3,7 @@ import { PulseLoader } from "react-spinners";
 import { GoalAmount } from "../pop-ups/ModalMontoMeta";
 import ModalMetas from "../pop-ups/ModalMetas";
 import { texts } from "../../constants/myfinances-constants";
+import useDark from "../../context/useDark";
 
 export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
     const orderedList = activeGoals?.sort((a, b) => ((b.montoActual / b.montoFinal) - (a.montoActual / a.montoFinal)));
@@ -10,7 +11,8 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
-
+    const { dark } = useDark();
+    /* test */
     const handleAddingModal = (goalId) => {
         setModal(true);
         setGoalId(goalId);
@@ -25,7 +27,11 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
         }, 400);
     };
     return (
-        <div className="bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around">
+        <div className={(dark === "light" ?
+            "bg-gray-200 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+            : "bg-violet-300 pt-4 rounded-lg shadow-md hover:shadow-violet-400 w-full m-2 flex flex-col justify-around"
+        )}
+        >
             {
                 cargando ?
                     <div className="flex justify-center">
@@ -37,17 +43,20 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                                 Ultima Meta
                             </h3>
                             <div
-                                className="w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100">
+                                className={(dark === "light" ?
+                                    "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                    : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                )}>
                                 <div className="flex justify-between items-center">
                                     <span className="font-semibold text-gray-500">{almostCompletedGoal[0].titulo}</span>
                                     <span className="font-semibold text-xs text-violet-500 font-mono">
                                         {
                                             !almostCompletedGoal[0].montoActual ?
                                                 "$0" :
-                                                `$${parseFloat(almostCompletedGoal[0].montoActual)}`
+                                                `$${parseFloat(almostCompletedGoal[0].montoActual.toFixed(2))}`
                                         }
                                         <span className="font-semibold text-xs text-gray-500">
-                                            {` / $${parseFloat(almostCompletedGoal[0].montoFinal)}`}
+                                            {` / $${parseFloat(almostCompletedGoal[0].montoFinal.toFixed(2))}`}
                                         </span>
                                     </span>
                                 </div>
