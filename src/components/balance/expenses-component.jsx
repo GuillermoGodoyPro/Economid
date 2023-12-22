@@ -69,9 +69,9 @@ export const BalanceExpenses = ({ user, config }) => {
         >
             <div>
                 <h2 className={(dark === "light" ?
-                        'p-1 text-center font-semibold text-violet-600'
-                        : 'p-1 text-center font-semibold text-violet-400'
-                    )}
+                    "p-1 text-center font-semibold text-violet-600"
+                    : "p-1 text-center font-semibold text-violet-400"
+                )}
                 >Gastos</h2>
                 {
                     expensesAlert ?
@@ -94,18 +94,18 @@ export const BalanceExpenses = ({ user, config }) => {
                                         <tr>
                                             <th className={(dark === "light" ?
                                                 "text-center py-2 px-10 font-semibold text-violet-600"
-                                                    : "text-center py-2 px-10 font-semibold text-violet-400"
-                                                )}
+                                                : "text-center py-2 px-10 font-semibold text-violet-400"
+                                            )}
                                             >Transacción</th>
                                             <th className={(dark === "light" ?
                                                 "text-center py-2 px-10 font-semibold text-violet-600"
-                                                    : "text-center py-2 px-10 font-semibold text-violet-400"
-                                                )}
+                                                : "text-center py-2 px-10 font-semibold text-violet-400"
+                                            )}
                                             >Monto</th>
                                             <th className={(dark === "light" ?
                                                 "text-center py-2 px-10 font-semibold text-violet-600"
-                                                    : "text-center py-2 px-10 font-semibold text-violet-400"
-                                                )}
+                                                : "text-center py-2 px-10 font-semibold text-violet-400"
+                                            )}
                                             >Estado</th>
                                         </tr>
                                     </thead>
@@ -114,9 +114,9 @@ export const BalanceExpenses = ({ user, config }) => {
                                             return (
                                                 <tr className=" border-gray-200" key={index}>
                                                     <td className={(dark === "light" ?
-                                                            "py-2 px-10 text-gray-800"
-                                                            : "text-gray-100 font-semibold py-2 px-10"
-                                                        )}>{transaccion.detalle}</td>
+                                                        "py-2 px-10 text-gray-800"
+                                                        : "text-gray-100 font-semibold py-2 px-10"
+                                                    )}>{transaccion.detalle}</td>
                                                     <td className="py-2 px-10 text-red-500 font-semibold font-mono">
                                                         <div className="w-28 flex justify-center">
                                                             -${parseFloat(transaccion.monto).toFixed(2)}

@@ -21,8 +21,8 @@ export const BalanceComponent = ({cargando, balance}) => {
                         <div className='flex flex-col p-5 justify-center text-center'>
                             <div>
                                 <h3 className={(dark === "light" ?
-                                    'text-xl font-semibold text-violet-600 antialiased'
-                                    :'text-xl font-semibold text-violet-400 antialiased'
+                                    "text-xl font-semibold text-violet-600 antialiased"
+                                    :"text-xl font-semibold text-violet-400 antialiased"
                                 )}>
                                     Balance
                                 </h3>
@@ -34,18 +34,18 @@ export const BalanceComponent = ({cargando, balance}) => {
                                                 {parseFloat(balance.data.saldo_Total).toFixed(2)}
                                             </h1> :
                                             <h1 className={(dark === "light" ?
-                                                    'text-gray-600 font-bold text-5xl font-mono'
-                                                    :'text-gray-100 font-bold text-5xl font-mono'
-                                                )}
+                                                "text-gray-600 font-bold text-5xl font-mono"
+                                                :"text-gray-100 font-bold text-5xl font-mono"
+                                            )}
                                             >
                                                 <span className="mr-1">$</span>
                                                 {parseFloat(balance.data.saldo_Total).toFixed(2)}
                                             </h1> :
                                         balance.saldo_Total < 0 ?
                                             <h1 className={(dark === "light" ?
-                                                    'text-red-600 font-bold text-5xl font-mono'
-                                                    :'text-red-600 font-bold text-5xl font-mono'
-                                                )}
+                                                "text-red-600 font-bold text-5xl font-mono"
+                                                :"text-red-600 font-bold text-5xl font-mono"
+                                            )}
                                             >
                                                 <span className="mr-1">$</span>
                                                 {parseFloat(balance.saldo_Total).toFixed(2)}

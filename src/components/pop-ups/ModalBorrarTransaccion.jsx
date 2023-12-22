@@ -6,6 +6,8 @@ import { deleteTransaction } from "../../services/myfinances-api/transacciones";
 export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, transaccionId, auth, transacciones, setTransacciones }) => {
     const [alerta, setAlerta] = useState({});
     const [cargando, setLoading] = useState(false);
+/*     const { dark } = useDark();
+ */
 
     const ocultarModal = () => {
         setAnimarModal(false);
@@ -64,7 +66,7 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                             <h3 className="text-gray-800 text-lg">
                                 {texts.ON_DELETING_QUESTION}
                             </h3>
-                            <div className="text-center rounded-xl p-3 bg-yellow-300 shadow-md hover:shadow-orange-400">
+                            <div className="text-center rounded-xl p-3 bg-orange-400 shadow-md hover:shadow-orange-400">
                                 <h3 className="text-lg text-gray-800 text-center">
                                     {texts.ON_DELETING_WARN}
                                 </h3>

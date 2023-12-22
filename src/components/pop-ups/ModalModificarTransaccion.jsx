@@ -142,7 +142,7 @@ export const ModificarTransaccion = ({
                     <div className='campo'>
                         <label htmlFor="detalle">Detalle</label>
                         <input
-                            id="detalle"
+                            id="detalle"                            
                             type="text"
                             placeholder="Detalle"
                             value={detalle}

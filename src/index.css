@@ -18,6 +18,7 @@
     --gris-f: #757575;
     --gris-mod: #f5f5f5;
     --blanco-gris: #f5f5f3;
+    --gristopo-crema: #303030;
 
     --blue-mod: #15084e;
     --gris-popup: rgb(229 231 235);
@@ -133,6 +134,9 @@ em {
 
 .deletePopUp .textDelete {
     color: var(--negro);
+}
+.deletePopUp .textDelete div h3{
+    color: var(--gristopo-crema);
 }
 
 .deletePopUp.animar {
@@ -276,10 +280,11 @@ select {
 .modalDeleteContainer {
     margin: 0 auto;
     margin-top: 2.5rem;
-    background-color: var(--crema);
+    background-color: var(--blanco-gris);
     width: 30rem;
     border-radius: 0.5rem;
     box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.175);
+    color: var(--gristopo-crema);
 }
 
 .modal .cerrar-modal {
@@ -313,6 +318,7 @@ select {
     transition-property: all;
     transition-duration: 300ms;
     transition-timing-function: ease-in;
+    
     opacity: 0;
 }
 
@@ -322,9 +328,10 @@ select {
 }
 
 .modalDelete .textDelete label {
-    color: var(--violetdark);
+    color: var(--gristopo-crema);
     font-weight: bolder;
 }
+
 
 body .modal {
     overflow: hidden;

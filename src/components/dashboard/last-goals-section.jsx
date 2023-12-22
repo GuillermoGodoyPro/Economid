@@ -40,9 +40,9 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                     almostCompletedGoal.length ?
                         <div className="flex flex-col items-center justify-center">
                             <h3 className={(dark === "light" ?
-                                    'text-xl font-semibold text-violet-600 antialiased'
-                                    : 'text-xl font-semibold text-violet-400 antialiased'
-                                )}
+                                "text-xl font-semibold text-violet-600 antialiased"
+                                : "text-xl font-semibold text-violet-400 antialiased"
+                            )}
                             >
                                 Ultima Meta
                             </h3>
