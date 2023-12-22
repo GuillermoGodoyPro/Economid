@@ -44,7 +44,19 @@ export const ExpensesChart = ({ egresos }) => {
                         legend: {
                             display: true,
                             position: "bottom",
-                            align: "center"
+                            align: "center",
+                            labels: {
+                                font: {
+                                    size: 12,
+                                    weight: 500,
+                                    family: "Consolas"
+                                },
+                                color: dark === "light" ? "#4B5563" : "white",
+                                boxWidth: 8,
+                                boxHeight: 8,
+                                usePointStyle: true,
+                                pointStyle: "circle"
+                            }
                         }
                     }
 
