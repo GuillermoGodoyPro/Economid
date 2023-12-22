@@ -22,7 +22,10 @@ export const errors = {
 export const texts = {
     ON_DELETING_QUESTION: "¿Desea anular la transaccion?",
     ON_DELETING_WARN: "Al confirmar se anula la transacción definitivamente",
+    ON_DELETING_QUESTION_ACCOUNT_WARN: "¿Desea eliminar su cuenta?",
+    ON_DELETING_ACCOUNT_WARN: "Al confirmar se eliminaran todos sus datos de forma definitiva",
     ON_DELETING_SUCCESS: "La transacción ha sido anulada",
+    ON_DELETING_ACCOUNT_SUCCESS: "El usuario ha sido eliminado",
     WITH_NO_TRANSACTIONS: "Informacion de saldos no disponible. Comience a crear transacciones...",
     WITH_NO_EXPENSES: "Informacion de gastos no disponible. Comience a crear gastos...",
     WITH_NO_INCOMES: "Informacion de ingresos no disponible. Comience a crear ingresos...",

@@ -10,6 +10,8 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
     const { auth } = useAuth();
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
+/*     const { dark } = useDark();
+ */
 
     const user = getUserToken();
 
@@ -83,7 +85,7 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                         <input
                             id="nombre"
                             type="text"
-                            placeholder="Nombre"
+                            placeholder="Nombre"                            
                             defaultValue={user.nombre}
                             onChange={e => setNombre(e.target.value)}
 

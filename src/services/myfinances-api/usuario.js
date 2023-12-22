@@ -14,3 +14,9 @@ export async function modifyProfile(userId, payload, config) {
     const data = await clienteAxios.put(`/usuario/Modificar/${userId}`, payload, config);
     return data;
 }
+
+export async function deleteUser(userId, config) {
+    console.log(userId)
+    const data = await clienteAxios.delete(`usuario/eliminar/${userId}`, config);
+    return data;
+}
