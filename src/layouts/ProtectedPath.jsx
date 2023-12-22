@@ -8,7 +8,7 @@ const ProtectedPath = () => {
 
     const { auth, cargando } = useAuth();
 
-    // TODO: usar un spinner
+    // TODO: usar un spinners
     if(cargando) return "Cargando...";
     /*   const autid = true
  */
