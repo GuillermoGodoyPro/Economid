@@ -5,7 +5,7 @@ import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
 import { errors } from "../../constants/myfinances-constants";
 
-const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals }) => {
+const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals, setMetadata }) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
     const [tituloMeta, setTituloMeta] = useState("");
@@ -28,7 +28,12 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                 error: true
             });
         }
-
+        if (metaFinal.length < 0) {
+            setAlerta({
+                msg: "El monto no puede ser negativo",
+                error: true
+            });
+        }
         setTimeout(() => {
             setAlerta({});
         }, 3000);
@@ -57,6 +62,9 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                 setTimeout(() => {
                     setAlerta({});
                     !activeGoals.length ? setActiveGoals([data]) : setActiveGoals([data, ...activeGoals]);
+                    setMetadata(metadata => metadata.map((m) => {
+                        return activeGoals.length > 2 ? { ...m, totalCount: totalCount + 1 } : m;
+                    }));
                     ocultarModal();
                 }, 1500);
             }

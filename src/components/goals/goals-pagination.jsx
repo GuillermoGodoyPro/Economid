@@ -1,11 +1,26 @@
 import { useState } from "react";
 import { getByState } from "../../services/myfinances-api/metaFinanciera";
 import { getUserToken } from "../../services/token/tokenService";
+import useAuth from "../../context/useAuth";
 
-export const GoalsPagination = ({ setGoals, auth, navigationNumbers, completed }) => {
+export const GoalsPagination = ({ 
+    setActiveGoals, 
+    setCompletedGoals, 
+    metadata, 
+    completed,
+    setLoading
+}) => {
+    const { auth } = useAuth();
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(true);
+    const generatePageNumbers = (pageNumber) => {
+        let navigationNumbers = [];
+        for (let i = 1; i <= pageNumber; i++) navigationNumbers.push(i);
+        return navigationNumbers;
+    };
+    const pageNumber = Math.ceil(metadata.totalCount / metadata.pageSize);
+    const navigationNumbers = generatePageNumbers(pageNumber);
 
     const changePage = (page) => {
         setCurrentPage(page);
@@ -25,6 +40,7 @@ export const GoalsPagination = ({ setGoals, auth, navigationNumbers, completed }
         }
     };
     const handleChangePage = async (page) => {
+        setLoading(true);
         const user = getUserToken();
 
         const config = {
@@ -39,8 +55,14 @@ export const GoalsPagination = ({ setGoals, auth, navigationNumbers, completed }
                 completada: completed
             };
             try {
-                const { data: response } = await getByState(payload, page, 5, config);
-                setGoals(response.data);
+                const { data: response,  } = await getByState(payload, page, 2, config);
+                if (!payload.completada) {
+                    setActiveGoals(response.data);
+                    setLoading(false);
+                } else {
+                    setCompletedGoals(response.data);
+                    setLoading(false);
+                }
                 if (!response.meta.hasNextPage) {
                     setHasNextPage(false);
                 }
@@ -49,12 +71,13 @@ export const GoalsPagination = ({ setGoals, auth, navigationNumbers, completed }
                 }
             } catch (error) {
                 setError(error);
+                setLoading(false);
             }
         };
         fetchGoals();
     };
     return (
-        <div className="flex items-center justify-between border-t border-gray-200 bg-inherit px-4 py-3 sm:px-6">
+        <div className="flex items-center justify-between bg-inherit px-4 py-3 sm:px-6">
             <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-end">
                 <div>
                     <nav className="inline-flex -space-x-px rounded-md shadow-sm">

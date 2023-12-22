@@ -1,31 +1,41 @@
 import { PulseLoader } from "react-spinners";
 import useDark from "../../context/useDark";
+import { GoalsPagination } from "./goals-pagination";
 
-export const CompletedGoals = ({ goals, error, cargando }) => {
-    const completedGoals = goals?.filter(({ completada }) => completada);
+export const CompletedGoals = ({ 
+    goals, 
+    error, 
+    cargando,
+    setCargando,
+    completedGoalsMetadata, 
+    setCompletedGoals 
+}) => {
     const { dark } = useDark();
 
     return (
         <div className={(dark === "light" ?
-            "bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max"
-            : "bg-violet-300 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center grid grid-flow-row auto-rows-max"
+            "bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
         )}
         >
-            <h3 className="font-semibold text-violet-600">Metas Completadas</h3>
+            <h3 className={(dark === "light" ?
+                "text-xl font-semibold text-violet-600 antialiased"
+                : "text-xl font-semibold text-violet-400 antialiased"
+            )}>Metas Completadas</h3>
 
             {
                 cargando ?
-                    <div className="flex justify-around">
+                    <div className="flex justify-around p-10 mx-20">
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div> :
-                    completedGoals && !error ?
-                        <div className="flex flex-wrap justify-around">
-                            {completedGoals.slice(0, 5).map((goal, index) => {
+                    goals.length || (goals.length && !error) ?
+                        <div className="flex flex-wrap justify-center">
+                            {goals?.slice(0, 2).map((goal, index) => {
                                 return (
                                     <div
                                         className={(dark === "light" ?
-                                            "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-100"
-                                            : "w-64 h-64 m-3 rounded-lg bg-violet-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 duration-100"
+                                            "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                            : "w-64 h-64 m-3 rounded-lg bg-gray-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
                                         )}
                                         key={index}>
                                         <div className="flex justify-between items-center">
@@ -67,7 +77,17 @@ export const CompletedGoals = ({ goals, error, cargando }) => {
                         </div>
                         : <div></div>
             }
-
+            {
+                completedGoalsMetadata.totalCount > 2 ?
+                    <div className="w-full">
+                        <GoalsPagination
+                            metadata={completedGoalsMetadata}
+                            setCompletedGoals={setCompletedGoals}
+                            completed={true}
+                            setLoading={setCargando}
+                        />
+                    </div> : <div></div>
+            }
         </div>
     );
 };

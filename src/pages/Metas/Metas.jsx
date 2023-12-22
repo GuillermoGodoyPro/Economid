@@ -3,22 +3,27 @@ import ModalMetas from "../../components/pop-ups/ModalMetas";
 import { ActiveGoals } from "../../components/goals/active-goals";
 import { CompletedGoals } from "../../components/goals/completed-goals";
 import { useEffect } from "react";
-import { getAll } from "../../services/myfinances-api/metaFinanciera";
+import { getAll, getByState } from "../../services/myfinances-api/metaFinanciera";
 import { getUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
 import Alerta from "../../components/Alerta";
 import { texts } from "../../constants/myfinances-constants";
+import { GoalsTable } from "../../components/goals/goals-table";
+import useDark from "../../context/useDark";
 
 const Metas = () => {
     const { auth } = useAuth();
+    const { dark } = useDark();
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [activeGoals, setActiveGoals] = useState([]);
+    const [activeGoalsMetadata, setActiveGoalsMetadata] = useState({});
     const [completedGoals, setCompletedGoals] = useState([]);
-    const [cargando, setLoading] = useState(true);
+    const [completedGoalsMetadata, setCompletedGoalsMetadata] = useState({});
+    const [loadingActiveGoals, setLoadingActiveGoals] = useState(true);
+    const [loadingCompletedGoals, setLoadingCompletedGoals] = useState(true);
     const [error, setError] = useState(null);
     const [alerta, setAlerta] = useState({});
-    const [metadata, setMetadata] = useState({});
 
     const user = getUserToken();
     const handleGoals = () => {
@@ -36,19 +41,22 @@ const Metas = () => {
     };
 
     useEffect(() => {
-        const fetchGoals = async () => {
+        const fetchActiveGoals = async () => {
             try {
-                const { data, status } = await getAll({userId: user.id}, 1, 6, config);
-                if (status === 200) {
-                    setActiveGoals(data.data);
-                    setCompletedGoals(data.data);
-                    setMetadata(data.meta);
-                    setLoading(false);
-                    console.log(data);
+                const activeGoalsPayload = {
+                    userId: user.id,
+                    completada: false
+                };
+                const { data: activeGoalsResponse, status: activeGoalsStatus } = await getByState(activeGoalsPayload, 1, 2, config);
+                if (activeGoalsStatus === 200) {
+                    setActiveGoals(activeGoalsResponse.data);
+                    setActiveGoalsMetadata(activeGoalsResponse.meta);
+                    setLoadingActiveGoals(false);
+                    console.log(`Active Goals Response: ${activeGoalsResponse.data}`);
                 }
             } catch (error) {
                 setError(error);
-                setLoading(false);
+                setLoadingActiveGoals(false);
                 setAlerta({
                     msg: texts.WITH_NO_GOALS,
                     error: true
@@ -58,7 +66,36 @@ const Metas = () => {
                 }, 3000);
             }
         };
-        fetchGoals();
+        fetchActiveGoals();
+    }, []);
+
+    useEffect(() => {
+        const fetchCompletedGoals = async () => {
+            try {
+                const completedGoalsPayload = {
+                    userId: user.id,
+                    completada: true
+                };
+                const { data: completedGoalsResponse, status: completedGoalsStatus } = await getByState(completedGoalsPayload, 1, 2, config);
+                if (completedGoalsStatus === 200) {
+                    setCompletedGoals(completedGoalsResponse.data);
+                    setCompletedGoalsMetadata(completedGoalsResponse.meta);
+                    setLoadingCompletedGoals(false);
+                    console.log(`Completed Goals Response: ${completedGoalsResponse.data.toString()}`);
+                }
+            } catch (error) {
+                setError(error);
+                setLoadingCompletedGoals(false);
+                setAlerta({
+                    msg: texts.WITH_NO_GOALS,
+                    error: true
+                });
+                setTimeout(() => {
+                    setAlerta({});
+                }, 3000);
+            }
+        };
+        fetchCompletedGoals();
     }, []);
 
     const { msg } = alerta;
@@ -84,22 +121,39 @@ const Metas = () => {
                         setAnimarModal={setAnimarModal}
                         setActiveGoals={setActiveGoals}
                         activeGoals={activeGoals}
+                        setMetadata={setActiveGoalsMetadata}
                     />
                 }
             </div>
-            <ActiveGoals
-                goals={activeGoals}
-                auth={auth}
-                error={error}
-                cargando={cargando}
-                setActiveGoals={setActiveGoals}
-                setCompletedGoals={setCompletedGoals}
-            />
-            <CompletedGoals
-                goals={completedGoals}
-                error={error}
-                cargando={cargando}
-            />
+            <div className="flex justify-center">
+                <ActiveGoals
+                    goals={activeGoals}
+                    auth={auth}
+                    error={error}
+                    cargando={loadingActiveGoals}
+                    setLoading={setLoadingActiveGoals}
+                    setActiveGoals={setActiveGoals}
+                    setCompletedGoals={setCompletedGoals}
+                    activeGoalsMetadata={activeGoalsMetadata}
+                />
+                <CompletedGoals
+                    goals={completedGoals}
+                    error={error}
+                    cargando={loadingCompletedGoals}
+                    setCargando={setLoadingCompletedGoals}
+                    completedGoalsMetadata={completedGoalsMetadata}
+                    setCompletedGoals={setCompletedGoals}
+                />
+            </div>
+            <div>
+                <div className={(dark === "light" ?
+                    "bg-inherit p-4 rounded-lg shadow-md hover:shadow-violet-400"
+                    :
+                    "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400"
+                )}>
+                    <GoalsTable />
+                </div>
+            </div>
         </div>
     );
 };

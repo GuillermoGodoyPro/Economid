@@ -3,7 +3,15 @@ import Alerta from "../Alerta";
 import { agregarMonto } from "../../services/myfinances-api/metaFinanciera";
 import { errors, texts } from "../../constants/myfinances-constants";
 
-export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth, setActiveGoals, setCompletedGoals, activeGoals }) => {
+export const GoalAmount = ({ 
+    animarModal, 
+    setAnimarModal, 
+    setModal, 
+    goalId, 
+    auth, 
+    setActiveGoals, 
+    setCompletedGoals         
+}) => {
     const [alerta, setAlerta] = useState({});
     const [amount, setAmount] = useState("");
     const [cargando, setLoading] = useState(false);
@@ -47,7 +55,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
                 });
                 setTimeout(() => {
                     setAlerta({});
-                    setActiveGoals(activeGoals.map((goal) => {
+                    setActiveGoals(activeGoals => activeGoals.map((goal) => {
                         return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
                     }));
                     if (data.completada) {
@@ -56,7 +64,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
                                 msg: texts.ON_COMPLETED_GOAL,
                                 error: false
                             });
-                            setActiveGoals(activeGoals.map((goal) => {
+                            setActiveGoals(activeGoals => activeGoals.map((goal) => {
                                 return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                             }));
                             if (setCompletedGoals) {
