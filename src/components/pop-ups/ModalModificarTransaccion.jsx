@@ -118,7 +118,7 @@ export const ModificarTransaccion = ({
     const { msg } = alerta;
     return (
         <div className="modal">
-            <div className='modalDeleteContainer shadow-md p-5'>
+            <div className='modalContainer'>
                 <form
                     onSubmit={handleSubmit}
                     className={`formulario ${animarModal ? "animar" : "cerrar"}`}
@@ -142,7 +142,7 @@ export const ModificarTransaccion = ({
                     <div className='campo'>
                         <label htmlFor="detalle">Detalle</label>
                         <input
-                            id="detalle"                            
+                            id="detalle"
                             type="text"
                             placeholder="Detalle"
                             value={detalle}

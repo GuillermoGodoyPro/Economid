@@ -100,7 +100,7 @@ export const GoalAmount = ({ animarModal, setAnimarModal, setModal, goalId, auth
                         <label htmlFor="Monto">Monto</label>
                         <input
                             id="Monto"
-                            type="text"
+                            type="number"
                             placeholder="Ingresar Monto"
                             value={amount.replace(",", ".")}
                             onChange={e => setAmount(e.target.value)}

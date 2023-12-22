@@ -6,8 +6,6 @@ import { deleteTransaction } from "../../services/myfinances-api/transacciones";
 export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, transaccionId, auth, transacciones, setTransacciones }) => {
     const [alerta, setAlerta] = useState({});
     const [cargando, setLoading] = useState(false);
-/*     const { dark } = useDark();
- */
 
     const ocultarModal = () => {
         setAnimarModal(false);

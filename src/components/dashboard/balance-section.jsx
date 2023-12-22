@@ -86,8 +86,8 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                     <div>
                                         <select
                                             className={`${divisa === "ARS" ?
-                                                "font-semibold bg-blue-200 shadow-md hover:shadow-blue-400" :
-                                                "font-semibold bg-green-200 shadow-md hover:shadow-green-400"}`}
+                                                "font-semibold text-black bg-blue-200 shadow-md hover:shadow-blue-400" :
+                                                "font-semibold text-black bg-green-200 shadow-md hover:shadow-green-400"}`}
                                             name="divisa"
                                             id="divisa"
                                             value={divisa}
@@ -116,7 +116,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                                 </h1> :
                                                 <h1 className={(dark === "light" ?
                                                     "text-gray-600 font-bold text-5xl font-mono"
-                                                    :"text-gray-200 font-bold text-5xl font-mono"
+                                                    : "text-gray-200 font-bold text-5xl font-mono"
                                                 )}
                                                 >
                                                     <span className="mr-1">$</span>
@@ -127,7 +127,10 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                                     <span className="mr-1">$</span>
                                                     {parseFloat(balance.saldo_Total).toFixed(2)}
                                                 </h1> :
-                                                <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                <h1 className={(dark === "light" ?
+                                                    "text-gray-600 font-bold text-5xl font-mono"
+                                                    : "text-gray-200 font-bold text-5xl font-mono"
+                                                )}>
                                                     <span className="mr-1">$</span>
                                                     {parseFloat(balance.saldo_Total).toFixed(2)}
                                                 </h1>
@@ -140,7 +143,10 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                                         <span className="mr-1">U$S</span>
                                                         {parseFloat(balance.data.saldo_Total / dolarValue).toFixed(2)}
                                                     </h1> :
-                                                    <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                    <h1 className={(dark === "light" ?
+                                                        "text-gray-600 font-bold text-5xl font-mono"
+                                                        : "text-gray-200 font-bold text-5xl font-mono"
+                                                    )}>
                                                         <span className="mr-1">U$S</span>
                                                         {parseFloat(balance.data.saldo_Total / dolarValue).toFixed(2)}
                                                     </h1> :
@@ -149,7 +155,10 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                                         <span className="mr-1">U$S</span>
                                                         {parseFloat(balance.saldo_Total / dolarValue).toFixed(2)}
                                                     </h1> :
-                                                    <h1 className='text-gray-600 font-bold text-5xl font-mono'>
+                                                    <h1 className={(dark === "light" ?
+                                                        "text-gray-600 font-bold text-5xl font-mono"
+                                                        : "text-gray-200 font-bold text-5xl font-mono"
+                                                    )}>
                                                         <span className="mr-1">U$S</span>
                                                         {parseFloat(balance.saldo_Total / dolarValue).toFixed(2)}
                                                     </h1>

@@ -54,27 +54,21 @@ export const GananciaChart = ({ transacciones }) => {
     const egresosTotales = montosTotales.map(({ egresos }) => egresos);
 
     const colores = [
-        "rgb(84, 255, 50)",
-        "rgb(252, 52, 58)"
+        "#22C55E",
+        "#EF4444"
     ];
 
     return (
         <div className={(dark === "light" ?
-            "mt-6 mb-60"
+            "bg-gray-200 rounded-lg px-6 mt-6 mb-60 p-10 shadow-md hover:shadow-violet-400"
             :
-            "bg-gray-800 rounded-lg px-6 mt-6 mb-60"
+            "bg-gray-600 rounded-lg px-6 mt-6 mb-60 p-10 shadow-md hover:shadow-violet-400"
         )}
         >
-            <h2 className={(dark === "light" ?
-                "text-center text-2xl leading-10 mt-6 font-semibold"
-                :
-                "text-violet-400 text-center text-2xl leading-10 mt-6 font-semibold"
-            )}
-            >Ganancias</h2>
-
-            <div className=" chart-container ">
+            <div className="chart-container">
                 <Bar
-                    width={730} height={250}
+                    width={500} height={250}
+                    color={dark === "light" ? "white" : "black"}
                     data={{
                         labels: fechasAcumuladas,
                         datasets: [
@@ -82,32 +76,72 @@ export const GananciaChart = ({ transacciones }) => {
                                 label: "Ingresos",
                                 data: ingresosTotales,
                                 backgroundColor: colores[0], // Color para ingresos
-                                borderColor: "rgb(242, 230, 255)",
-                                borderWidth: 1,
+                                borderWidth: 0,
                                 hoverOffset: 15,
-                                borderRadius: 15,
+                                borderRadius: 15
                             },
                             {
                                 label: "Egresos",
                                 data: egresosTotales,
                                 backgroundColor: colores[1], // Color para egresos
-                                borderColor: "rgb(242, 230, 255)",
-                                borderWidth: 1,
+                                borderWidth: 0,
                                 hoverOffset: 15,
                                 borderRadius: 15,
                             }
                         ]
                     }}
                     options={{
+                        responsive: true,
+                        color: dark === "light" ? "black" : "white",
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: dark === "light" ? "#4B5563" : "white",
+                                    font: {
+                                        size: 12,
+                                        weight: 500,
+                                        family: "Consolas"
+                                    }
+                                },
+                                grid: {
+                                    color: dark === "light" ? "#E5E7EB" : "#4B5563"
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: dark === "light" ? "#4B5563" : "white",
+                                    font: {
+                                        size: 12,
+                                        weight: 500,
+                                        family: "Consolas"
+                                    }
+                                },
+                                grid: {
+                                    color: dark === "light" ? "#4B5563" : "gray"
+                                }
+                            }
+                        },
                         layout: {
-                            padding: 1,
+                            padding: 1
                         },
                         plugins: {
                             title: "",
                             legend: {
                                 display: true,
                                 position: "bottom",
-                                align: "center"
+                                align: "center",
+                                labels: {
+                                    font: {
+                                        size: 12,
+                                        weight: 500,
+                                        family: "Consolas"
+                                    },
+                                    color: dark === "light" ? "#4B5563" : "white",
+                                    boxWidth: 8,
+                                    boxHeight: 8,
+                                    usePointStyle: true,
+                                    pointStyle: "circle"
+                                }
                             }
                         }
                     }}

@@ -98,7 +98,7 @@ em {
     width: 100%;
     margin: 0 auto;
     padding: 10rem 0;
-    
+
 }
 
 .deletePopUp {
@@ -135,7 +135,8 @@ em {
 .deletePopUp .textDelete {
     color: var(--negro);
 }
-.deletePopUp .textDelete div h3{
+
+.deletePopUp .textDelete div h3 {
     color: var(--gristopo-crema);
 }
 
@@ -270,11 +271,11 @@ select {
 .modalContainer {
     margin: 0 auto;
     margin-top: 2.5rem;
-    justify-items: center;
-    background-color: var(--crema);
+    background-color: var(--blanco-gris);
     width: 30rem;
     border-radius: 0.5rem;
-    box-shadow: 0 0 15px 1px black;
+    box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.175);
+    color: var(--gristopo-crema);
 }
 
 .modalDeleteContainer {
@@ -318,7 +319,7 @@ select {
     transition-property: all;
     transition-duration: 300ms;
     transition-timing-function: ease-in;
-    
+
     opacity: 0;
 }
 

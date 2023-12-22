@@ -143,7 +143,9 @@ export const BalanceExpenses = ({ user, config }) => {
                             </div>
                             :
                             <div className="flex justify-center p-32">
-                                <h3 className="text-lg">
+                                <h3 className={(dark === "light" ?
+                                    "text-lg text-center text-black" :
+                                    "text-lg text-center text-white")}>
                                     {texts.WITH_NO_EXPENSES}
                                 </h3>
                             </div>

@@ -1,10 +1,12 @@
 import { ArcElement, BarElement, CategoryScale, Tooltip, Legend, Chart as ChartJS, Title } from "chart.js";
 import { Doughnut } from "react-chartjs-2";
+import useDark from "../../../context/useDark";
 
 ChartJS.register(CategoryScale, ArcElement, BarElement, Tooltip, Legend, Title);
 
 export const ExpensesChart = ({ egresos }) => {
 
+    const { dark } = useDark();
     const detalles = egresos?.map(({ detalle }) => detalle);
     const montos = egresos?.map(data => data.monto);
     const colores = [
@@ -25,18 +27,15 @@ export const ExpensesChart = ({ egresos }) => {
                             label: "",
                             data: montos,
                             backgroundColor: colores,
-                            borderWidth: 1,
+                            borderWidth: 0,
                             hoverOffset: 25,
                             borderRadius: 15,
-                            borderColor: "rgb(242, 230, 255)"
+                            spacing: 2
                         }
                     ]
                 }}
                 options={{
-                    title: {
-                        display: true,
-                        text: "Ultimos gastos por categoria"
-                    },
+                    color: dark === "light" ? "black" : "white",
                     layout: {
                         padding: 16
                     },

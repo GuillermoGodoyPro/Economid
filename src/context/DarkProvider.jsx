@@ -20,13 +20,18 @@ const DarkProvider = ({ children }) => {
                 document.documentElement.style.setProperty("--blanco", "#ffffff");
                 document.documentElement.style.setProperty("--gris", "#303030");
                 document.documentElement.style.setProperty("--violetlight", "#4f339ccb");
+                document.documentElement.style.setProperty("--gris-popup", "rgb(229 231 235)");
+                document.documentElement.style.setProperty("--negro", "#141414");
+
             } else {
                 document.documentElement.style.setProperty("--crema", "rgb(55 65 81)");
                 document.documentElement.style.setProperty("--blanco-gris", "rgb(75 85 99)");
                 document.documentElement.style.setProperty("--gristopo-crema", "#f5f5f3");
                 document.documentElement.style.setProperty("--blanco", "#cac2e9");
                 document.documentElement.style.setProperty("--gris", "#13159e");
-                document.documentElement.style.setProperty("--violetlight", "#865ef7c9");
+                document.documentElement.style.setProperty("--violetlight", "#A78BFA");
+                document.documentElement.style.setProperty("--gris-popup", "rgb(55 65 81)");
+                document.documentElement.style.setProperty("--negro", "rgb(75 85 99)");
             }
             localStorage.setItem("colorScheme", estadoDarkMode);
 
@@ -46,6 +51,8 @@ const DarkProvider = ({ children }) => {
                 document.documentElement.style.setProperty("--blanco", "#ffffff");
                 document.documentElement.style.setProperty("--gris", "#303030");
                 document.documentElement.style.setProperty("--violetlight", "#4f339ccb");
+                document.documentElement.style.setProperty("--gris-popup", "rgb(229 231 235)");
+                document.documentElement.style.setProperty("--negro", "#141414");
 
             } else {
                 document.documentElement.style.setProperty("--crema", "rgb(55 65 81)");
@@ -53,7 +60,9 @@ const DarkProvider = ({ children }) => {
                 document.documentElement.style.setProperty("--gristopo-crema", "#f5f5f3");
                 document.documentElement.style.setProperty("--blanco", "#cac2e9");
                 document.documentElement.style.setProperty("--gris", "#13159e");
-                document.documentElement.style.setProperty("--violetlight", "#865ef7c9");
+                document.documentElement.style.setProperty("--violetlight", "#A78BFA");
+                document.documentElement.style.setProperty("--gris-popup", "rgb(55 65 81)");
+                document.documentElement.style.setProperty("--negro", "white");
             }
             localStorage.setItem("colorScheme", estado);
 

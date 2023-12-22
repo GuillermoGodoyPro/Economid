@@ -205,7 +205,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                 <i className={(dark === "light" ?
                                                     "fa-regular fa-pen-to-square text-gray-600 m-3"
                                                     :
-                                                    "fa-regular fa-pen-to-square text-gray-800 m-3"
+                                                    "fa-regular fa-pen-to-square text-gray-200 m-3"
                                                 )}
                                                     data-tooltip-id="my-tooltip"
                                                     data-tooltip-content="Modificar"

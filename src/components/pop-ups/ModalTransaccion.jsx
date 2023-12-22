@@ -8,6 +8,7 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { getCategories } from "../../services/myfinances-api/categorias";
+import useDark from "../../context/useDark";
 
 const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, setTransacciones, setBalance, setBalanceId, categorias }) => {
 
@@ -21,6 +22,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
     const [tipoTransaccion, setTipoTransaccion] = useState("Ingreso");
     const [categoriaId, setCategoria] = useState(categorias[0].id);
     const user = getUserToken();
+    const { dark } = useDark();
 
     const config = {
         headers: {
@@ -36,7 +38,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
         }, 200);
     };
 
-    useEffect(() =>{
+    useEffect(() => {
         const fetchCategorias = async () => {
             try {
                 const { data: response } = await getCategories(config);
@@ -140,7 +142,6 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
                         <label htmlFor="Fecha">Fecha</label>
                         <ReactDatePicker
                             locale={es}
-                            className="bg-[#E5E7EB] rounded-md p-1"
                             value={fecha}
                             placeholderText="Fecha"
                             onChange={(date) => setFecha(date.toISOString().split("T")[0])}

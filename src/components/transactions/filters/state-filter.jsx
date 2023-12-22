@@ -76,8 +76,8 @@ export const StateFilter = ({
                     name="estado"
                     id="estado"
                     className={(dark === "light" ?
-                        "bg-[#E5E7EB] rounded-md p-1 font-mono"
-                        : "bg-gray-600 text-gray-400 font-semibold rounded-md p-1 font-mono"
+                        "bg-[#E5E7EB] rounded-md p-1 font-mono text-black"
+                        : "bg-gray-600 text-gray-400 font-semibold rounded-md p-1 font-mono text-white"
                     )}
                     defaultValue={"Filtrar por estado"}
                     onChange={e => handleStateChange(e.target.value)}

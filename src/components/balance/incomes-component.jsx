@@ -69,7 +69,7 @@ export const BalanceIncomes = ({ user, config }) => {
             <div>
                 <h2 className={(dark === "light" ?
                     "p-1 text-center font-semibold text-violet-600"
-                    :"p-1 text-center font-semibold text-violet-400"
+                    : "p-1 text-center font-semibold text-violet-400"
                 )}
                 >Ingresos</h2>
                 {
@@ -142,7 +142,9 @@ export const BalanceIncomes = ({ user, config }) => {
                             </div>
                             :
                             <div className="flex justify-center p-32">
-                                <h3 className="text-lg">
+                                <h3 className={(dark === "light" ?
+                                    "text-lg text-center text-black" :
+                                    "text-lg text-center text-white")}>
                                     {texts.WITH_NO_INCOMES}
                                 </h3>
                             </div>

@@ -77,8 +77,8 @@ export const AmountFilter = ({
                     id="monto"
                     type="number"
                     className={(dark === "light" ?
-                        "bg-[#E5E7EB] rounded-md p-1 font-mono"
-                        : "bg-gray-600 rounded-md p-1 font-mono"
+                        "bg-[#E5E7EB] rounded-md p-1 font-mono text-black"
+                        : "bg-gray-600 rounded-md p-1 font-mono text-white"
                     )}
                     placeholder="Ingresar monto"
                     value={monto.replace(",", ".")}

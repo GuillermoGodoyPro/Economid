@@ -103,7 +103,7 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                         <label htmlFor="metaFinanciera">Monto Meta</label>
                         <input
                             id="metaFinanciera"
-                            type="text"
+                            type="number"
                             placeholder="Monto"
                             value={metaFinal.replace(",", ".")}
                             onChange={e => setMetaFinal(e.target.value)}

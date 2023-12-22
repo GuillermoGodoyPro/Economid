@@ -36,7 +36,9 @@ export const ChartSection = ({ cargando, transacciones }) => {
                             </div>
                         </div>
                     </div> :
-                    <h3 className="mb-10 text-lg text-center mt-20">
+                    <h3 className={(dark === "light" ?
+                        "mb-10 text-lg text-center mt-20 text-black" :
+                        "mb-10 text-lg text-center mt-20 text-white")}>
                         {texts.NO_CHART}
                     </h3>
             }
