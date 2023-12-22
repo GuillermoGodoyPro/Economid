@@ -3,6 +3,8 @@
     width: 40%;
 }
 
+
+
 .span {
     font-weight: 700;
     font-size: 2rem;
@@ -25,7 +27,7 @@
 
 }
 .container2{
-    background-color: #29212918;
+    background-color: var(--blanco);
     margin: 1.5rem 0;
     width: 40%;
     height: 50%;
@@ -83,7 +85,7 @@
     width: 80%;   
     cursor: pointer;
     padding: 0.15rem 0;
-    color: var(--crema);
+    color: var(--blanco);
     background-color: var(--violetlight);
     margin-top: 8px;
     font-weight: bold;

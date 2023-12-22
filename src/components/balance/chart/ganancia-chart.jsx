@@ -1,5 +1,4 @@
-/* import {HistogramaChart} from './histograma-chart'*/
-import { 
+import {
     BarElement,
     CategoryScale, // x
     LinearScale, // y
@@ -11,98 +10,117 @@ import {
 } from "chart.js";
 import { Bar } from "react-chartjs-2";
 
-ChartJS.register( CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title);
-import { texts, type } from "../../../constants/myfinances-constants";
+ChartJS.register(CategoryScale, LinearScale, BarElement, Tooltip, Legend, Title);
+import { type } from "../../../constants/myfinances-constants";
+import useDark from "../../../context/useDark";
 
 
-export const GananciaChart = ({transacciones}) => {
+export const GananciaChart = ({ transacciones }) => {
+    const { dark } = useDark();
+    const transaccionesActivas = transacciones?.filter(({ estaActiva }) => estaActiva);
 
-
-    /* Se obtienen los montos (ingresos y egresos) por mes */
-
-    const sumarMontos = (transacciones) => {
-        // Inicializar un objeto para almacenar los montos por mes
+    const sumarMontos = (transaccionesActivas) => {
         const montosPorMes = {};
-        
-        // Iterar sobre las transacciones
-        transacciones?.forEach((transaccion) => {
+
+        transaccionesActivas?.forEach((transaccion) => {
+
             const fecha = new Date(transaccion.fecha);
-            const mesAnio = fecha.toLocaleString('es-ES', { month: 'long', year: 'numeric' });
+            const mesAnio = fecha.toLocaleString("es-ES", { month: "long", year: "numeric" });
             const monto = transaccion.monto;
-        
-            // Determinar si es ingreso o egreso
+
             if (!montosPorMes[mesAnio]) {
-            montosPorMes[mesAnio] = { mes: mesAnio, ingresos: 0, egresos: 0 };
+                montosPorMes[mesAnio] = { mes: mesAnio, ingresos: 0, egresos: 0 };
             }
-        
+
             if (transaccion.tipoTransaccion === type.INGRESO) {
-            montosPorMes[mesAnio].ingresos += monto;
+                montosPorMes[mesAnio].ingresos += monto;
             } else if (transaccion.tipoTransaccion === type.EGRESO) {
-            montosPorMes[mesAnio].egresos += monto;
+                montosPorMes[mesAnio].egresos += monto;
             }
         });
-        
-        // Convertir el objeto a un array de objetos
+
         const montosArray = Object.values(montosPorMes);
-        
         return montosArray;
-    }; 
-
-    // Llamamos la función   
-    const montosTotales = sumarMontos(transacciones)
-
-    /* En esta parte se obtienen los resultados buscados */
+    };
+    const montosTotales = sumarMontos(transaccionesActivas);
     const datosOrdenados = montosTotales.sort((a, b) => {
         const fechaA = new Date(a.mes);
         const fechaB = new Date(b.mes);
-        return fechaB - fechaA;
+        return fechaA - fechaB;
     });
-    
-    // Obtener las fechas acumuladas de los últimos 5 elementos (los más recientes)
-    const fechasAcumuladas = datosOrdenados.slice(0, 5).map(({ mes }) => mes);
-    /* TODO: testear si hay que poner el mismo slice en ingresosTotales y egresosTotales*/
 
-    // Obtener un array con las sumas de ingresos y egresos por fecha acumulada
+    const fechasAcumuladas = datosOrdenados.slice(0, 5).map(({ mes }) => mes);
     const ingresosTotales = montosTotales.map(({ ingresos }) => ingresos);
     const egresosTotales = montosTotales.map(({ egresos }) => egresos);
 
-    
     const colores = [
-        "rgb(84, 255, 50)",
-        "rgb(252, 52, 58)"
+        "#22C55E",
+        "#EF4444"
     ];
-    
-    return (        
-        <div className="mt-6 mb-60">
-            <h2 className="text-center text-2xl leading-10 mt-6 font-semibold">Ganancias</h2>
 
-            <div className="chart-container ">
-                <Bar 
-                    width={730} height={250}
+    return (
+        <div className={(dark === "light" ?
+            "bg-gray-200 rounded-lg px-6 mt-6 mb-60 p-10 shadow-md hover:shadow-violet-400"
+            :
+            "bg-gray-600 rounded-lg px-6 mt-6 mb-60 p-10 shadow-md hover:shadow-violet-400"
+        )}
+        >
+            <div className="chart-container">
+                <Bar
+                    width={500} height={250}
+                    color={dark === "light" ? "white" : "black"}
                     data={{
                         labels: fechasAcumuladas,
                         datasets: [
-                        {
-                            label: "Ingresos",
-                            data: ingresosTotales,
-                            backgroundColor: colores[0], // Color para ingresos
-                            borderColor: "rgb(242, 230, 255)",
-                            borderWidth: 1,
-                            hoverOffset: 15,
-                            borderRadius: 15,
-                        },
-                        {
-                            label: "Egresos",
-                            data: egresosTotales,
-                            backgroundColor: colores[1], // Color para egresos
-                            borderColor: "rgb(242, 230, 255)",
-                            borderWidth: 1,
-                            hoverOffset: 15,
-                            borderRadius: 15,
-                        }
+                            {
+                                label: "Ingresos",
+                                data: ingresosTotales,
+                                backgroundColor: colores[0], // Color para ingresos
+                                borderWidth: 0,
+                                hoverOffset: 15,
+                                borderRadius: 15
+                            },
+                            {
+                                label: "Egresos",
+                                data: egresosTotales,
+                                backgroundColor: colores[1], // Color para egresos
+                                borderWidth: 0,
+                                hoverOffset: 15,
+                                borderRadius: 15,
+                            }
                         ]
                     }}
                     options={{
+                        responsive: true,
+                        color: dark === "light" ? "black" : "white",
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: dark === "light" ? "#4B5563" : "white",
+                                    font: {
+                                        size: 12,
+                                        weight: 500,
+                                        family: "Consolas"
+                                    }
+                                },
+                                grid: {
+                                    color: dark === "light" ? "#E5E7EB" : "#4B5563"
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: dark === "light" ? "#4B5563" : "white",
+                                    font: {
+                                        size: 12,
+                                        weight: 500,
+                                        family: "Consolas"
+                                    }
+                                },
+                                grid: {
+                                    color: dark === "light" ? "#4B5563" : "gray"
+                                }
+                            }
+                        },
                         layout: {
                             padding: 1
                         },
@@ -111,24 +129,25 @@ export const GananciaChart = ({transacciones}) => {
                             legend: {
                                 display: true,
                                 position: "bottom",
-                                align: "center"
+                                align: "center",
+                                labels: {
+                                    font: {
+                                        size: 12,
+                                        weight: 500,
+                                        family: "Consolas"
+                                    },
+                                    color: dark === "light" ? "#4B5563" : "white",
+                                    boxWidth: 8,
+                                    boxHeight: 8,
+                                    usePointStyle: true,
+                                    pointStyle: "circle"
+                                }
                             }
                         }
-
                     }}
-                    
-
                 >
-                    
-                </Bar>                 
-                
+                </Bar>
             </div>
-
-
-           
-
         </div>
-
-
-    )
-}
+    );
+};

@@ -1,4 +1,3 @@
-import React, { useContext } from "react";
 import { Navigate, Outlet } from "react-router-dom";
 import styles from "../styles/ProtectedPath.module.css";
 import Header from "../components/header/Header";
@@ -7,11 +6,9 @@ import useAuth from "../context/useAuth";
 
 const ProtectedPath = () => {
 
-
     const { auth, cargando } = useAuth();
 
-
-    // TODO: usar un spinner
+    // TODO: usar un spinners
     if(cargando) return "Cargando...";
     /*   const autid = true
  */
@@ -23,11 +20,6 @@ const ProtectedPath = () => {
                 auth ?
                     (
                         <div className={styles.container}>
-
-                            {/*  <div className={styles.menu}>
-                                <Sidebar />
-                            </div> */}
-
 
                             <div className={styles.headerContainer}>
                                 <Header />

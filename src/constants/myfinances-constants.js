@@ -12,12 +12,20 @@ export const errors = {
         BAD_REQUEST: "Request failed with status code 400",
         BAD_REQUEST_CODE: 400,
         REQUIRED_FIELDS: "Todos los campos son obligatorios"
+    },
+    notFounds: {
+        NOT_FOUND: "Request failed with status code 404",
+        NOT_FOUND_CODE: 404,
+        WITH_NO_INCOMES_EXPENSES: "No existen ingresos/egresos. Comience a crear transacciones..."
     }
 };
 export const texts = {
     ON_DELETING_QUESTION: "¿Desea anular la transaccion?",
     ON_DELETING_WARN: "Al confirmar se anula la transacción definitivamente",
+    ON_DELETING_QUESTION_ACCOUNT_WARN: "¿Desea eliminar su cuenta?",
+    ON_DELETING_ACCOUNT_WARN: "Al confirmar se eliminaran todos sus datos de forma definitiva",
     ON_DELETING_SUCCESS: "La transacción ha sido anulada",
+    ON_DELETING_ACCOUNT_SUCCESS: "El usuario ha sido eliminado",
     WITH_NO_TRANSACTIONS: "Informacion de saldos no disponible. Comience a crear transacciones...",
     WITH_NO_EXPENSES: "Informacion de gastos no disponible. Comience a crear gastos...",
     WITH_NO_INCOMES: "Informacion de ingresos no disponible. Comience a crear ingresos...",

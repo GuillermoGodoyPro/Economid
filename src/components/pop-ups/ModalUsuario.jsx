@@ -10,7 +10,8 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
     const { auth } = useAuth();
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
-    const [email, setEmail] = useState("");
+/*     const { dark } = useDark();
+ */
 
     const user = getUserToken();
 
@@ -29,10 +30,9 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
             Id: parseInt(user.id),
             Nombre: nombre,
             Apellido: apellido,
-            email: email,
+            email: user.email,
             Contraseña: user.pwd,
-            EsAdmin: false,
-            P_E_Id: parseInt(user.p_e_id),
+            EsAdmin: false
         };
 
         const config = {
@@ -42,7 +42,6 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
             }
 
         };
-
 
         try {
 
@@ -86,8 +85,7 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                         <input
                             id="nombre"
                             type="text"
-                            placeholder="Nombre"
-                            value={nombre}
+                            placeholder="Nombre"                            
                             defaultValue={user.nombre}
                             onChange={e => setNombre(e.target.value)}
 
@@ -101,7 +99,6 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                             id="apellido"
                             type="text"
                             placeholder="Apellido"
-                            value={apellido}
                             defaultValue={user.apellido}
                             onChange={e => setApellido(e.target.value)}
 
@@ -113,12 +110,10 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                         <label htmlFor="email">Correo Electrónico</label>
                         <input
                             id="email"
-                            type="email"
-                            placeholder="Correo Electrónico"
-                            value={email}
+                            type="text"
                             defaultValue={user.email}
-                            onChange={e => setEmail(e.target.value)}
-
+                            disabled="true"
+                            className="text-white"
                         />
 
                     </div>
@@ -126,19 +121,10 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
 
                     <input
                         type="submit"
-                        value="Aceptar"
-                    />
-
+                        value="Aceptar"/>
                     {msg && <Alerta alerta={alerta} />}
-
                 </form>
-
-
             </div>
-
-
-
-
         </div>
     );
 };

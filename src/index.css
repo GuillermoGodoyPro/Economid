@@ -6,19 +6,21 @@
 /* Aquí definimos las Custom properties */
 :root {
 
-
-
     --violetlight: #4f339ccb;
     --violetdark: #372174cb;
     --violethover: #ae9cdfcb;
     --crema: #f5f5f3;
-    --white: white;
+    --blanco: #ffffff;
     --rojo: #e50909b2;
     --rojo-hover: #c40707b2;
     --negro: #141414;
     --gris: #303030;
     --gris-f: #757575;
     --gris-mod: #f5f5f5;
+    --blanco-gris: #f5f5f3;
+    --gristopo-crema: #303030;
+
+    --blue-mod: #15084e;
     --gris-popup: rgb(229 231 235);
     /* Tipografía */
     --tipo-principal: Monospace, Arial, sans-serif;
@@ -96,6 +98,7 @@ em {
     width: 100%;
     margin: 0 auto;
     padding: 10rem 0;
+
 }
 
 .deletePopUp {
@@ -131,6 +134,10 @@ em {
 
 .deletePopUp .textDelete {
     color: var(--negro);
+}
+
+.deletePopUp .textDelete div h3 {
+    color: var(--gristopo-crema);
 }
 
 .deletePopUp.animar {
@@ -169,14 +176,14 @@ select {
 }
 
 .formulario input[type="submit"] {
-    background-color: var(--violetdark);
+    background-color: var(--violetlight);
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
     text-align: center;
     margin-top: 2.5rem;
     margin-bottom: 0.8rem;
-    color: var(--white);
+    color: var(--blanco);
     font-weight: 700;
     text-transform: uppercase;
     font-size: 0.8rem;
@@ -191,7 +198,7 @@ select {
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
-    text-align: center;        
+    text-align: center;
     color: var(--white);
     font-size: 0.8rem;
     font-weight: 700;
@@ -206,21 +213,23 @@ select {
     border: none;
     border-radius: 0.5rem;
     padding: 0.8rem;
-    text-align: center;        
-    color: var(--white);
+    text-align: center;
+    color: var(--blanco);
     font-size: 0.8rem;
     font-weight: 700;
     text-transform: uppercase;
     font-family: Arial, Helvetica, sans-serif;
     transition: 300ms ease;
 }
+
 .deletePopUpButtons input[type="submit"].deleteButton:hover {
     background-color: var(--rojo-hover);
-    cursor: pointer;   
+    cursor: pointer;
 }
+
 .deletePopUpButtons input[type="submit"].backDeleteButton:hover {
     background-color: var(--violetdark);
-    cursor: pointer;   
+    cursor: pointer;
 }
 
 @media (min-width: 768px) {
@@ -231,7 +240,9 @@ select {
 }
 
 .formulario input[type="submit"]:hover {
-    background-color: #570467;
+    background-color: var(--violethover);
+    color: var(--blanco);
+
     cursor: pointer;
 }
 
@@ -243,6 +254,7 @@ select {
     right: 0;
     bottom: 0;
     cursor: auto;
+    z-index: 2000 !important;
 }
 
 .modalDelete {
@@ -253,25 +265,27 @@ select {
     right: 0;
     bottom: 0;
     cursor: auto;
+    z-index: 2000 !important;
 }
 
 .modalContainer {
     margin: 0 auto;
     margin-top: 2.5rem;
-    justify-items: center;
-    background-color: var(--crema);
+    background-color: var(--blanco-gris);
     width: 30rem;
     border-radius: 0.5rem;
-    box-shadow: 0 0 15px 1px black;
+    box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.175);
+    color: var(--gristopo-crema);
 }
 
 .modalDeleteContainer {
     margin: 0 auto;
     margin-top: 2.5rem;
-    background-color: var(--crema);
-    width: 30rem;    
+    background-color: var(--blanco-gris);
+    width: 30rem;
     border-radius: 0.5rem;
     box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.175);
+    color: var(--gristopo-crema);
 }
 
 .modal .cerrar-modal {
@@ -301,26 +315,29 @@ select {
     opacity: 0;
 }
 
-.modalDelete .deletePopUp {    
+.modalDelete .deletePopUp {
     transition-property: all;
     transition-duration: 300ms;
     transition-timing-function: ease-in;
+
     opacity: 0;
 }
 
 .modal .campo label {
-    color: var(--violetdark);
+    color: var(--violetlight);
     font-weight: bolder;
 }
 
 .modalDelete .textDelete label {
-    color: var(--violetdark);
+    color: var(--gristopo-crema);
     font-weight: bolder;
 }
+
 
 body .modal {
     overflow: hidden;
 }
+
 body .modalDelete {
     overflow: hidden;
 }
@@ -358,6 +375,7 @@ body .modalDelete {
 
 header {
     text-align: center;
+    z-index: 1 !important;
 }
 
 header p {
@@ -383,6 +401,7 @@ header p {
 .headerStyle {
     background: rgb(135, 119, 179);
     background: radial-gradient(circle, rgba(174, 156, 223, 1) 30%, rgba(187, 170, 233, 1) 60%, rgba(135, 119, 179, 1) 90%);
+    z-index: 1000 !important;
 }
 
 .spinner {
@@ -391,4 +410,12 @@ header p {
 
 .deletePopUpButtons {
     padding: 0;
+}
+
+.t-table {
+    height: 560px;
+}
+
+.date-picker .react-datepicker-popper {
+    z-index: -1000 !important;
 }

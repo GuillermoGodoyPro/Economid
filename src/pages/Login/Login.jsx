@@ -56,8 +56,14 @@ const Login = () => {
     const { msg } = alerta;
 
     return (
-        <div className={styles.container} >
-            <span className={styles.span}> ¿Controlar tus finanzas? ¡fácil! </span>
+        <div className={styles.container}>
+
+            <div className="flex justify-center">
+                <div className="text-center p-5 m-5 w-20 rounded-3xl bg-violet-400">
+                    <i className="fa-solid fa-dragon"></i>
+                </div>
+            </div>
+            <span className={styles.span}>Bienvenido a My Finances</span>
             <h1 className={styles.title}>Inicia sesión</h1>
 
             <form
@@ -115,15 +121,19 @@ const Login = () => {
 
             <div className={styles.nav}>
                 <nav>
+
+                    <p>
+                        ¿Aún no tienes tu cuenta?
+                    </p>
                     <Link
                         className={styles.link} to="/signup">
-                        Registrarse
+                        Regístrate
                     </Link>
-                    <Link
+                    {/* <Link
                         className={styles.link} to="/forgotpassword"
                     >
                         Recuperar contraseña
-                    </Link>
+                    </Link> */}
 
                     {/* <Link
                 className={styles.link} to="/dashboard">

@@ -1,21 +1,26 @@
 import { useState } from "react";
 import { texts } from "../../constants/myfinances-constants";
 import Alerta from "../Alerta";
-import { deleteTransaction } from "../../services/myfinances-api/transacciones";
+import { deleteUser } from "../../services/myfinances-api/usuario";
+import { Navigate, useNavigate } from "react-router-dom";
+ 
+export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, userId }) => {
+        const [alerta, setAlerta] = useState({});
+        const [cargando, setLoading] = useState(false);
+        const navigate = useNavigate()
 
-export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, transaccionId, auth, transacciones, setTransacciones }) => {
-    const [alerta, setAlerta] = useState({});
-    const [cargando, setLoading] = useState(false);
+        const ocultarModal = () => {
+            setAnimarModal(false);
+            setTimeout(() => {
+                setModal(false);
+            }, 200);
+        };
 
-    const ocultarModal = () => {
-        setAnimarModal(false);
-        setTimeout(() => {
-            setModal(false);
-        }, 200);
-    };
+       
 
-    const handleBorrado = async (transaccionId) => {
+        const handleBorrado = async (userId) => {
         setLoading(true);
+
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -23,23 +28,27 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
             }
         };
 
+       
+        
         try {
-            const { data, status } = await deleteTransaction(transaccionId, config);
+            const { data, status } = await deleteUser(userId, config);
             if (status === 200) {
                 setLoading(false);
                 setAlerta({
-                    msg: texts.ON_DELETING_SUCCESS,
+                    msg: texts.ON_DELETING_ACCOUNT_SUCCESS,
                     error: false
                 });
                 setTimeout(() => {
-                    setAlerta({});
-                    console.log(data);
-                    setTransacciones(transacciones.map((transaccion) =>
-                        transaccion.id === transaccionId ?
-                            { ...transaccion, estaActiva: data.estaActiva } : transaccion
-                    ));
-                    ocultarModal();
+                    setAlerta({});    
+                    
+                            
+                                      
+                    
                 }, 2000);
+                localStorage.removeItem("token");
+                localStorage.removeItem("user");
+                navigate("/");
+                
             }
         } catch (error) {
             console.log(error);
@@ -62,11 +71,11 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                     <div className='textDelete text-center pb-10 pr-10 pl-10 pt-10 flex flex-col items-center'>
                         <div>
                             <h3 className="text-gray-800 text-lg">
-                                {texts.ON_DELETING_QUESTION}
+                                {texts.ON_DELETING_QUESTION_ACCOUNT_WARN}
                             </h3>
                             <div className="text-center rounded-xl p-3 bg-orange-400 shadow-md hover:shadow-orange-400">
                                 <h3 className="text-lg text-gray-800 text-center">
-                                    {texts.ON_DELETING_WARN}
+                                    {texts.ON_DELETING_ACCOUNT_WARN}
                                 </h3>
                             </div>
                         </div>
@@ -82,9 +91,9 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
 
                         <input
                             type="submit"
-                            value={!cargando ? "Anular" : "Anulando..."}
+                            value={!cargando ? "Eliminar" : "Eliminando..."}
                             disabled={cargando}
-                            onClick={() => handleBorrado(transaccionId)}
+                            onClick={() => handleBorrado(userId)}
                             className="deleteButton"
                         />
                     </div>

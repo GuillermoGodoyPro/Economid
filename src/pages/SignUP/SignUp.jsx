@@ -180,15 +180,18 @@ const SignUp = () => {
                 </form>
                 <div className={styles.nav}>
                     <nav>
+                        <p>
+                            ¿Ya tienes tu cuenta?
+                        </p>
                         <Link className={styles.link} to="/">
                             Iniciar sesión
                         </Link>
 
-                        <Link className={styles.link}
+                        {/* <Link className={styles.link}
                             to="/forgotpassword"
                         >
                             Recuperar contraseña
-                        </Link>
+                        </Link> */}
 
                     </nav>
                 </div>

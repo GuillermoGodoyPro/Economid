@@ -1,12 +1,25 @@
 import { useState } from "react";
 import { GoalAmount } from "../pop-ups/ModalMontoMeta";
 import { PulseLoader } from "react-spinners";
+import useDark from "../../context/useDark";
+import { GoalsPagination } from "./goals-pagination";
 
-export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setCompletedGoals }) => {
+export const ActiveGoals = ({
+    goals,
+    auth,
+    error,
+    cargando,
+    setLoading,
+    setActiveGoals,
+    setCompletedGoals,
+    activeGoalsMetadata    
+}) => {
     const activeGoals = goals?.filter(({ completada }) => !completada);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
+    const { dark } = useDark();
+
 
     const handleAddingModal = (goalId) => {
         setModal(true);
@@ -17,8 +30,15 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
     };
 
     return (
-        <div className="bg-gray-200 p-4 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center">
-            <h3 className="font-semibold text-violet-600">Metas Activas</h3>
+        <div className={(dark === "light" ?
+            "bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+        )}
+        >
+            <h3 className={(dark === "light" ?
+                "text-xl font-semibold text-violet-600 antialiased"
+                : "text-xl font-semibold text-violet-400 antialiased"
+            )}>Metas Activas</h3>
 
             {
                 cargando ?
@@ -26,11 +46,14 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div> :
                     goals.length || (goals.length && !error) ?
-                        <div className="flex flex-wrap justify-around">
-                            {activeGoals.map((goal, index) => {
+                        <div className="flex flex-wrap justify-center">
+                            {activeGoals?.splice(0, 2).map((goal, index) => {
                                 return (
                                     <div
-                                        className="w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                        className={(dark === "light" ?
+                                            "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                            : "w-64 h-64 m-3 rounded-lg bg-gray-200 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"
+                                        )}
                                         key={index}>
                                         <div className="flex justify-between items-center">
                                             <span className="font-semibold text-gray-500">{goal.titulo}</span>
@@ -38,10 +61,10 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                                                 {
                                                     !goal.montoActual ?
                                                         "$0" :
-                                                        `$${parseFloat(goal.montoActual)}`
+                                                        `$${parseFloat(goal.montoActual.toFixed(2))}`
                                                 }
                                                 <span className="font-semibold text-xs text-gray-500">
-                                                    {` / $${parseFloat(goal.montoFinal)}`}
+                                                    {` / $${parseFloat(goal.montoFinal.toFixed(2))}`}
                                                 </span>
                                             </span>
                                         </div>
@@ -84,7 +107,6 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                                                 auth={auth}
                                                 setActiveGoals={setActiveGoals}
                                                 setCompletedGoals={setCompletedGoals}
-                                                activeGoals={activeGoals}
                                             />
                                         }
                                     </div>
@@ -92,6 +114,17 @@ export const ActiveGoals = ({ goals, auth, error, cargando, setActiveGoals, setC
                             })}
                         </div> :
                         <div></div>
+            }
+            {
+                activeGoalsMetadata.totalCount > 2 ?
+                    <div className="w-full">
+                        <GoalsPagination
+                            metadata={activeGoalsMetadata}
+                            setActiveGoals={setActiveGoals}
+                            completed={false}
+                            setLoading={setLoading}
+                        />
+                    </div> : <div></div>
             }
         </div>
     );
