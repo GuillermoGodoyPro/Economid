@@ -1,6 +1,7 @@
 import { PulseLoader } from "react-spinners";
 import useDark from "../../context/useDark";
 import { GoalsPagination } from "./goals-pagination";
+import useAuth from "../../context/useAuth";
 
 export const CompletedGoals = ({ 
     goals, 
@@ -11,11 +12,10 @@ export const CompletedGoals = ({
     setCompletedGoals 
 }) => {
     const { dark } = useDark();
-
     return (
         <div className={(dark === "light" ?
-            "bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
-            : "bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            "w-2/5 bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "w-2/5 bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
         )}
         >
             <h3 className={(dark === "light" ?
@@ -30,7 +30,7 @@ export const CompletedGoals = ({
                     </div> :
                     goals.length || (goals.length && !error) ?
                         <div className="flex flex-wrap justify-center">
-                            {goals?.slice(0, 2).map((goal, index) => {
+                            {goals?.slice(0, 4).map((goal, index) => {
                                 return (
                                     <div
                                         className={(dark === "light" ?
@@ -66,10 +66,16 @@ export const CompletedGoals = ({
                                         <div className="flex justify-center">
                                             <div className="w-32 text-center rounded-md bg-green-200">
                                                 <h5
-                                                    className="text-xl font-semibold italic text-center text-green-500">
+                                                    className="text-xl font-semibold text-center text-green-500 font-mono">
                                                     Completada
                                                 </h5>
                                             </div>
+                                            {/* <i 
+                                                className="fa-solid fa-money-bill-transfer"
+                                                data-tooltip-id="my-tooltip"
+                                                data-tooltip-content="Retirar"
+                                                onClick={}
+                                            ></i> */}
                                         </div>
                                     </div>
                                 );
@@ -78,7 +84,7 @@ export const CompletedGoals = ({
                         : <div></div>
             }
             {
-                completedGoalsMetadata.totalCount > 2 ?
+                completedGoalsMetadata.totalCount > 4 ?
                     <div className="w-full">
                         <GoalsPagination
                             metadata={completedGoalsMetadata}

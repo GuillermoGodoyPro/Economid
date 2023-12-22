@@ -75,7 +75,7 @@ export const BalanceIncomes = ({ user, config }) => {
                 {
                     incomesAlert ?
                         <div className="flex justify-center">
-                            <div className="fixed">
+                            <div className="absolute">
                                 {msg && <Alerta alerta={incomesAlert} />}
                             </div>
                         </div> : <div></div>
@@ -85,7 +85,7 @@ export const BalanceIncomes = ({ user, config }) => {
                         <div className="flex justify-center">
                             <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                         </div> :
-                        incomes
+                        incomes.length
                             ?
                             <div className="flex justify-center mb-5">
                                 <table>

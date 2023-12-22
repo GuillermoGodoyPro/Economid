@@ -5,37 +5,8 @@ import { getUserToken } from "../../services/token/tokenService";
 import useDark from "../../context/useDark";
 import { PulseLoader } from "react-spinners";
 
-export const GoalsTable = () => {
-    const { auth } = useAuth();
+export const GoalsTable = ({ loading, goals }) => {
     const { dark } = useDark();
-    const [goals, setGoals] = useState();
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
-    const user = getUserToken();
-    const config = {
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${auth}`
-        }
-    };
-    useEffect(() => {
-        const fetchGoals = async () => {
-            try {
-                const goalsPayload = {
-                    userId: user.id
-                };
-                const { data: goalsResponse, status: goalsStatus } = await getAll(goalsPayload, 1, 10, config);
-                if (goalsStatus === 200) {
-                    setGoals(goalsResponse.data);
-                    setLoading(false);
-                }
-            } catch (error) {
-                setError(error);
-                setLoading(false);
-            }
-        };
-        fetchGoals();
-    }, []);
     return (
         <div className="t-table">
             {
@@ -100,13 +71,23 @@ export const GoalsTable = () => {
                                                 "py-2 px-4 text-gray-200 font-semibold font-mono"
                                             )}
                                             >{goal.titulo}</td>
-                                            <td className={(dark === "light" ?
-                                                "py-2 px-4 text-gray-400 font-semibold font-mono"
-                                                :
-                                                "py-2 px-4 text-gray-300 font-semibold font-mono"
-                                            )}>
-                                                ${parseFloat(goal.montoActual).toFixed(2)}
-                                            </td>
+                                            {
+                                                !goal.montoActual ?
+                                                    <td className={(dark === "light" ?
+                                                        "py-2 px-4 text-gray-400 font-semibold font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-300 font-semibold font-mono"
+                                                    )}>
+                                                        ${parseFloat(0).toFixed(2)}
+                                                    </td> :
+                                                    <td className={(dark === "light" ?
+                                                        "py-2 px-4 text-gray-400 font-semibold font-mono"
+                                                        :
+                                                        "py-2 px-4 text-gray-300 font-semibold font-mono"
+                                                    )}>
+                                                        ${parseFloat(goal.montoActual).toFixed(2)}
+                                                    </td>
+                                            }
                                             <td className={(dark === "light" ?
                                                 "py-2 px-4 text-gray-400 font-semibold font-mono"
                                                 :

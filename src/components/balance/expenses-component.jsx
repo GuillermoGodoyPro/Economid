@@ -76,7 +76,7 @@ export const BalanceExpenses = ({ user, config }) => {
                 {
                     expensesAlert ?
                         <div className="flex justify-center">
-                            <div className="fixed">
+                            <div className="absolute">
                                 {msg && <Alerta alerta={expensesAlert} />}
                             </div>
                         </div> : <div></div>

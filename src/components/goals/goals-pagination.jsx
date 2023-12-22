@@ -55,7 +55,7 @@ export const GoalsPagination = ({
                 completada: completed
             };
             try {
-                const { data: response,  } = await getByState(payload, page, 2, config);
+                const { data: response,  } = await getByState(payload, page, 4, config);
                 if (!payload.completada) {
                     setActiveGoals(response.data);
                     setLoading(false);

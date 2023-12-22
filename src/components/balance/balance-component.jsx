@@ -2,7 +2,7 @@ import { PulseLoader } from "react-spinners";
 import { texts } from "../../constants/myfinances-constants";
 import useDark from "../../context/useDark";
 
-export const BalanceComponent = ({cargando, balance}) => {
+export const BalanceComponent = ({ cargando, balance }) => {
     const { dark } = useDark();
 
     return (
@@ -22,7 +22,7 @@ export const BalanceComponent = ({cargando, balance}) => {
                             <div>
                                 <h3 className={(dark === "light" ?
                                     "text-xl font-semibold text-violet-600 antialiased"
-                                    :"text-xl font-semibold text-violet-400 antialiased"
+                                    : "text-xl font-semibold text-violet-400 antialiased"
                                 )}>
                                     Balance
                                 </h3>
@@ -35,7 +35,7 @@ export const BalanceComponent = ({cargando, balance}) => {
                                             </h1> :
                                             <h1 className={(dark === "light" ?
                                                 "text-gray-600 font-bold text-5xl font-mono"
-                                                :"text-gray-100 font-bold text-5xl font-mono"
+                                                : "text-gray-100 font-bold text-5xl font-mono"
                                             )}
                                             >
                                                 <span className="mr-1">$</span>
@@ -44,7 +44,7 @@ export const BalanceComponent = ({cargando, balance}) => {
                                         balance.saldo_Total < 0 ?
                                             <h1 className={(dark === "light" ?
                                                 "text-red-600 font-bold text-5xl font-mono"
-                                                :"text-red-600 font-bold text-5xl font-mono"
+                                                : "text-red-600 font-bold text-5xl font-mono"
                                             )}
                                             >
                                                 <span className="mr-1">$</span>
@@ -58,7 +58,9 @@ export const BalanceComponent = ({cargando, balance}) => {
                             </div>
                         </div> :
                         <div className='pt-14 flex flex-col p-5 items-center text-center' >
-                            <h3 className="mb-10 text-lg">
+                            <h3 className={(dark === "light" ?
+                                "text-lg text-center text-black" :
+                                "text-lg text-center text-white")}>
                                 {texts.WITH_NO_TRANSACTIONS}
                             </h3>
                         </div>

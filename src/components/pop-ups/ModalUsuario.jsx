@@ -84,7 +84,6 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                             id="nombre"
                             type="text"
                             placeholder="Nombre"
-                            value={nombre}
                             defaultValue={user.nombre}
                             onChange={e => setNombre(e.target.value)}
 
@@ -98,7 +97,6 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                             id="apellido"
                             type="text"
                             placeholder="Apellido"
-                            value={apellido}
                             defaultValue={user.apellido}
                             onChange={e => setApellido(e.target.value)}
 

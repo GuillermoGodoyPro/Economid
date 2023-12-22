@@ -5,7 +5,7 @@ import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
 import { errors } from "../../constants/myfinances-constants";
 
-const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals, setMetadata }) => {
+const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals, tableGoals , setTableGoals }) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
     const [tituloMeta, setTituloMeta] = useState("");
@@ -62,9 +62,9 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                 setTimeout(() => {
                     setAlerta({});
                     !activeGoals.length ? setActiveGoals([data]) : setActiveGoals([data, ...activeGoals]);
-                    setMetadata(metadata => metadata.map((m) => {
-                        return activeGoals.length > 2 ? { ...m, totalCount: totalCount + 1 } : m;
-                    }));
+                    if (tableGoals) {
+                        !tableGoals.length ? setTableGoals([data]) : setTableGoals([data, ...tableGoals]);
+                    }
                     ocultarModal();
                 }, 1500);
             }

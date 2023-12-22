@@ -190,7 +190,9 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                             </div>
                         </div> :
                         <div className='pt-14 flex flex-col p-5 items-center text-center' >
-                            <h3 className="mb-10 text-lg">
+                            <h3 className={(dark === "light" ?
+                                "mb-10 text-lg text-center mt-20 text-black" :
+                                "mb-10 text-lg text-center mt-20 text-white")}>
                                 {texts.WITH_NO_TRANSACTIONS}
                             </h3>
                         </div>

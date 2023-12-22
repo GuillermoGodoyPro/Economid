@@ -20,8 +20,10 @@ const Metas = () => {
     const [activeGoalsMetadata, setActiveGoalsMetadata] = useState({});
     const [completedGoals, setCompletedGoals] = useState([]);
     const [completedGoalsMetadata, setCompletedGoalsMetadata] = useState({});
+    const [tableGoals, setTableGoals] = useState([]);
     const [loadingActiveGoals, setLoadingActiveGoals] = useState(true);
     const [loadingCompletedGoals, setLoadingCompletedGoals] = useState(true);
+    const [loadingTableGoals, setLoadingTableGoals] = useState(true);
     const [error, setError] = useState(null);
     const [alerta, setAlerta] = useState({});
 
@@ -47,7 +49,7 @@ const Metas = () => {
                     userId: user.id,
                     completada: false
                 };
-                const { data: activeGoalsResponse, status: activeGoalsStatus } = await getByState(activeGoalsPayload, 1, 2, config);
+                const { data: activeGoalsResponse, status: activeGoalsStatus } = await getByState(activeGoalsPayload, 1, 4, config);
                 if (activeGoalsStatus === 200) {
                     setActiveGoals(activeGoalsResponse.data);
                     setActiveGoalsMetadata(activeGoalsResponse.meta);
@@ -59,7 +61,7 @@ const Metas = () => {
                 setLoadingActiveGoals(false);
                 setAlerta({
                     msg: texts.WITH_NO_GOALS,
-                    error: true
+                    warn: true
                 });
                 setTimeout(() => {
                     setAlerta({});
@@ -76,7 +78,7 @@ const Metas = () => {
                     userId: user.id,
                     completada: true
                 };
-                const { data: completedGoalsResponse, status: completedGoalsStatus } = await getByState(completedGoalsPayload, 1, 2, config);
+                const { data: completedGoalsResponse, status: completedGoalsStatus } = await getByState(completedGoalsPayload, 1, 4, config);
                 if (completedGoalsStatus === 200) {
                     setCompletedGoals(completedGoalsResponse.data);
                     setCompletedGoalsMetadata(completedGoalsResponse.meta);
@@ -86,23 +88,35 @@ const Metas = () => {
             } catch (error) {
                 setError(error);
                 setLoadingCompletedGoals(false);
-                setAlerta({
-                    msg: texts.WITH_NO_GOALS,
-                    error: true
-                });
-                setTimeout(() => {
-                    setAlerta({});
-                }, 3000);
             }
         };
         fetchCompletedGoals();
+    }, []);
+
+    useEffect(() => {
+        const fetchGoals = async () => {
+            try {
+                const goalsPayload = {
+                    userId: user.id
+                };
+                const { data: goalsResponse, status: goalsStatus } = await getAll(goalsPayload, 1, 10, config);
+                if (goalsStatus === 200) {
+                    setTableGoals(goalsResponse.data);
+                    setLoadingTableGoals(false);
+                }
+            } catch (error) {
+                setError(error);
+                setLoadingTableGoals(false);
+            }
+        };
+        fetchGoals();
     }, []);
 
     const { msg } = alerta;
 
     return (
         <div>
-            <div className="flex justify-end text-right fixed">
+            <div className="flex justify-end text-center absolute">
                 {msg && <Alerta alerta={alerta} />}
             </div>
             <div className='pt-8 flex justify-center bottom-1 '>
@@ -121,7 +135,8 @@ const Metas = () => {
                         setAnimarModal={setAnimarModal}
                         setActiveGoals={setActiveGoals}
                         activeGoals={activeGoals}
-                        setMetadata={setActiveGoalsMetadata}
+                        setTableGoals={setTableGoals}
+                        tableGoals={tableGoals}
                     />
                 }
             </div>
@@ -135,6 +150,7 @@ const Metas = () => {
                     setActiveGoals={setActiveGoals}
                     setCompletedGoals={setCompletedGoals}
                     activeGoalsMetadata={activeGoalsMetadata}
+                    setTableGoals={setTableGoals}
                 />
                 <CompletedGoals
                     goals={completedGoals}
@@ -151,7 +167,7 @@ const Metas = () => {
                     :
                     "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400"
                 )}>
-                    <GoalsTable />
+                    <GoalsTable goals={tableGoals} loading={loadingTableGoals} />
                 </div>
             </div>
         </div>

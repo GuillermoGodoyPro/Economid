@@ -8,9 +8,10 @@ export const GoalAmount = ({
     setAnimarModal, 
     setModal, 
     goalId, 
-    auth, 
+    auth,
     setActiveGoals, 
-    setCompletedGoals         
+    setCompletedGoals,
+    setTableGoals     
 }) => {
     const [alerta, setAlerta] = useState({});
     const [amount, setAmount] = useState("");
@@ -58,6 +59,11 @@ export const GoalAmount = ({
                     setActiveGoals(activeGoals => activeGoals.map((goal) => {
                         return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
                     }));
+                    if (setTableGoals) {
+                        setTableGoals(setTableGoals => setTableGoals.map((goal) => {
+                            return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
+                        }));
+                    }                    
                     if (data.completada) {
                         setTimeout(() => {
                             setAlerta({
@@ -67,6 +73,11 @@ export const GoalAmount = ({
                             setActiveGoals(activeGoals => activeGoals.map((goal) => {
                                 return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                             }));
+                            if (setTableGoals) {
+                                setTableGoals(setTableGoals => setTableGoals.map((goal) => {
+                                    return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
+                                }));
+                            }                            
                             if (setCompletedGoals) {
                                 setCompletedGoals(completedGoals => [data, ...completedGoals]);
                             }

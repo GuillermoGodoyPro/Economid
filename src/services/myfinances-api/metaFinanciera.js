@@ -18,3 +18,8 @@ export async function getByState(payload, page, pageSize, config) {
     const data = await clienteAxios.post(`/MetaFinanciera/ObtenerPorEstado?page=${page}&pageSize=${pageSize}`, payload, config);
     return data;
 }
+
+// export async function withdrawGoal(payload, config) {
+//     const data = await clienteAxios.post(`/MetaFinanciera/RetirarMeta`, payload, config);
+//     return data;
+// }

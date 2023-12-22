@@ -12,7 +12,8 @@ export const ActiveGoals = ({
     setLoading,
     setActiveGoals,
     setCompletedGoals,
-    activeGoalsMetadata    
+    activeGoalsMetadata,
+    setTableGoals    
 }) => {
     const activeGoals = goals?.filter(({ completada }) => !completada);
     const [modal, setModal] = useState(false);
@@ -31,8 +32,8 @@ export const ActiveGoals = ({
 
     return (
         <div className={(dark === "light" ?
-            "bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
-            : "bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            "w-2/5 bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            : "w-2/5 bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
         )}
         >
             <h3 className={(dark === "light" ?
@@ -42,12 +43,12 @@ export const ActiveGoals = ({
 
             {
                 cargando ?
-                    <div className="flex justify-center">
+                    <div className="flex justify-around p-10 mx-20">
                         <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
                     </div> :
                     goals.length || (goals.length && !error) ?
                         <div className="flex flex-wrap justify-center">
-                            {activeGoals?.splice(0, 2).map((goal, index) => {
+                            {activeGoals?.splice(0, 4).map((goal, index) => {
                                 return (
                                     <div
                                         className={(dark === "light" ?
@@ -107,6 +108,7 @@ export const ActiveGoals = ({
                                                 auth={auth}
                                                 setActiveGoals={setActiveGoals}
                                                 setCompletedGoals={setCompletedGoals}
+                                                setTableGoals={setTableGoals}                                            
                                             />
                                         }
                                     </div>
@@ -116,7 +118,7 @@ export const ActiveGoals = ({
                         <div></div>
             }
             {
-                activeGoalsMetadata.totalCount > 2 ?
+                activeGoalsMetadata.totalCount > 4 ?
                     <div className="w-full">
                         <GoalsPagination
                             metadata={activeGoalsMetadata}
