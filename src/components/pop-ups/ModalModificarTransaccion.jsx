@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { modifyTransaction } from "../../services/myfinances-api/transacciones";
-import { errors } from "../../constants/myfinances-constants";
+import { amountReGex, errors, textsReGex } from "../../constants/myfinances-constants";
 import Alerta from "../Alerta";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
@@ -16,7 +16,7 @@ export const ModificarTransaccion = ({
     transaccion,
     setTransaccion,
     setTransacciones,
-    idBalance,
+    balance,
     categorias
 }) => {
     const { auth } = useAuth();
@@ -65,7 +65,7 @@ export const ModificarTransaccion = ({
             monto: parseFloat(monto),
             tipoTransaccion: tipoTransaccion,
             cat_Id: parseInt(categoriaId),
-            balance_Id: parseInt(idBalance) ?? null,
+            balance_Id: parseInt(balance?.id) ?? null,
             usuarioId: parseInt(user.id),
             estaActiva: true
         };
@@ -145,18 +145,27 @@ export const ModificarTransaccion = ({
                             id="detalle"
                             type="text"
                             placeholder="Detalle"
+                            maxLength={80}
                             value={detalle}
-                            onChange={e => setDetalle(e.target.value)}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setDetalle(e.target.value);
+                                }
+                            }}
                         />
                     </div>
                     <div className='campo'>
                         <label htmlFor="monto">Monto</label>
                         <input
                             id="monto"
-                            type="number"
+                            type="text"
                             placeholder="Ingresar monto"
-                            value={monto}
-                            onChange={e => setMonto(e.target.value.replace(",", ".").trim())}
+                            value={monto.toString().replace(",", ".")}
+                            onChange={e => {
+                                if (e.target.value === "" || amountReGex.test(e.target.value.replace(",", "."))) {
+                                    setMonto(e.target.value);
+                                }
+                            }}
                         />
                     </div>
 

@@ -7,7 +7,7 @@ import useAuth from "../../context/useAuth";
 import { getCategories } from "../../services/myfinances-api/categorias";
 import useDark from "../../context/useDark";
 
-export const TransactionsTable = ({ cargando, transacciones, setTransacciones, idBalance }) => {
+export const TransactionsTable = ({ cargando, transacciones, setTransacciones, balance }) => {
     const { auth } = useAuth();
     const orderedTransactions = transacciones?.slice(0, 10);
     const [error, setError] = useState(null);
@@ -222,7 +222,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, i
                                                     transaccion={toModifyTransact}
                                                     setTransaccion={setTransaccion}
                                                     setTransacciones={setTransacciones}
-                                                    idBalance={idBalance}
+                                                    balance={balance}
                                                     categorias={categorias}
                                                 />
                                             }

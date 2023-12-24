@@ -3,17 +3,15 @@ import Alerta from "../Alerta";
 import useAuth from "../../context/useAuth";
 import { getUserToken, setUserToken } from "../../services/token/tokenService";
 import { modifyProfile } from "../../services/myfinances-api/usuario";
+import { textsReGex } from "../../constants/myfinances-constants";
 
 
 const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
     const [alerta, setAlerta] = useState({});
-    const { auth } = useAuth();
-    const [nombre, setNombre] = useState("");
-    const [apellido, setApellido] = useState("");
-/*     const { dark } = useDark();
- */
-
     const user = getUserToken();
+    const { auth } = useAuth();
+    const [nombre, setNombre] = useState(user.nombre);
+    const [apellido, setApellido] = useState(user.apellido);
 
     const ocultarModal = () => {
         setAnimarModal(false);
@@ -44,24 +42,24 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
         };
 
         try {
-
             const { data } = await modifyProfile(user.id, payload, config);
-
             setUserToken("user",JSON.stringify({
                 ...user,
                 nombre: data.nombre,
                 apellido: data.apellido,
                 email: data.email
             }));
-
-
-            console.log(data);
+            setAlerta({
+                msg: "Usuario Modificado!",
+                error: false
+            });
+            setTimeout(() => {
+                setAlerta({});
+                ocultarModal();
+            }, 1500);
         } catch (error) {
             setAlerta(error);
         }
-
-
-        ocultarModal();
     };
 
     const { msg } = alerta;
@@ -85,10 +83,14 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                         <input
                             id="nombre"
                             type="text"
-                            placeholder="Nombre"                            
-                            defaultValue={user.nombre}
-                            onChange={e => setNombre(e.target.value)}
-
+                            placeholder="Nombre"
+                            maxLength={30}
+                            value={nombre}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setNombre(e.target.value);
+                                }
+                            }}
                         />
 
                     </div>
@@ -99,9 +101,13 @@ const ModalUsuario = ({ setModal, animarModal, setAnimarModal }) => {
                             id="apellido"
                             type="text"
                             placeholder="Apellido"
-                            defaultValue={user.apellido}
-                            onChange={e => setApellido(e.target.value)}
-
+                            value={apellido}
+                            maxLength={30}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setApellido(e.target.value);
+                                }
+                            }}
                         />
 
                     </div>

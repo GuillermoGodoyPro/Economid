@@ -9,38 +9,25 @@ import useAuth from "../../context/useAuth";
 const Usuario = () => {
     const user = getUserToken();
     const { auth } = useAuth();
-
-
-    const [error, setError] = useState(null);
     const [deleteModal, setDeleteModal] = useState(false);
-    const [modifyModal, setModifyModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
-
-
-    
     const [modalModificarPerfil, setModalPerfil] = useState(false);
     const [animarModalPerfil, setAnimarModalPerfil] = useState(false);
     const { dark } = useDark();
 
-
     const handleModificarPerfil = () => {
         setModalPerfil(true);
-
         setTimeout(() => {
-
             setAnimarModalPerfil(true);
         }, 400);
     };
 
-    const handleDeletingModal = (user) => {
+    const handleDeletingModal = () => {
         setDeleteModal(true);
-        
         setTimeout(() => {
             setAnimarModal(true);
         }, 400);
     };
-
-
 
     return (
 
@@ -48,52 +35,47 @@ const Usuario = () => {
 
             <div className={styles.container2} >
 
-                <div >
-
+                <div>
                     <h1 className={(dark === "light" ?
-                        'text-violet-400 font-semibold'
+                        "text-violet-400 font-semibold"
                         :
-                        'text-violet-600 font-semibold'
+                        "text-violet-600 font-semibold"
                     )}>NOMBRE</h1>
                     <p className={(dark === "light" ?
-                        'text-gray-700 font-semibold'
+                        "text-gray-700 font-semibold"
                         :
-                        'text-gray-900 font-semibold'
+                        "text-gray-900 font-semibold"
                     )}>{user.nombre}</p>
                     <h1 className={(dark === "light" ?
-                        'text-violet-400 font-semibold'
+                        "text-violet-400 font-semibold"
                         :
-                        'text-violet-600 font-semibold'
+                        "text-violet-600 font-semibold"
                     )}>APELLIDO</h1>
                     <p className={(dark === "light" ?
-                        'text-gray-700 font-semibold'
+                        "text-gray-700 font-semibold"
                         :
-                        'text-gray-900 font-semibold'
+                        "text-gray-900 font-semibold"
                     )}
                     >{user.apellido}</p>
                     <h1 className={(dark === "light" ?
-                        'text-violet-400 font-semibold'
+                        "text-violet-400 font-semibold"
                         :
-                        'text-violet-600 font-semibold'
+                        "text-violet-600 font-semibold"
                     )}>CORREO ELECTRÓNICO</h1>
                     <p className={(dark === "light" ?
-                        'text-gray-700 font-semibold'
+                        "text-gray-700 font-semibold"
                         :
-                        'text-gray-900 font-semibold'
+                        "text-gray-900 font-semibold"
                     )}
                     >{user.email}</p>
-                    
-
-                    <div className="">
-                        <div >                           
-
-
-                            <button 
+                    <div>
+                        <div>
+                            <button
                                 onClick={handleModificarPerfil}
                                 className={(dark === "light" ?
-                                    'mt-6 mr-4 text-gray-800 text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500'
+                                    "mt-6 mr-4 text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500"
                                     :
-                                    'mt-6 mr-4 text-gray-900 text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500'
+                                    "mt-6 mr-4 text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold p-absolute shadow-md hover:shadow-violet-500"
                                 )}
                             >MODIFICAR PERFIL</button>
 
@@ -118,18 +100,13 @@ const Usuario = () => {
                                     animarModal={animarModal}
                                     auth={auth}
                                     userId={user.id}
-                                   
                                 />
                             }
-
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
     );
 };
-
-
 export default Usuario;

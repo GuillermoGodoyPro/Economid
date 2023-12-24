@@ -1,16 +1,15 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Alerta from "../Alerta";
 import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
 import { newTransaction } from "../../services/myfinances-api/transacciones";
-import { errors } from "../../constants/myfinances-constants";
+import { amountReGex, errors, textsReGex } from "../../constants/myfinances-constants";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
-import { getCategories } from "../../services/myfinances-api/categorias";
 import useDark from "../../context/useDark";
 
-const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, setTransacciones, setBalance, setBalanceId, categorias }) => {
+const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransacciones, setBalance, balance, categorias }) => {
 
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
@@ -38,20 +37,6 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
         }, 200);
     };
 
-    useEffect(() => {
-        const fetchCategorias = async () => {
-            try {
-                const { data: response } = await getCategories(config);
-                setCategorias(response);
-                setLoading(false);
-            } catch (error) {
-                setError(error);
-                setLoading(false);
-            }
-        };
-        fetchCategorias();
-    }, []);
-
     const handleSubmit = async e => {
         e.preventDefault();
         setLoading(true);
@@ -73,7 +58,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
             monto: parseFloat(monto),
             tipoTransaccion: tipoTransaccion,
             cat_Id: parseInt(categoriaId),
-            balance_Id: parseInt(idBalance) ?? null,
+            balance_Id: parseInt(balance?.id) ?? null,
             usuarioId: parseInt(user.id),
             estaActiva: true
         };
@@ -91,7 +76,6 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
                     setTransacciones(transacciones => [data, ...transacciones]);
                     if (setBalance) {
                         setBalance(data.balance);
-                        setBalanceId(data.balance.id);
                     }
                     ocultarModal();
                 }, 1500);
@@ -153,19 +137,28 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, idBalance, se
                         <input
                             id="detalle"
                             type="text"
+                            maxLength={80}
                             placeholder="Detalle"
                             value={detalle}
-                            onChange={e => setDetalle(e.target.value)}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setDetalle(e.target.value);
+                                }
+                            }}
                         />
                     </div>
                     <div className='campo'>
                         <label htmlFor="monto">Monto</label>
                         <input
                             id="monto"
-                            type="number"
+                            type="text"
                             placeholder="Ingresar monto"
                             value={monto.replace(",", ".")}
-                            onChange={e => setMonto(e.target.value.replace(",", ".").trim())}
+                            onChange={e => {
+                                if (e.target.value === "" || amountReGex.test(e.target.value.replace(",", "."))) {
+                                    setMonto(e.target.value);
+                                }
+                            }}
                         />
                     </div>
 

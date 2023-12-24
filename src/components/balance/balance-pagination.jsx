@@ -39,7 +39,7 @@ export const BalancePagination = ({ setTransactions, auth, navigationNumbers, ty
                 tipo: type
             };
             try {
-                const { data: response } = await filterByType(payload, page, 10, config);
+                const { data: response } = await filterByType(payload, page, 5, config);
                 setLoading(false);
                 setTransactions(response.data);
                 if (!response.meta.hasNextPage) {

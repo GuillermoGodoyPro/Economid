@@ -54,7 +54,6 @@ const Metas = () => {
                     setActiveGoals(activeGoalsResponse.data);
                     setActiveGoalsMetadata(activeGoalsResponse.meta);
                     setLoadingActiveGoals(false);
-                    console.log(`Active Goals Response: ${activeGoalsResponse.data}`);
                 }
             } catch (error) {
                 setError(error);
@@ -83,7 +82,6 @@ const Metas = () => {
                     setCompletedGoals(completedGoalsResponse.data);
                     setCompletedGoalsMetadata(completedGoalsResponse.meta);
                     setLoadingCompletedGoals(false);
-                    console.log(`Completed Goals Response: ${completedGoalsResponse.data.toString()}`);
                 }
             } catch (error) {
                 setError(error);
@@ -116,10 +114,7 @@ const Metas = () => {
 
     return (
         <div>
-            <div className="flex justify-end text-center absolute">
-                {msg && <Alerta alerta={alerta} />}
-            </div>
-            <div className='pt-8 flex justify-center bottom-1 '>
+            <div className='pt-8 flex justify-between items-center'>
                 <button
                     type="button"
                     className='text-white text-sm bg-violet-400 p-3 rounded-md uppercase font-bold shadow-md hover:shadow-violet-500'
@@ -139,6 +134,9 @@ const Metas = () => {
                         tableGoals={tableGoals}
                     />
                 }
+                <div className="flex justify-center text-center">
+                    {msg && <Alerta alerta={alerta} />}
+                </div>
             </div>
             <div className="flex justify-center">
                 <ActiveGoals
@@ -159,6 +157,8 @@ const Metas = () => {
                     setCargando={setLoadingCompletedGoals}
                     completedGoalsMetadata={completedGoalsMetadata}
                     setCompletedGoals={setCompletedGoals}
+                    setTableGoals={setTableGoals}
+                    setAlerta={setAlerta}
                 />
             </div>
             <div>

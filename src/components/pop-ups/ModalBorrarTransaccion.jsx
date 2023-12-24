@@ -33,7 +33,6 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
                 });
                 setTimeout(() => {
                     setAlerta({});
-                    console.log(data);
                     setTransacciones(transacciones.map((transaccion) =>
                         transaccion.id === transaccionId ?
                             { ...transaccion, estaActiva: data.estaActiva } : transaccion

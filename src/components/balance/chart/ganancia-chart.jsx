@@ -65,6 +65,12 @@ export const GananciaChart = ({ transacciones }) => {
             "bg-gray-600 rounded-lg px-6 mt-6 mb-60 p-10 shadow-md hover:shadow-violet-400"
         )}
         >
+            <h3 className={(dark === "light" ?
+                "text-xl text-center font-semibold text-violet-600 antialiased"
+                : "text-xl text-center font-semibold text-violet-400 antialiased"
+            )}>
+                Resumen últimas 10 transacciones
+            </h3>
             <div className="chart-container">
                 <Bar
                     width={500} height={250}

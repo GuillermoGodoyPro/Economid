@@ -31,5 +31,9 @@ export const texts = {
     WITH_NO_INCOMES: "Informacion de ingresos no disponible. Comience a crear ingresos...",
     WITH_NO_GOALS: "No hay metas activas. Comience a crear metas...",
     NO_CHART: "Gráfico no disponible. No se registran gastos...",
-    ON_COMPLETED_GOAL: "Meta completada!"
+    ON_COMPLETED_GOAL: "Meta completada!",
+    ON_WITHDRAWN_GOAL: "Meta retirada con éxito!"
 };
+
+export const amountReGex = /^\d{1,5}?(\.\d{0,2})?$/;
+export const textsReGex = /^[A-Za-z\s]+$/;

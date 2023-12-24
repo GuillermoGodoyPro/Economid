@@ -2,25 +2,22 @@ import { useState } from "react";
 import { texts } from "../../constants/myfinances-constants";
 import Alerta from "../Alerta";
 import { deleteUser } from "../../services/myfinances-api/usuario";
-import { Navigate, useNavigate } from "react-router-dom";
- 
+import { useNavigate } from "react-router-dom";
+
 export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, userId }) => {
-        const [alerta, setAlerta] = useState({});
-        const [cargando, setLoading] = useState(false);
-        const navigate = useNavigate()
+    const [alerta, setAlerta] = useState({});
+    const [cargando, setLoading] = useState(false);
+    const navigate = useNavigate();
 
-        const ocultarModal = () => {
-            setAnimarModal(false);
-            setTimeout(() => {
-                setModal(false);
-            }, 200);
-        };
+    const ocultarModal = () => {
+        setAnimarModal(false);
+        setTimeout(() => {
+            setModal(false);
+        }, 200);
+    };
 
-       
-
-        const handleBorrado = async (userId) => {
+    const handleBorrado = async () => {
         setLoading(true);
-
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -28,8 +25,6 @@ export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, use
             }
         };
 
-       
-        
         try {
             const { data, status } = await deleteUser(userId, config);
             if (status === 200) {
@@ -39,16 +34,11 @@ export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, use
                     error: false
                 });
                 setTimeout(() => {
-                    setAlerta({});    
-                    
-                            
-                                      
-                    
+                    setAlerta({});
+                    localStorage.removeItem("token");
+                    localStorage.removeItem("user");
+                    navigate("/");
                 }, 2000);
-                localStorage.removeItem("token");
-                localStorage.removeItem("user");
-                navigate("/");
-                
             }
         } catch (error) {
             console.log(error);
@@ -80,7 +70,6 @@ export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, use
                             </div>
                         </div>
                     </div>
-                    {msg && <Alerta alerta={alerta} />}
                     <div className="deletePopUpButtons flex flex-row justify-around">
                         <input
                             type="submit"
@@ -93,10 +82,11 @@ export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, use
                             type="submit"
                             value={!cargando ? "Eliminar" : "Eliminando..."}
                             disabled={cargando}
-                            onClick={() => handleBorrado(userId)}
+                            onClick={handleBorrado}
                             className="deleteButton"
                         />
                     </div>
+                    {msg && <Alerta alerta={alerta} />}
                 </div>
             </div>
         </div>

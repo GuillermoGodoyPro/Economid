@@ -3,6 +3,7 @@ import styles from "./SignUp.module.css";
 import { useState } from "react";
 import Alerta from "../../components/Alerta";
 import { register } from "../../services/myfinances-api/usuario";
+import { textsReGex } from "../../constants/myfinances-constants";
 
 
 
@@ -85,9 +86,8 @@ const SignUp = () => {
         <>
             <div className={styles.container} >
                 <h1 className={styles.title}> Bienvenido a
-                    <span className={styles.span}> MyFinance</span>
+                    <span className={styles.span}> MyFinances</span>
                 </h1>
-
 
                 <form
                     className={styles.form}
@@ -95,29 +95,39 @@ const SignUp = () => {
                 >
                     <div>
                         <label className={styles.label}
-                            htmlFor='nombre'
+                            htmlFor="nombre"
                         >Nombre</label>
                         <input
-                            id='nombre'
-                            type='nombre'
-                            placeholder='Nombre'
+                            id="nombre"
+                            type="nombre"
+                            placeholder="Nombre"
+                            maxLength={30}
                             className={styles.input}
                             value={nombre}
-                            onChange={e => setNombre(e.target.value)}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setNombre(e.target.value);
+                                }
+                            }}
                         />
 
                     </div>
                     <div>
                         <label className={styles.label}
-                            htmlFor='apellido'
+                            htmlFor="apellido"
                         >Apellido</label>
                         <input
-                            id='apellido'
-                            type='apellido'
-                            placeholder='Apellido'
+                            id="apellido"
+                            type="text"
+                            placeholder="Apellido"
+                            maxLength={30}
                             className={styles.input}
                             value={apellido}
-                            onChange={e => setApellido(e.target.value)}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setApellido(e.target.value);
+                                }
+                            }}
                         />
 
                     </div>
@@ -130,12 +140,11 @@ const SignUp = () => {
                             type='email'
                             placeholder='Correo Electrónico'
                             className={styles.input}
+                            maxLength={30}
                             value={email}
                             onChange={e => setEmail(e.target.value)}
                         />
-
                     </div>
-
 
                     <div>
                         <label className={styles.label}
@@ -164,7 +173,6 @@ const SignUp = () => {
                             value={repetirPassword}
                             onChange={e => setRepetirPassword(e.target.value)}
                         />
-
                     </div>
 
                     <div
@@ -186,13 +194,6 @@ const SignUp = () => {
                         <Link className={styles.link} to="/">
                             Iniciar sesión
                         </Link>
-
-                        {/* <Link className={styles.link}
-                            to="/forgotpassword"
-                        >
-                            Recuperar contraseña
-                        </Link> */}
-
                     </nav>
                 </div>
 

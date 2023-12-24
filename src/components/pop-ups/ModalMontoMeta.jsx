@@ -1,17 +1,19 @@
 import { useState } from "react";
 import Alerta from "../Alerta";
 import { agregarMonto } from "../../services/myfinances-api/metaFinanciera";
-import { errors, texts } from "../../constants/myfinances-constants";
+import { amountReGex, errors, texts } from "../../constants/myfinances-constants";
 
-export const GoalAmount = ({ 
-    animarModal, 
-    setAnimarModal, 
-    setModal, 
-    goalId, 
+export const GoalAmount = ({
+    animarModal,
+    setAnimarModal,
+    setModal,
+    goalId,
     auth,
-    setActiveGoals, 
+    setActiveGoals,
     setCompletedGoals,
-    setTableGoals     
+    setTableGoals,
+    setBalance,
+    balance
 }) => {
     const [alerta, setAlerta] = useState({});
     const [amount, setAmount] = useState("");
@@ -27,13 +29,28 @@ export const GoalAmount = ({
     const handleAdding = async e => {
         e.preventDefault();
         setLoading(true);
-        if (amount.length === 0) {
+        if (amount === "" || amount.length === 0) {
             setAlerta({
                 msg: "El campo es obligatorio!",
                 error: true
             });
+            setTimeout(() => {
+                setLoading(false);
+                setAlerta({});
+            }, 2000);
+            return;
         }
-
+        if (amount <= 0) {
+            setAlerta({
+                msg: "El monto debe ser positivo!",
+                error: true
+            });
+            setTimeout(() => {
+                setLoading(false);
+                setAlerta({});
+            }, 2000);
+            return;
+        }
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -63,7 +80,13 @@ export const GoalAmount = ({
                         setTableGoals(setTableGoals => setTableGoals.map((goal) => {
                             return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
                         }));
-                    }                    
+                    }
+                    if (setBalance) {
+                        setBalance({
+                            ...balance,
+                            saldo_Total: balance.saldo_Total - amount
+                        });
+                    }
                     if (data.completada) {
                         setTimeout(() => {
                             setAlerta({
@@ -77,7 +100,7 @@ export const GoalAmount = ({
                                 setTableGoals(setTableGoals => setTableGoals.map((goal) => {
                                     return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                                 }));
-                            }                            
+                            }
                             if (setCompletedGoals) {
                                 setCompletedGoals(completedGoals => [data, ...completedGoals]);
                             }
@@ -119,10 +142,14 @@ export const GoalAmount = ({
                         <label htmlFor="Monto">Monto</label>
                         <input
                             id="Monto"
-                            type="number"
+                            type="text"
                             placeholder="Ingresar Monto"
                             value={amount.replace(",", ".")}
-                            onChange={e => setAmount(e.target.value)}
+                            onChange={e => {
+                                if (e.target.value === "" || amountReGex.test(e.target.value.replace(",", "."))) {
+                                    setAmount(e.target.value);
+                                }
+                            }}
                         />
                     </div>
 

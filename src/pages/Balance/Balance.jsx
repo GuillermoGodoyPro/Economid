@@ -48,13 +48,6 @@ const Balance = () => {
             } catch (error) {
                 setError(error);
                 setLoading(false);
-                /*  setAlertaTransacciones({
-                    msg: texts.WITH_NO_TRANSACTIONS,
-                    error: true
-                }); */
-                /* setTimeout(() => {
-                    setAlertaTransacciones({});
-                }, 3000); */
             }
         };
 
@@ -68,22 +61,14 @@ const Balance = () => {
 
     return (
         <div className="flex flex-col items-center">
-            <div className="bg-inherit rounded p-2 m-1 mb-0 flex justify-around">
-                <BalanceIncomes user={user} config={config}/>
-                <BalanceExpenses user={user} config={config}/>
-            </div>
-
-            {/* Se podria agregar el histograma usando chart.js acá */}
             <div className="bg-inherit rounded p-2 m-1 mb-0">
                 <BalanceComponent cargando={cargando} balance={balance} />
             </div>
-            {/* O acá */}
-
+            <div className="bg-inherit rounded p-2 m-1 mb-0 flex justify-around">
+                <BalanceIncomes user={user} config={config} />
+                <BalanceExpenses user={user} config={config} />
+            </div>
             <GananciaChart transacciones={transacciones} />
-
-
-            {/*  */}
-
         </div>
     );
 };

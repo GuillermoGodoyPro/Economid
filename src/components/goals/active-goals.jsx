@@ -13,7 +13,7 @@ export const ActiveGoals = ({
     setActiveGoals,
     setCompletedGoals,
     activeGoalsMetadata,
-    setTableGoals    
+    setTableGoals
 }) => {
     const activeGoals = goals?.filter(({ completada }) => !completada);
     const [modal, setModal] = useState(false);
@@ -86,9 +86,9 @@ export const ActiveGoals = ({
                                                             </div> :
                                                             <div
                                                                 className="bg-violet-500 p-0.5 text-center text-xs font-semibold font-mono text-white rounded-lg"
-                                                                style={{ width: `${(goal.montoActual / goal.montoFinal) * 100}%` }}
+                                                                style={{ width: `${((goal.montoActual / goal.montoFinal) * 100).toFixed(2)}%` }}
                                                             >
-                                                                {`${((goal.montoActual / goal.montoFinal) * 100).toFixed(2)}%`}
+                                                                {`${((goal.montoActual / goal.montoFinal) * 100).toFixed(3)}%`}
                                                             </div>
                                                     }
                                                 </div>
@@ -108,7 +108,7 @@ export const ActiveGoals = ({
                                                 auth={auth}
                                                 setActiveGoals={setActiveGoals}
                                                 setCompletedGoals={setCompletedGoals}
-                                                setTableGoals={setTableGoals}                                            
+                                                setTableGoals={setTableGoals}
                                             />
                                         }
                                     </div>

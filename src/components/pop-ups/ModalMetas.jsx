@@ -3,9 +3,9 @@ import Alerta from "../Alerta";
 import { altaMetaFinanciera } from "../../services/myfinances-api/metaFinanciera";
 import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
-import { errors } from "../../constants/myfinances-constants";
+import { amountReGex, errors, textsReGex } from "../../constants/myfinances-constants";
 
-const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals, tableGoals , setTableGoals }) => {
+const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals, tableGoals, setTableGoals }) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
     const [tituloMeta, setTituloMeta] = useState("");
@@ -22,17 +22,29 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
     const handleSubmit = async e => {
         e.preventDefault();
         setLoading(true);
-        if ([tituloMeta, metaFinal].length === 0) {
+
+        if ((metaFinal === "" || metaFinal.length === 0) ||
+            (tituloMeta === "" || tituloMeta.length === 0)) {
             setAlerta({
-                msg: "Todos los campos son obligatorios",
+                msg: "Todos los campos son obligatorios!",
                 error: true
             });
+            setTimeout(() => {
+                setLoading(false);
+                setAlerta({});
+            }, 2000);
+            return;
         }
-        if (metaFinal.length < 0) {
+        if (metaFinal <= 0) {
             setAlerta({
-                msg: "El monto no puede ser negativo",
+                msg: "El monto debe ser positivo!",
                 error: true
             });
+            setTimeout(() => {
+                setLoading(false);
+                setAlerta({});
+            }, 2000);
+            return;
         }
         setTimeout(() => {
             setAlerta({});
@@ -101,9 +113,14 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                         <input
                             id="Titulo"
                             type="text"
+                            maxLength={30}
                             placeholder="Titulo de la meta"
                             value={tituloMeta}
-                            onChange={e => setTituloMeta(e.target.value)}
+                            onChange={e => {
+                                if (textsReGex.test(e.target.value) || e.target.value === "") {
+                                    setTituloMeta(e.target.value);
+                                }
+                            }}
                         />
                     </div>
 
@@ -111,10 +128,14 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                         <label htmlFor="metaFinanciera">Monto Meta</label>
                         <input
                             id="metaFinanciera"
-                            type="number"
+                            type="text"
                             placeholder="Monto"
                             value={metaFinal.replace(",", ".")}
-                            onChange={e => setMetaFinal(e.target.value)}
+                            onChange={e => {
+                                if (e.target.value === "" || amountReGex.test(e.target.value.replace(",", "."))) {
+                                    setMetaFinal(e.target.value);
+                                }
+                            }}
                         />
                     </div>
 

@@ -3,10 +3,10 @@ import { getByState } from "../../services/myfinances-api/metaFinanciera";
 import { getUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
 
-export const GoalsPagination = ({ 
-    setActiveGoals, 
-    setCompletedGoals, 
-    metadata, 
+export const GoalsPagination = ({
+    setActiveGoals,
+    setCompletedGoals,
+    metadata,
     completed,
     setLoading
 }) => {
@@ -55,7 +55,7 @@ export const GoalsPagination = ({
                 completada: completed
             };
             try {
-                const { data: response,  } = await getByState(payload, page, 4, config);
+                const { data: response, } = await getByState(payload, page, 4, config);
                 if (!payload.completada) {
                     setActiveGoals(response.data);
                     setLoading(false);

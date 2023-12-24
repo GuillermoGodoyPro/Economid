@@ -19,7 +19,7 @@ export async function getByState(payload, page, pageSize, config) {
     return data;
 }
 
-// export async function withdrawGoal(payload, config) {
-//     const data = await clienteAxios.post(`/MetaFinanciera/RetirarMeta`, payload, config);
-//     return data;
-// }
+export async function withdrawGoal(goalId, config) {
+    const data = await clienteAxios.delete(`/MetaFinanciera/RetirarMeta/${goalId}`, config);
+    return data;
+}

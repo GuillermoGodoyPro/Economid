@@ -104,13 +104,37 @@ export const GoalsTable = ({ loading, goals }) => {
                                             </td>
 
                                             {
-                                                !goal.completada
-                                                    ?
-                                                    <td className="py-2 px-4  text-orange-400 font-semibold font-mono">
+                                                goal.completada ?
+                                                    !goal.retirada ?
+                                                        <td className="py-2 px-4  text-green-500 font-semibold font-mono">
+                                                            Completada
+                                                            <span className={(dark === "light" ?
+                                                                "py-2 px-1 text-gray-800 pointer-events-none font-mono"
+                                                                :
+                                                                "py-2 px-1 text-gray-200 pointer-events-none font-mono"
+                                                            )}>
+                                                                <i className="fa-solid fa-check text-sm"></i>
+                                                            </span>
+                                                        </td> :
+                                                        <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
+                                                            Retirada
+                                                            <span className={(dark === "light" ?
+                                                                "py-2 px-2 text-gray-800 pointer-events-none font-mono"
+                                                                :
+                                                                "py-2 px-2 text-gray-200 pointer-events-none font-mono"
+                                                            )}>
+                                                                <i className="fa-solid fa-arrow-up-from-bracket text-sm"></i>
+                                                            </span>
+                                                        </td> :
+                                                    <td className="py-2 px-4 font-semibold font-mono text-orange-400">
                                                         En progreso
-                                                    </td> :
-                                                    <td className="py-2 px-4  font-semibold font-mono text-green-500">
-                                                        Completada
+                                                        <span className={(dark === "light" ?
+                                                            "py-2 px-1 text-gray-800 pointer-events-none font-mono"
+                                                            :
+                                                            "py-2 px-1 text-gray-200 pointer-events-none font-mono"
+                                                        )}>
+                                                            <i className="fa-solid fa-clock text-sm"></i>
+                                                        </span>
                                                     </td>
                                             }
                                         </tr>
@@ -120,6 +144,6 @@ export const GoalsTable = ({ loading, goals }) => {
                         </table>
                     </div>
             }
-        </div>
+        </div >
     );
-}
+};

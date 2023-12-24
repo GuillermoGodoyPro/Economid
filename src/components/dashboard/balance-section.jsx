@@ -8,20 +8,16 @@ import { getDollarExchangeRate } from "../../services/dolar/cotizacion-api";
 import { texts } from "../../constants/myfinances-constants";
 import useDark from "../../context/useDark";
 
-export const BalanceSection = ({ auth, userId, setTransacciones }) => {
+export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) => {
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [balance, setBalance] = useState(null);
-    const [balanceId, setBalanceId] = useState(null);
     const [categorias, setCategorias] = useState([]);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [dolarValue, setDolarValue] = useState(null);
     const [dolarDate, setDolarDate] = useState(null);
     const [divisa, setDivisa] = useState("ARS");
-
     const { dark } = useDark();
-
     const handleModalTransaccion = () => {
         setModal(true);
         setTimeout(() => {
@@ -36,19 +32,19 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
     };
 
     useEffect(() => {
-        const fetchBalance = async () => {
-            try {
-                const res = await getBalanceByUserId(userId, config);
-                if (res) {
-                    setBalance(res);
-                    setBalanceId(res.data.id);
-                    setLoading(false);
-                }
-            } catch (error) {
-                setError(error);
-                setLoading(false);
-            }
-        };
+        // const fetchBalance = async () => {
+        //     try {
+        //         const res = await getBalanceByUserId(userId, config);
+        //         if (res) {
+        //             setBalance(res);
+        //             setBalanceId(res.data.id);
+        //             setLoading(false);
+        //         }
+        //     } catch (error) {
+        //         setError(error);
+        //         setLoading(false);
+        //     }
+        // };
         const fetchCategorias = async () => {
             try {
                 const { data: response } = await getCategories(config);
@@ -64,7 +60,7 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
             setDolarValue(data.blue.value_sell);
             setDolarDate(data.last_update);
         };
-        fetchBalance();
+        // fetchBalance();
         fetchCategorias();
         fetchDollars();
     }, []);
@@ -215,10 +211,9 @@ export const BalanceSection = ({ auth, userId, setTransacciones }) => {
                                 animarModal={animarModal}
                                 setAnimarModal={setAnimarModal}
                                 categorias={categorias}
-                                idBalance={balanceId}
                                 setTransacciones={setTransacciones}
                                 setBalance={setBalance}
-                                setBalanceId={setBalanceId}
+                                balance={balance}
                             />
                         }
                     </div>

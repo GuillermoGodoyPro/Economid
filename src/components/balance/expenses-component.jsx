@@ -33,7 +33,7 @@ export const BalanceExpenses = ({ user, config }) => {
                 tipo: type.EGRESO
             };
             try {
-                const { data, status } = await filterByType(payload, 1, 10, config);
+                const { data, status } = await filterByType(payload, 1, 5, config);
                 if (status === 200) {
                     setExpenses(data.data);
                     setMetadata(data.meta);

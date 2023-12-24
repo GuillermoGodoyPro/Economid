@@ -5,14 +5,13 @@ import ModalMetas from "../pop-ups/ModalMetas";
 import { texts } from "../../constants/myfinances-constants";
 import useDark from "../../context/useDark";
 
-export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
+export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals, setBalance, balance }) => {
     const orderedList = activeGoals?.sort((a, b) => ((b.montoActual / b.montoFinal) - (a.montoActual / a.montoFinal)));
     const almostCompletedGoal = orderedList?.filter((g) => !g.completada);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
     const { dark } = useDark();
-    /* test */
     const handleAddingModal = (goalId) => {
         setModal(true);
         setGoalId(goalId);
@@ -44,7 +43,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                                 : "text-xl font-semibold text-violet-400 antialiased"
                             )}
                             >
-                                Ultima Meta
+                                Meta a completar
                             </h3>
                             <div
                                 className={(dark === "light" ?
@@ -83,7 +82,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                                                         className="bg-violet-500 p-0.5 text-center text-xs font-semibold font-mono text-white rounded-lg"
                                                         style={{ width: `${(almostCompletedGoal[0].montoActual / almostCompletedGoal[0].montoFinal) * 100}%` }}
                                                     >
-                                                        {`${((almostCompletedGoal[0].montoActual / almostCompletedGoal[0].montoFinal) * 100).toFixed(2)}%`}
+                                                        {`${((almostCompletedGoal[0].montoActual / almostCompletedGoal[0].montoFinal) * 100).toFixed(3)}%`}
                                                     </div>
                                             }
                                         </div>
@@ -102,6 +101,8 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals }) => {
                                             auth={auth}
                                             setActiveGoals={setActiveGoals}
                                             activeGoals={activeGoals}
+                                            setBalance={setBalance}
+                                            balance={balance}
                                         />
                                     }
                                 </div>

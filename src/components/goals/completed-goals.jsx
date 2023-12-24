@@ -2,19 +2,61 @@ import { PulseLoader } from "react-spinners";
 import useDark from "../../context/useDark";
 import { GoalsPagination } from "./goals-pagination";
 import useAuth from "../../context/useAuth";
+import { withdrawGoal } from "../../services/myfinances-api/metaFinanciera";
+import Alerta from "../Alerta";
+import { texts } from "../../constants/myfinances-constants";
+import { useState } from "react";
 
-export const CompletedGoals = ({ 
-    goals, 
-    error, 
+export const CompletedGoals = ({
+    goals,
+    error,
     cargando,
     setCargando,
-    completedGoalsMetadata, 
-    setCompletedGoals 
+    completedGoalsMetadata,
+    setCompletedGoals,
+    setTableGoals,
+    setAlerta
 }) => {
     const { dark } = useDark();
+    const { auth } = useAuth();
+    const [goalError, setError] = useState(null);
+    const [goalLoading, setGoalLoading] = useState(false);
+    const completedGoals = goals?.filter(({ completada, retirada }) => completada && !retirada);
+
+    const handleGoalWithdrawal = async (goalId) => {
+        setGoalLoading(true);
+        const config = {
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${auth}`
+            }
+        };
+        try {
+            const { data, status } = await withdrawGoal(goalId, config);
+            if (status === 200) {
+                setGoalLoading(false);
+                setAlerta({
+                    msg: texts.ON_WITHDRAWN_GOAL,
+                    error: false
+                });
+                setTimeout(() => {
+                    setAlerta({});
+                    setCompletedGoals(completedGoals => completedGoals.map((goal) => {
+                        return goalId === goal.id ? { ...goal, retirada: data.retirada } : goal;
+                    }));
+                    setTableGoals(tableGoals => tableGoals.map((goal) => {
+                        return goalId === goal.id ? { ...goal, retirada: data.retirada } : goal;
+                    }));
+                }, 2000);
+            }
+        } catch (error) {
+            setGoalLoading(false);
+            setError(error);
+        }
+    };
     return (
         <div className={(dark === "light" ?
-            "w-2/5 bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
+            "w-2/5 bg-gray-200 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center flex flex-col items-center"
             : "w-2/5 bg-gray-600 p-10 rounded-lg shadow-md hover:shadow-violet-400 m-10 text-center"
         )}
         >
@@ -22,7 +64,6 @@ export const CompletedGoals = ({
                 "text-xl font-semibold text-violet-600 antialiased"
                 : "text-xl font-semibold text-violet-400 antialiased"
             )}>Metas Completadas</h3>
-
             {
                 cargando ?
                     <div className="flex justify-around p-10 mx-20">
@@ -30,7 +71,7 @@ export const CompletedGoals = ({
                     </div> :
                     goals.length || (goals.length && !error) ?
                         <div className="flex flex-wrap justify-center">
-                            {goals?.slice(0, 4).map((goal, index) => {
+                            {completedGoals?.slice(0, 4).map((goal, index) => {
                                 return (
                                     <div
                                         className={(dark === "light" ?
@@ -63,20 +104,26 @@ export const CompletedGoals = ({
                                                 </div>
                                             </div>
                                         </div>
-                                        <div className="flex justify-center">
-                                            <div className="w-32 text-center rounded-md bg-green-200">
-                                                <h5
-                                                    className="text-xl font-semibold text-center text-green-500 font-mono">
-                                                    Completada
-                                                </h5>
-                                            </div>
-                                            {/* <i 
-                                                className="fa-solid fa-money-bill-transfer"
-                                                data-tooltip-id="my-tooltip"
-                                                data-tooltip-content="Retirar"
-                                                onClick={}
-                                            ></i> */}
-                                        </div>
+                                        {
+                                            goalLoading ?
+                                                <div className="flex justify-center">
+                                                    <PulseLoader loading={goalLoading} color="rgb(113, 50, 255)" size={10} />
+                                                </div> :
+                                                <div className="flex justify-around">
+                                                    <div className="w-32 text-center rounded-md bg-green-200">
+                                                        <h5
+                                                            className="text-xl font-semibold text-center text-green-500 font-mono">
+                                                            Completada
+                                                        </h5>
+                                                    </div>
+                                                    <i
+                                                        className="fa-solid fa-arrow-up-from-bracket"
+                                                        data-tooltip-id="my-tooltip"
+                                                        data-tooltip-content="Retirar"
+                                                        onClick={() => handleGoalWithdrawal(goal.id)}
+                                                    ></i>
+                                                </div>
+                                        }
                                     </div>
                                 );
                             })}
@@ -84,7 +131,7 @@ export const CompletedGoals = ({
                         : <div></div>
             }
             {
-                completedGoalsMetadata.totalCount > 4 ?
+                completedGoals.length > 4 && completedGoalsMetadata.totalCount > 4 ?
                     <div className="w-full">
                         <GoalsPagination
                             metadata={completedGoalsMetadata}

@@ -19,7 +19,7 @@ const Transacciones = () => {
     const { auth } = useAuth();
     const [transacciones, setTransacciones] = useState([]);
     const [metadata, setMetadata] = useState({});
-    const [bId, setBalanceId] = useState();
+    const [balance, setBalance] = useState();
     const [cargando, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [modal, setModal] = useState(false);
@@ -110,10 +110,10 @@ const Transacciones = () => {
                 setLoading(false);
             }
         };
-        const fetchBalanceId = async () => {
+        const fetchBalance = async () => {
             try {
                 const { data: response } = await getBalanceByUserId(user.id, config);
-                setBalanceId(response.id);
+                setBalance(response);
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -122,7 +122,7 @@ const Transacciones = () => {
         };
         fetchTransacciones();
         fetchCategorias();
-        fetchBalanceId();
+        fetchBalance();
     }, []);
 
     const { msg } = alerta;
@@ -135,8 +135,8 @@ const Transacciones = () => {
         )}
         >
             {alerta ?
-                <div className="flex justify-center mb-20">
-                    <div className="fixed">
+                <div className="flex justify-end mb-20">
+                    <div className="absolute">
                         {msg && <Alerta alerta={alerta} />}
                     </div>
                 </div> : <div></div>}
@@ -156,7 +156,7 @@ const Transacciones = () => {
                             animarModal={animarModal}
                             setAnimarModal={setAnimarModal}
                             categorias={categorias}
-                            idBalance={bId}
+                            balance={balance}
                             setTransacciones={setTransacciones}
                             transacciones={transacciones}
                         />
@@ -221,7 +221,7 @@ const Transacciones = () => {
                     transacciones={transacciones}
                     setTransacciones={setTransacciones}
                     metadata={metadata}
-                    idBalance={bId}
+                    balance={balance}
                 />
                 {
                     metadata.totalCount > 10 ?
