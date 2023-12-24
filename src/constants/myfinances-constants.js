@@ -35,5 +35,5 @@ export const texts = {
     ON_WITHDRAWN_GOAL: "Meta retirada con éxito!"
 };
 
-export const amountReGex = /^\d{1,5}?(\.\d{0,2})?$/;
+export const amountReGex = /^\d{1,8}?(\.\d{0,2})?$/;
 export const textsReGex = /^[A-Za-z\s]+$/;
