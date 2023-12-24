@@ -84,7 +84,7 @@ export const GoalAmount = ({
                     if (setBalance) {
                         setBalance({
                             ...balance,
-                            saldo_Total: balance.saldo_Total - amount
+                            saldo_Total: balance.saldo_Total - parseFloat(amount)
                         });
                     }
                     if (data.completada) {

@@ -23,8 +23,7 @@ const Dashboard = () => {
     const [error, setError] = useState(null);
     const [alertaMeta, setAlertaMeta] = useState({});
     const [alertaTransacciones, setAlertaTransacciones] = useState({});
-    const [balance, setBalance] = useState(null);
-    // const [balanceId, setBalanceId] = useState(null);
+    const [balance, setBalance] = useState({});
     const { dark } = useDark();
 
 
@@ -43,7 +42,6 @@ const Dashboard = () => {
                 const { data, status } = await getBalanceByUserId(user.id, config);
                 if (status === 200) {
                     setBalance(data);
-                    // setBalanceId(res.data.id);
                     setLoading(false);
                 }
             } catch (error) {
@@ -117,7 +115,8 @@ const Dashboard = () => {
                     auth={auth}
                     userId={user.id}
                     setTransacciones={setTransacciones}
-                    balance={balance} />
+                    balance={balance}
+                    setBalance={setBalance} />
                 <ChartSection
                     cargando={cargando}
                     transacciones={transacciones} />

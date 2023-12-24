@@ -18,6 +18,7 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
     const [dolarDate, setDolarDate] = useState(null);
     const [divisa, setDivisa] = useState("ARS");
     const { dark } = useDark();
+
     const handleModalTransaccion = () => {
         setModal(true);
         setTimeout(() => {
@@ -32,19 +33,6 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
     };
 
     useEffect(() => {
-        // const fetchBalance = async () => {
-        //     try {
-        //         const res = await getBalanceByUserId(userId, config);
-        //         if (res) {
-        //             setBalance(res);
-        //             setBalanceId(res.data.id);
-        //             setLoading(false);
-        //         }
-        //     } catch (error) {
-        //         setError(error);
-        //         setLoading(false);
-        //     }
-        // };
         const fetchCategorias = async () => {
             try {
                 const { data: response } = await getCategories(config);
@@ -60,7 +48,6 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
             setDolarValue(data.blue.value_sell);
             setDolarDate(data.last_update);
         };
-        // fetchBalance();
         fetchCategorias();
         fetchDollars();
     }, []);

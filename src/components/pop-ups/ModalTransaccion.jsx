@@ -3,7 +3,7 @@ import Alerta from "../Alerta";
 import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
 import { newTransaction } from "../../services/myfinances-api/transacciones";
-import { amountReGex, errors, textsReGex } from "../../constants/myfinances-constants";
+import { amountReGex, errors, textsReGex, type } from "../../constants/myfinances-constants";
 import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
@@ -74,8 +74,18 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
                 setTimeout(() => {
                     setAlerta({});
                     setTransacciones(transacciones => [data, ...transacciones]);
-                    if (setBalance) {
-                        setBalance(data.balance);
+                    if (setBalance) {                        
+                        if (data.tipoTransaccion === type.EGRESO) {
+                            setBalance({
+                                ...balance,
+                                saldo_Total: balance.saldo_Total - parseFloat(monto)
+                            });
+                        } else {
+                            setBalance({
+                                ...balance,
+                                saldo_Total: balance.saldo_Total + parseFloat(monto)
+                            });
+                        }
                     }
                     ocultarModal();
                 }, 1500);
