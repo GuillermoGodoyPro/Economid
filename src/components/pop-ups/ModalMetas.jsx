@@ -116,11 +116,7 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
                             maxLength={30}
                             placeholder="Titulo de la meta"
                             value={tituloMeta}
-                            onChange={e => {
-                                if (textsReGex.test(e.target.value) || e.target.value === "") {
-                                    setTituloMeta(e.target.value);
-                                }
-                            }}
+                            onChange={e => setTituloMeta(e.target.value)}
                         />
                     </div>
 

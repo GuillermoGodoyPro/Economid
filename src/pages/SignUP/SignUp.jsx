@@ -24,6 +24,7 @@ const SignUp = () => {
         setLoading(true);
         /* Validación de campos */
         if ([nombre, apellido, email, contraseña, repetirPassword].includes("")) {
+            setLoading(false);
             setAlerta({
                 msg: "Todos los campos son obligatorios",
                 error: true
@@ -32,6 +33,7 @@ const SignUp = () => {
         }
 
         if (contraseña !== repetirPassword) {
+            setLoading(false);
             setAlerta({
                 msg: "No coinciden los password",
                 error: true
@@ -62,18 +64,11 @@ const SignUp = () => {
             setRepetirPassword("");
 
         } catch (error) {
-            if (contraseña.length < 6) {
-                setAlerta({
-                    msg: error.response.data.errors.Contraseña[0],
-                    error: true
-                });
-            }
-            else {
-                setAlerta({
-                    msg: error.response.data,
-                    error: true
-                });
-            }
+            setLoading(false);
+            setAlerta({
+                msg: error.response.data,
+                error: true
+            });
             setTimeout(() => {
                 setAlerta({});
             }, 5000);
