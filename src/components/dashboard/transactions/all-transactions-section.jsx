@@ -76,14 +76,26 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                                 >{transaccion.detalle}</td>
                                                 {
                                                     transaccion.tipoTransaccion === type.EGRESO ?
-                                                        <td className="py-2 px-20 text-red-500 font-semibold font-mono">-${parseFloat(transaccion.monto).toFixed(2)}</td> :
+                                                        <td className="py-2 px-20 text-red-500 font-semibold font-mono">
+                                                            -${parseFloat(transaccion.monto).toFixed(2)}
+                                                        </td> :
                                                         transaccion.tipoTransaccion === type.INGRESO ?
                                                             <td className="py-2 px-20 text-green-500 font-semibold font-mono">
                                                                 <div className="w-28 flex justify-center rounded-md bg-green-200">
                                                                     +${parseFloat(transaccion.monto).toFixed(2)}
                                                                 </div>
                                                             </td> :
-                                                            <td></td>
+                                                            transaccion.tipoTransaccion === type.RESERVA ?
+                                                                transaccion.detalle?.includes("Retiro") ?
+                                                                    <td className="py-2 px-20 text-green-500 font-semibold font-mono">
+                                                                        <div className="w-28 flex justify-center rounded-md bg-green-200">
+                                                                            +${parseFloat(transaccion.monto).toFixed(2)}
+                                                                        </div>
+                                                                    </td> :
+                                                                    <td className="py-2 px-20 text-red-500 font-semibold font-mono">
+                                                                        -${parseFloat(transaccion.monto).toFixed(2)}
+                                                                    </td>
+                                                                : <td></td>
                                                 }
                                                 {
                                                     transaccion.fecha ?
@@ -99,7 +111,7 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                                     transaccion && transaccion.tipoTransaccion === type.EGRESO ?
                                                         <td className="py-2 px-20 text-gray-400">
                                                             {transaccion.tipoTransaccion}
-                                                            <span className="text-red-500 font-bold ml-1">
+                                                            <span className="text-red-500 font-bold ml-1 pointer-events-none">
                                                                 <i className="fa-solid fa-arrow-trend-down"></i>
                                                             </span>
                                                         </td>
@@ -107,11 +119,16 @@ export const AllTransactionsSection = ({ transacciones, cargando }) => {
                                                         transaccion && transaccion.tipoTransaccion === type.INGRESO ?
                                                             <td className="py-2 px-20 text-gray-400">
                                                                 {transaccion.tipoTransaccion}
-                                                                <span className="text-green-500 font-bold ml-1">
+                                                                <span className="text-green-500 font-bold ml-1 pointer-events-none">
                                                                     <i className="fa-solid fa-arrow-trend-up"></i>
                                                                 </span>
-                                                            </td>
-                                                            : <td></td>
+                                                            </td> :
+                                                            transaccion.tipoTransaccion === type.RESERVA ?
+                                                                <td className="py-2 px-20 text-gray-400">
+                                                                    {transaccion.tipoTransaccion}
+                                                                    <i className="fa-solid fa-piggy-bank ml-1 pointer-events-none"></i>
+                                                                </td>
+                                                                : <td></td>
                                                 }
                                             </tr>
                                         );

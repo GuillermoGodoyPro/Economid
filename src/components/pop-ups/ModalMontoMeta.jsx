@@ -2,6 +2,8 @@ import { useState } from "react";
 import Alerta from "../Alerta";
 import { agregarMonto } from "../../services/myfinances-api/metaFinanciera";
 import { amountReGex, errors, texts } from "../../constants/myfinances-constants";
+import { getAll } from "../../services/myfinances-api/transacciones";
+import { getUserToken } from "../../services/token/tokenService";
 
 export const GoalAmount = ({
     animarModal,
@@ -13,11 +15,13 @@ export const GoalAmount = ({
     setCompletedGoals,
     setTableGoals,
     setBalance,
-    balance
+    balance,
+    setTransacciones
 }) => {
     const [alerta, setAlerta] = useState({});
     const [amount, setAmount] = useState("");
     const [cargando, setLoading] = useState(false);
+    const user = getUserToken();
 
     const ocultarModal = () => {
         setAnimarModal(false);
@@ -82,10 +86,18 @@ export const GoalAmount = ({
                         }));
                     }
                     if (setBalance) {
-                        setBalance({
-                            ...balance,
-                            saldo_Total: balance.saldo_Total - parseFloat(amount)
-                        });
+                        if (!balance.saldo_Total) {
+                            setBalance({
+                                ...balance,
+                                saldo_Total: parseFloat(amount) * -1
+                            });
+                        }
+                        else {
+                            setBalance({
+                                ...balance,
+                                saldo_Total: balance.saldo_Total - parseFloat(amount)
+                            });
+                        }
                     }
                     if (data.completada) {
                         setTimeout(() => {
@@ -122,7 +134,21 @@ export const GoalAmount = ({
             }
             console.log(error);
         }
-
+        if (setTransacciones) {
+            try {
+                const { data: response, status } = await getAll({ userId: user.id }, 1, 10, config);
+                if (status === 200) {
+                    setTimeout(() => {
+                        const activeTransactions = response.data.filter((t) => t.estaActiva);
+                        setTransacciones(activeTransactions);
+                        setLoading(false);
+                        ocultarModal();
+                    }, 1500);
+                }
+            } catch (error) {
+                setLoading(false);
+            }
+        }
     };
     const { msg } = alerta;
 

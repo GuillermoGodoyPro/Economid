@@ -137,20 +137,30 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, b
                                                     <td className="py-2 px-4 text-red-500 font-semibold font-mono">
                                                         -${parseFloat(transaccion.monto).toFixed(2)}
                                                     </td>
-                                                :
-                                                !transaccion.estaActiva
-                                                    ?
-                                                    <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
-                                                        <div className="w-28 flex justify-center rounded-md bg-gray-200">
-                                                            +${parseFloat(transaccion.monto).toFixed(2)}
-                                                        </div>
-                                                    </td>
+                                                : transaccion.tipoTransaccion === type.INGRESO ?
+                                                    !transaccion.estaActiva
+                                                        ?
+                                                        <td className="py-2 px-4 text-gray-400 font-semibold font-mono">
+                                                            <div className="w-28 flex justify-center rounded-md bg-gray-200">
+                                                                +${parseFloat(transaccion.monto).toFixed(2)}
+                                                            </div>
+                                                        </td>
+                                                        :
+                                                        <td className="py-2 px-4 text-green-500 font-semibold font-mono">
+                                                            <div className="w-28 flex justify-center rounded-md bg-green-200">
+                                                                +${parseFloat(transaccion.monto).toFixed(2)}
+                                                            </div>
+                                                        </td>
                                                     :
-                                                    <td className="py-2 px-4 text-green-500 font-semibold font-mono">
-                                                        <div className="w-28 flex justify-center rounded-md bg-green-200">
-                                                            +${parseFloat(transaccion.monto).toFixed(2)}
-                                                        </div>
-                                                    </td>
+                                                    transaccion.detalle?.includes("Retiro") ?
+                                                        <td className="py-2 px-4 text-green-500 font-semibold font-mono">
+                                                            <div className="w-28 flex justify-center rounded-md bg-green-200">
+                                                                +${parseFloat(transaccion.monto).toFixed(2)}
+                                                            </div>
+                                                        </td> :
+                                                        <td className="py-2 px-4 text-red-500 font-semibold font-mono">
+                                                            -${parseFloat(transaccion.monto).toFixed(2)}
+                                                        </td>
                                         }
                                         {
                                             transaccion.fecha
@@ -180,12 +190,17 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, b
                                                     </span>
                                                 </td>
                                                 :
-                                                <td className="py-2 px-4 text-gray-400">
-                                                    {transaccion.tipoTransaccion}
-                                                    <span className="text-green-500 font-bold ml-2 pointer-events-none">
-                                                        <i className="fa-solid fa-arrow-trend-up"></i>
-                                                    </span>
-                                                </td>
+                                                transaccion.tipoTransaccion === type.INGRESO ?
+                                                    <td className="py-2 px-4 text-gray-400">
+                                                        {transaccion.tipoTransaccion}
+                                                        <span className="text-green-500 font-bold ml-2 pointer-events-none">
+                                                            <i className="fa-solid fa-arrow-trend-up"></i>
+                                                        </span>
+                                                    </td> :
+                                                    <td className="py-2 px-4 text-gray-400">
+                                                        {transaccion.tipoTransaccion}
+                                                        <i className="fa-solid fa-piggy-bank ml-2 pointer-events-none"></i>
+                                                    </td>
                                         }
                                         {
                                             !transaccion.estaActiva ?

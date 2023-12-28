@@ -24,7 +24,10 @@ export const CompletedGoals = ({
     const completedGoals = goals?.filter(({ completada, retirada }) => completada && !retirada);
 
     const handleGoalWithdrawal = async (goalId) => {
-        setGoalLoading(true);
+        setGoalLoading({
+            ...goalLoading,
+            [goalId]: true
+        });
         const config = {
             headers: {
                 "Content-Type": "application/json",
@@ -34,7 +37,10 @@ export const CompletedGoals = ({
         try {
             const { data, status } = await withdrawGoal(goalId, config);
             if (status === 200) {
-                setGoalLoading(false);
+                setGoalLoading({
+                    ...goalLoading,
+                    [goalId]: false
+                });
                 setAlerta({
                     msg: texts.ON_WITHDRAWN_GOAL,
                     error: false
@@ -50,7 +56,10 @@ export const CompletedGoals = ({
                 }, 2000);
             }
         } catch (error) {
-            setGoalLoading(false);
+            setGoalLoading({
+                ...goalLoading,
+                [goalId]: false
+            });
             setError(error);
         }
     };
@@ -105,9 +114,9 @@ export const CompletedGoals = ({
                                             </div>
                                         </div>
                                         {
-                                            goalLoading ?
+                                            goalLoading[goal.id] ?
                                                 <div className="flex justify-center">
-                                                    <PulseLoader loading={goalLoading} color="rgb(113, 50, 255)" size={10} />
+                                                    <PulseLoader loading={goalLoading[goal.id]} color="rgb(113, 50, 255)" size={10} />
                                                 </div> :
                                                 <div className="flex justify-around">
                                                     <div className="w-32 text-center rounded-md bg-green-200">

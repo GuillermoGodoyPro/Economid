@@ -89,13 +89,21 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
                                     Saldo
                                 </h3>
                                 {
-                                    divisa === "ARS"
-                                        ?
-                                        balance.data ?
-                                            balance.data.saldo_Total < 0 ?
+                                    !balance?.saldo_Total ?
+                                        <h1 className={(dark === "light" ?
+                                            "text-gray-600 font-bold text-5xl font-mono"
+                                            : "text-gray-200 font-bold text-5xl font-mono"
+                                        )}
+                                        >
+                                            <span className="mr-1">$</span>
+                                            {parseFloat(0).toFixed(2)}
+                                        </h1> :
+                                        divisa === "ARS"
+                                            ?
+                                            balance?.saldo_Total < 0 ?
                                                 <h1 className='text-red-500 font-bold text-5xl font-mono'>
                                                     <span className="mr-1">$</span>
-                                                    {parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                                    {parseFloat(balance?.saldo_Total).toFixed(2)}
                                                 </h1> :
                                                 <h1 className={(dark === "light" ?
                                                     "text-gray-600 font-bold text-5xl font-mono"
@@ -103,52 +111,26 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
                                                 )}
                                                 >
                                                     <span className="mr-1">$</span>
-                                                    {parseFloat(balance.data.saldo_Total).toFixed(2)}
+                                                    {parseFloat(balance?.saldo_Total).toFixed(2)}
                                                 </h1> :
-                                            balance.saldo_Total < 0 ?
-                                                <h1 className='text-red-600 font-bold text-5xl font-mono'>
-                                                    <span className="mr-1">$</span>
-                                                    {parseFloat(balance.saldo_Total).toFixed(2)}
-                                                </h1> :
-                                                <h1 className={(dark === "light" ?
-                                                    "text-gray-600 font-bold text-5xl font-mono"
-                                                    : "text-gray-200 font-bold text-5xl font-mono"
-                                                )}>
-                                                    <span className="mr-1">$</span>
-                                                    {parseFloat(balance.saldo_Total).toFixed(2)}
-                                                </h1>
-                                        :
-                                        divisa === "USD"
-                                            ?
-                                            balance.data ?
-                                                balance.data.saldo_Total < 0 ?
+                                            divisa === "USD"
+                                                ?
+                                                balance?.saldo_Total < 0 ?
                                                     <h1 className='text-red-500 font-bold text-5xl font-mono'>
                                                         <span className="mr-1">U$S</span>
-                                                        {parseFloat(balance.data.saldo_Total / dolarValue).toFixed(2)}
+                                                        {parseFloat(balance?.saldo_Total / dolarValue).toFixed(2)}
                                                     </h1> :
                                                     <h1 className={(dark === "light" ?
                                                         "text-gray-600 font-bold text-5xl font-mono"
                                                         : "text-gray-200 font-bold text-5xl font-mono"
                                                     )}>
                                                         <span className="mr-1">U$S</span>
-                                                        {parseFloat(balance.data.saldo_Total / dolarValue).toFixed(2)}
-                                                    </h1> :
-                                                balance.saldo_Total < 0 ?
-                                                    <h1 className='text-red-600 font-bold text-5xl font-mono'>
-                                                        <span className="mr-1">U$S</span>
-                                                        {parseFloat(balance.saldo_Total / dolarValue).toFixed(2)}
-                                                    </h1> :
-                                                    <h1 className={(dark === "light" ?
-                                                        "text-gray-600 font-bold text-5xl font-mono"
-                                                        : "text-gray-200 font-bold text-5xl font-mono"
-                                                    )}>
-                                                        <span className="mr-1">U$S</span>
-                                                        {parseFloat(balance.saldo_Total / dolarValue).toFixed(2)}
+                                                        {parseFloat(balance?.saldo_Total / dolarValue).toFixed(2)}
                                                     </h1>
-                                            :
-                                            <div className="flex justify-center">
-                                                <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
-                                            </div>
+                                                :
+                                                <div className="flex justify-center">
+                                                    <PulseLoader loading={cargando} color="rgb(113, 50, 255)" size={10} />
+                                                </div>
                                 }
                                 <br />
                                 {

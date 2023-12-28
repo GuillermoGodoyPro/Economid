@@ -21,7 +21,6 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
     const [tipoTransaccion, setTipoTransaccion] = useState("Ingreso");
     const [categoriaId, setCategoria] = useState(categorias[0].id);
     const user = getUserToken();
-    const { dark } = useDark();
 
     const config = {
         headers: {
@@ -74,17 +73,29 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
                 setTimeout(() => {
                     setAlerta({});
                     setTransacciones(transacciones => [data, ...transacciones]);
-                    if (setBalance) {                        
+                    if (setBalance) {
                         if (data.tipoTransaccion === type.EGRESO) {
-                            setBalance({
-                                ...balance,
-                                saldo_Total: balance.saldo_Total - parseFloat(monto)
-                            });
+                            !balance.saldo_Total ?
+                                setBalance({
+                                    ...balance,
+                                    saldo_Total: parseFloat(monto)
+                                })
+                                :
+                                setBalance({
+                                    ...balance,
+                                    saldo_Total: balance.saldo_Total - parseFloat(monto)
+                                });
                         } else {
-                            setBalance({
-                                ...balance,
-                                saldo_Total: balance.saldo_Total + parseFloat(monto)
-                            });
+                            !balance.saldo_Total ?
+                                setBalance({
+                                    ...balance,
+                                    saldo_Total: parseFloat(monto)
+                                })
+                                :
+                                setBalance({
+                                    ...balance,
+                                    saldo_Total: balance.saldo_Total + parseFloat(monto)
+                                });
                         }
                     }
                     ocultarModal();
@@ -150,11 +161,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
                             maxLength={80}
                             placeholder="Detalle"
                             value={detalle}
-                            onChange={e => {
-                                if (textsReGex.test(e.target.value) || e.target.value === "") {
-                                    setDetalle(e.target.value);
-                                }
-                            }}
+                            onChange={e => setDetalle(e.target.value)}
                         />
                     </div>
                     <div className='campo'>

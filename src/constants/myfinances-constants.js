@@ -1,6 +1,7 @@
 export const type = {
     INGRESO: "Ingreso",
-    EGRESO: "Egreso"
+    EGRESO: "Egreso",
+    RESERVA: "Reserva"
 };
 
 export const errors = {

@@ -99,7 +99,7 @@ const Dashboard = () => {
             {
                 alertaTransacciones ?
                     <div className="flex justify-end">
-                        <div className="fixed">
+                        <div className="absolute">
                             {msg && <Alerta alerta={alertaTransacciones} />}
                         </div>
                     </div> : <div></div>
@@ -126,7 +126,8 @@ const Dashboard = () => {
                     cargando={cargando}
                     setActiveGoals={setActiveGoals}
                     balance={balance}
-                    setBalance={setBalance} />
+                    setBalance={setBalance}
+                    setTransacciones={setTransacciones} />
             </div>
             <div className={(dark === "light" ?
                 "bg-inherit p-10"

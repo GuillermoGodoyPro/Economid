@@ -31,7 +31,7 @@ const DarkProvider = ({ children }) => {
                 document.documentElement.style.setProperty("--gris", "#13159e");
                 document.documentElement.style.setProperty("--violetlight", "#A78BFA");
                 document.documentElement.style.setProperty("--gris-popup", "rgb(55 65 81)");
-                document.documentElement.style.setProperty("--negro", "rgb(75 85 99)");
+                document.documentElement.style.setProperty("--negro", "white");
             }
             localStorage.setItem("colorScheme", estadoDarkMode);
 

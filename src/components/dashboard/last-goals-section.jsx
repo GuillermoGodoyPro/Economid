@@ -5,7 +5,15 @@ import ModalMetas from "../pop-ups/ModalMetas";
 import { texts } from "../../constants/myfinances-constants";
 import useDark from "../../context/useDark";
 
-export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals, setBalance, balance }) => {
+export const LastGoal = ({
+    activeGoals,
+    auth,
+    cargando,
+    setActiveGoals,
+    setBalance,
+    balance,
+    setTransacciones
+}) => {
     const orderedList = activeGoals?.sort((a, b) => ((b.montoActual / b.montoFinal) - (a.montoActual / a.montoFinal)));
     const almostCompletedGoal = orderedList?.filter((g) => !g.completada);
     const [modal, setModal] = useState(false);
@@ -103,6 +111,7 @@ export const LastGoal = ({ activeGoals, auth, cargando, setActiveGoals, setBalan
                                             activeGoals={activeGoals}
                                             setBalance={setBalance}
                                             balance={balance}
+                                            setTransacciones={setTransacciones}
                                         />
                                     }
                                 </div>
