@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Alerta from "../Alerta";
 import { agregarMonto } from "../../services/myfinances-api/metaFinanciera";
-import { amountReGex, errors, texts } from "../../constants/myfinances-constants";
+import { amountReGex, errors, texts, type } from "../../constants/myfinances-constants";
 import { getAll } from "../../services/myfinances-api/transacciones";
 import { getUserToken } from "../../services/token/tokenService";
 
@@ -99,6 +99,18 @@ export const GoalAmount = ({
                             });
                         }
                     }
+                    if (setTransacciones) {
+                        const goalTransaction = {
+                            detalle: `Reserva - Meta: ${data.titulo}`,
+                            monto: parseFloat(amount),
+                            fecha: new Date(),
+                            tipoTransaccion: type.RESERVA
+                        }
+                        setTransacciones(transacciones => [
+                            goalTransaction,
+                            ...transacciones
+                        ]);
+                    }
                     if (data.completada) {
                         setTimeout(() => {
                             setAlerta({
@@ -133,21 +145,6 @@ export const GoalAmount = ({
                 }, 3000);
             }
             console.log(error);
-        }
-        if (setTransacciones) {
-            try {
-                const { data: response, status } = await getAll({ userId: user.id }, 1, 10, config);
-                if (status === 200) {
-                    setTimeout(() => {
-                        const activeTransactions = response.data.filter((t) => t.estaActiva);
-                        setTransacciones(activeTransactions);
-                        setLoading(false);
-                        ocultarModal();
-                    }, 1500);
-                }
-            } catch (error) {
-                setLoading(false);
-            }
         }
     };
     const { msg } = alerta;
