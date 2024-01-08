@@ -1,7 +1,3 @@
-import { useEffect, useState } from "react";
-import useAuth from "../../context/useAuth";
-import { getAll } from "../../services/myfinances-api/metaFinanciera";
-import { getUserToken } from "../../services/token/tokenService";
 import useDark from "../../context/useDark";
 import { PulseLoader } from "react-spinners";
 

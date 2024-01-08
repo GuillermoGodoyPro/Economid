@@ -1,11 +1,10 @@
 import { useState } from "react";
 import ModalTransaccion from "../pop-ups/ModalTransaccion";
 import { getCategories } from "../../services/myfinances-api/categorias";
-import { getBalanceByUserId } from "../../services/myfinances-api/balance";
 import { useEffect } from "react";
 import { PulseLoader } from "react-spinners";
 import { getDollarExchangeRate } from "../../services/dolar/cotizacion-api";
-import { texts } from "../../constants/myfinances-constants";
+import { currency, texts } from "../../constants/myfinances-constants";
 import useDark from "../../context/useDark";
 
 export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) => {
@@ -36,7 +35,8 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
         const fetchCategorias = async () => {
             try {
                 const { data: response } = await getCategories(config);
-                setCategorias(response);
+                const validCategories = response?.filter(({ titulo }) => !titulo.includes("Reserva"));
+                setCategorias(validCategories);
                 setLoading(false);
             } catch (error) {
                 setError(error);
@@ -98,7 +98,7 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
                                             <span className="mr-1">$</span>
                                             {parseFloat(0).toFixed(2)}
                                         </h1> :
-                                        divisa === "ARS"
+                                        divisa === currency.ARS
                                             ?
                                             balance?.saldo_Total < 0 ?
                                                 <h1 className='text-red-500 font-bold text-5xl font-mono'>
@@ -113,7 +113,7 @@ export const BalanceSection = ({ auth, setTransacciones, balance, setBalance }) 
                                                     <span className="mr-1">$</span>
                                                     {parseFloat(balance?.saldo_Total).toFixed(2)}
                                                 </h1> :
-                                            divisa === "USD"
+                                            divisa === currency.USD
                                                 ?
                                                 balance?.saldo_Total < 0 ?
                                                     <h1 className='text-red-500 font-bold text-5xl font-mono'>

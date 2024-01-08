@@ -63,12 +63,7 @@ export const TransactionsPagination = ({
                     : await getAll({userId: user.id}, page, 10, config);
                 setLoading(false);
                 setTransacciones(response.data);
-                if (!response.meta.hasNextPage) {
-                    setHasNextPage(false);
-                }
-                else {
-                    setHasNextPage(true);
-                }
+                !response.meta.hasNextPage ? setHasNextPage(false) : setHasNextPage(true);
             } catch (error) {
                 setError(error);
             }

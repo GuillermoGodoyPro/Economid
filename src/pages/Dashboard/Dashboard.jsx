@@ -26,7 +26,6 @@ const Dashboard = () => {
     const [balance, setBalance] = useState({});
     const { dark } = useDark();
 
-
     const user = getUserToken();
     const config = {
         headers: {
@@ -34,7 +33,6 @@ const Dashboard = () => {
             Authorization: `Bearer ${auth}`
         }
     };
-
 
     useEffect(() => {
         const fetchBalance = async () => {

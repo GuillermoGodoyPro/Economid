@@ -216,7 +216,7 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, b
                                                 </td>
                                         }
                                         <td>
-                                            <button disabled={!transaccion.estaActiva}>
+                                            <button disabled={!transaccion.estaActiva || transaccion.tipoTransaccion === type.RESERVA}>
                                                 <i className={(dark === "light" ?
                                                     "fa-regular fa-pen-to-square text-gray-600 m-3"
                                                     :
@@ -225,7 +225,9 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, b
                                                     data-tooltip-id="my-tooltip"
                                                     data-tooltip-content="Modificar"
                                                     onClick={e => handleModifyModal(transaccion.id, transaccion)}
-                                                    style={!transaccion.estaActiva ? { cursor: "not-allowed" } : { cursor: "pointer" }}>
+                                                    style={!transaccion.estaActiva || transaccion.tipoTransaccion === type.RESERVA ?
+                                                    { cursor: "not-allowed" } : { cursor: "pointer" }
+                                                }>
                                                 </i>
                                             </button>
                                             {
@@ -241,12 +243,14 @@ export const TransactionsTable = ({ cargando, transacciones, setTransacciones, b
                                                     categorias={categorias}
                                                 />
                                             }
-                                            <button disabled={!transaccion.estaActiva}>
+                                            <button disabled={!transaccion.estaActiva || transaccion.tipoTransaccion === type.RESERVA}>
                                                 <i className="fa-solid fa-ban pl-2 text-red-600"
                                                     data-tooltip-id="my-tooltip"
                                                     data-tooltip-content="Anular"
                                                     onClick={e => handleDeletingModal(transaccion.id)}
-                                                    style={!transaccion.estaActiva ? { cursor: "not-allowed" } : { cursor: "pointer" }}>
+                                                    style={!transaccion.estaActiva || transaccion.tipoTransaccion === type.RESERVA ?
+                                                        { cursor: "not-allowed" } : { cursor: "pointer" }
+                                                    }>
                                                 </i>
                                             </button>
                                             {

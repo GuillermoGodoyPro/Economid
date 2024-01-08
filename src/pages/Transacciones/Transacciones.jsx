@@ -6,7 +6,7 @@ import { getAll } from "../../services/myfinances-api/transacciones";
 import { getCategories } from "../../services/myfinances-api/categorias";
 import { getBalanceByUserId } from "../../services/myfinances-api/balance";
 import { TransactionsTable } from "../../components/transactions/transactions-table";
-import { texts } from "../../constants/myfinances-constants";
+import { texts, type } from "../../constants/myfinances-constants";
 import Alerta from "../../components/Alerta";
 import { DateFilter } from "../../components/transactions/filters/date-filter";
 import { TransactionsPagination } from "../../components/dashboard/transactions/transactions-pagination";
@@ -103,7 +103,8 @@ const Transacciones = () => {
         const fetchCategorias = async () => {
             try {
                 const { data: response } = await getCategories(config);
-                setCategorias(response);
+                const validCategories = response?.filter(({ titulo }) => !titulo.includes(type.RESERVA));
+                setCategorias(validCategories);
                 setLoading(false);
             } catch (error) {
                 setError(error);

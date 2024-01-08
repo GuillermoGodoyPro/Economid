@@ -105,7 +105,7 @@ export const GoalAmount = ({
                             monto: parseFloat(amount),
                             fecha: new Date(),
                             tipoTransaccion: type.RESERVA
-                        }
+                        };
                         setTransacciones(transacciones => [
                             goalTransaction,
                             ...transacciones

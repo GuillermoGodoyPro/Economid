@@ -4,6 +4,11 @@ export const type = {
     RESERVA: "Reserva"
 };
 
+export const currency = {
+    USD: "USD",
+    ARS: "ARS"
+};
+
 export const errors = {
     serverErrors: {
         NETWORK_ERROR: "Network Error",
