@@ -30,7 +30,7 @@ const Transacciones = () => {
     const [tipo, setTipo] = useState("");
     const [fecha, setFecha] = useState("");
     const [monto, setMonto] = useState("");
-    const [state, setState] = useState(null);
+    const [state, setState] = useState("");
     const [currentPage, setCurrentPage] = useState(1);
     const { dark } = useDark();
 
@@ -160,6 +160,8 @@ const Transacciones = () => {
                             balance={balance}
                             setTransacciones={setTransacciones}
                             transacciones={transacciones}
+                            setMetadata={setMetadata}
+                            metadata={metadata}
                         />
                     }
                 </div>

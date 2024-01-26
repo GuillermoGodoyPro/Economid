@@ -12,16 +12,18 @@ export const ActiveGoals = ({
     setLoading,
     setActiveGoals,
     setCompletedGoals,
+    setCompletedGoalsMetadata,
     activeGoalsMetadata,
-    setTableGoals
+    completedGoalsMetadata,
+    setTableGoals,
+    setActiveGoalsMetadata
 }) => {
     const activeGoals = goals?.filter(({ completada }) => !completada);
     const [modal, setModal] = useState(false);
     const [animarModal, setAnimarModal] = useState(false);
     const [goalId, setGoalId] = useState(0);
     const { dark } = useDark();
-
-
+    
     const handleAddingModal = (goalId) => {
         setModal(true);
         setGoalId(goalId);
@@ -107,7 +109,12 @@ export const ActiveGoals = ({
                                                 goalId={goalId}
                                                 auth={auth}
                                                 setActiveGoals={setActiveGoals}
+                                                lastGoalIndex={index}
+                                                activeGoalsMetadata={activeGoalsMetadata}
+                                                setActiveGoalsMetadata={setActiveGoalsMetadata}
                                                 setCompletedGoals={setCompletedGoals}
+                                                completedGoalsMetadata={completedGoalsMetadata}
+                                                setCompletedGoalsMetadata={setCompletedGoalsMetadata}
                                                 setTableGoals={setTableGoals}
                                             />
                                         }
@@ -122,8 +129,9 @@ export const ActiveGoals = ({
                     <div className="w-full">
                         <GoalsPagination
                             metadata={activeGoalsMetadata}
+                            setActiveGoalsMetadata={setActiveGoalsMetadata}
                             setActiveGoals={setActiveGoals}
-                            completed={false}
+                            isCompleted={false}
                             setLoading={setLoading}
                         />
                     </div> : <div></div>

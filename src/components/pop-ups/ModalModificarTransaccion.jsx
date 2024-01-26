@@ -7,6 +7,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { getUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
+import { HttpStatusCode } from "axios";
 
 export const ModificarTransaccion = ({
     animarModal,
@@ -27,7 +28,7 @@ export const ModificarTransaccion = ({
     const [detalle, setDetalle] = useState(transaccion.detalle);
     const [monto, setMonto] = useState(transaccion.monto);
     const [tipoTransaccion, setTipoTransaccion] = useState(transaccion.tipoTransaccion);
-    const [categoriaId, setCategoria] = useState(transaccion.categoria.id);
+    const [categoriaId, setCategoria] = useState(transaccion?.categoria?.id ?? transaccion?.cat_Id);
     const user = getUserToken();
     const config = {
         headers: {
@@ -72,7 +73,7 @@ export const ModificarTransaccion = ({
 
         try {
             const { data, status } = await modifyTransaction(transaccionId, payload, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setAlerta({
                     msg: "Transaccion Modificada!",

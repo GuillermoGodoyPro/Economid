@@ -6,6 +6,7 @@ import Alerta from "../Alerta";
 import { BalancePagination } from "./balance-pagination";
 import useAuth from "../../context/useAuth";
 import useDark from "../../context/useDark";
+import { HttpStatusCode } from "axios";
 
 export const BalanceIncomes = ({ user, config }) => {
     const { auth } = useAuth();
@@ -34,7 +35,7 @@ export const BalanceIncomes = ({ user, config }) => {
             };
             try {
                 const { data, status } = await filterByType(payload, 1, 5, config);
-                if (status === 200) {
+                if (status === HttpStatusCode.Ok) {
                     setIncomes(data.data);
                     setMetadata(data.meta);
                     if (!data.meta.hasNextPage) {

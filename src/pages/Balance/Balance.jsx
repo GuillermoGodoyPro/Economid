@@ -7,6 +7,7 @@ import { BalanceComponent } from "../../components/balance/balance-component";
 import { GananciaChart } from "../../components/balance/chart/ganancia-chart";
 import { getBalanceByUserId } from "../../services/myfinances-api/balance";
 import { getAll } from "../../services/myfinances-api/transacciones";
+import { HttpStatusCode } from "axios";
 
 const Balance = () => {
     const { auth } = useAuth();
@@ -41,7 +42,7 @@ const Balance = () => {
         const fetchTransacciones = async () => {
             try {
                 const { data: response, status } = await getAll({ userId: user.id }, 1, 10, config);
-                if (status === 200) {
+                if (status === HttpStatusCode.Ok) {
                     setTransacciones(response.data);
                     setLoading(false);
                 }

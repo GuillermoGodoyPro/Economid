@@ -46,13 +46,18 @@ export const LastGoal = ({
                     </div> :
                     almostCompletedGoal.length ?
                         <div className="flex flex-col items-center justify-center">
-                            <h3 className={(dark === "light" ?
-                                "text-xl font-semibold text-violet-600 antialiased"
-                                : "text-xl font-semibold text-violet-400 antialiased"
-                            )}
-                            >
-                                Meta a completar
-                            </h3>
+                            <div className="flex justify-between items-center">
+                                <h3 className={(dark === "light" ?
+                                    "text-xl font-semibold text-violet-600 antialiased"
+                                    : "text-xl font-semibold text-violet-400 antialiased"
+                                )}>
+                                    Meta a completar
+                                </h3>
+                                <i className="fa-solid fa-circle-question ml-2 text-gray-400"
+                                    data-tooltip-id="my-tooltip"
+                                    data-tooltip-content="Información basada en las últimas 10 metas activas.">
+                                </i>
+                            </div>
                             <div
                                 className={(dark === "light" ?
                                     "w-64 h-64 m-3 rounded-lg bg-gray-100 p-8 w-50% shadow-md hover:shadow-violet-400 dark:bg-neutral-700 duration-100"

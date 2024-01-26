@@ -1,3 +1,5 @@
+import { HttpStatusCode } from "axios";
+import { amountReGex } from "../../../constants/myfinances-constants";
 import useAuth from "../../../context/useAuth";
 import useDark from "../../../context/useDark";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
@@ -39,7 +41,7 @@ export const AmountFilter = ({
         };
         try {
             const { data: response, status } = await filterTransactions(payload, 1, 10, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setCurrentPage(1);
                 setTransacciones(response.data);
@@ -75,14 +77,18 @@ export const AmountFilter = ({
                 >Monto Hasta</label>
                 <input
                     id="monto"
-                    type="number"
+                    type="text"
                     className={(dark === "light" ?
                         "bg-[#E5E7EB] rounded-md p-1 font-mono text-black"
                         : "bg-gray-600 rounded-md p-1 font-mono text-white"
                     )}
                     placeholder="Ingresar monto"
                     value={monto.replace(",", ".")}
-                    onChange={e => handleAmountChange(e.target.value.replace(",", ".").trim())}
+                    onChange={e => {
+                        if (e.target.value === "" || amountReGex.test(e.target.value.replace(",", "."))) {
+                            handleAmountChange(e.target.value);
+                        }
+                    }}
                 />
             </div>
         </div>

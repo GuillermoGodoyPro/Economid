@@ -2,10 +2,11 @@ import { PulseLoader } from "react-spinners";
 import useDark from "../../context/useDark";
 import { GoalsPagination } from "./goals-pagination";
 import useAuth from "../../context/useAuth";
-import { withdrawGoal } from "../../services/myfinances-api/metaFinanciera";
-import Alerta from "../Alerta";
+import { getByState, withdrawGoal } from "../../services/myfinances-api/metaFinanciera";
 import { texts } from "../../constants/myfinances-constants";
 import { useState } from "react";
+import { HttpStatusCode } from "axios";
+import { getUserToken } from "../../services/token/tokenService";
 
 export const CompletedGoals = ({
     goals,
@@ -13,6 +14,7 @@ export const CompletedGoals = ({
     cargando,
     setCargando,
     completedGoalsMetadata,
+    setCompletedGoalsMetadata,
     setCompletedGoals,
     setTableGoals,
     setAlerta
@@ -22,6 +24,7 @@ export const CompletedGoals = ({
     const [goalError, setError] = useState(null);
     const [goalLoading, setGoalLoading] = useState(false);
     const completedGoals = goals?.filter(({ completada, retirada }) => completada && !retirada);
+    const user = getUserToken();
 
     const handleGoalWithdrawal = async (goalId) => {
         setGoalLoading({
@@ -36,7 +39,7 @@ export const CompletedGoals = ({
         };
         try {
             const { data, status } = await withdrawGoal(goalId, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setGoalLoading({
                     ...goalLoading,
                     [goalId]: false
@@ -47,13 +50,36 @@ export const CompletedGoals = ({
                 });
                 setTimeout(() => {
                     setAlerta({});
+                }, 1500)
+                setTimeout( async () => {
                     setCompletedGoals(completedGoals => completedGoals.map((goal) => {
                         return goalId === goal.id ? { ...goal, retirada: data.retirada } : goal;
                     }));
                     setTableGoals(tableGoals => tableGoals.map((goal) => {
                         return goalId === goal.id ? { ...goal, retirada: data.retirada } : goal;
-                    }));
-                }, 2000);
+                    }));                    
+                    const payload = {
+                        userId: user.id,
+                        completada: true
+                    };
+
+                    let page = completedGoalsMetadata?.page ?? 1;
+                    const resetPageEnabled =
+                        page !== 1 &&
+                        (
+                            !completedGoalsMetadata?.hasNextPage &&
+                            completedGoals?.length === 1
+                        );
+
+                    if (resetPageEnabled) {
+                        page = page - 1;
+                    }
+                    const { data: response, status } = await getByState(payload, page, 4, config);
+                    if (status === HttpStatusCode.Ok) {
+                        setCompletedGoals(response.data);
+                        setCompletedGoalsMetadata(response.meta);
+                    }
+                }, 500);
             }
         } catch (error) {
             setGoalLoading({
@@ -121,7 +147,8 @@ export const CompletedGoals = ({
                                                 <div className="flex justify-around">
                                                     <div className="w-32 text-center rounded-md bg-green-200">
                                                         <h5
-                                                            className="text-xl font-semibold text-center text-green-500 font-mono">
+                                                            className="text-xl font-semibold text-center text-green-500 font-mono"
+                                                        >
                                                             Completada
                                                         </h5>
                                                     </div>
@@ -140,14 +167,14 @@ export const CompletedGoals = ({
                         : <div></div>
             }
             {
-                completedGoals.length > 4 && completedGoalsMetadata.totalCount > 4 ?
+                completedGoalsMetadata.totalCount > 4 ?
                     <div className="w-full">
                         <GoalsPagination
                             metadata={completedGoalsMetadata}
                             setCompletedGoals={setCompletedGoals}
-                            completed={true}
-                            setLoading={setCargando}
-                        />
+                            setCompletedGoalsMetadata={setCompletedGoalsMetadata}
+                            isCompleted={true}
+                            setLoading={setCargando} />
                     </div> : <div></div>
             }
         </div>

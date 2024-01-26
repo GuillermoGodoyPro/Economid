@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { EliminarTransaccion } from "../services/transacciones";
 import useAuth from "../hooks/useAuth";
+import { HttpStatusCode } from "axios";
 
 const BorrarTransaccion = ({ setModal, animarModal, setAnimarModal, transaccionId }) => {
     const [alerta, setAlerta] = useState({});
@@ -25,7 +26,7 @@ const BorrarTransaccion = ({ setModal, animarModal, setAnimarModal, transaccionI
 
             const { data, status } = await EliminarTransaccion(transaccionId, config);
             console.log(data);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setAlerta("Transaccion Eliminada");
                 setTimeout(() => {
                     setModal(false);

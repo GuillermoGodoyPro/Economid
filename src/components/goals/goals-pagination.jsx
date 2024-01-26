@@ -1,26 +1,34 @@
 import { useState } from "react";
-import { getByState } from "../../services/myfinances-api/metaFinanciera";
+import { getAll, getByState } from "../../services/myfinances-api/metaFinanciera";
 import { getUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
+import { HttpStatusCode } from "axios";
 
 export const GoalsPagination = ({
     setActiveGoals,
     setCompletedGoals,
+    setTableGoals,
     metadata,
-    completed,
-    setLoading
+    isCompleted,
+    setLoading,
+    setActiveGoalsMetadata,
+    setCompletedGoalsMetadata,
+    setTableGoalsMetadata,
+    comesFromTable = false
 }) => {
     const { auth } = useAuth();
     const [error, setError] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const [hasNextPage, setHasNextPage] = useState(true);
     const generatePageNumbers = (pageNumber) => {
         let navigationNumbers = [];
-        for (let i = 1; i <= pageNumber; i++) navigationNumbers.push(i);
+        for (let i = 1; i <= pageNumber; i++)
+            navigationNumbers.push(i);
         return navigationNumbers;
     };
-    const pageNumber = Math.ceil(metadata.totalCount / metadata.pageSize);
+    const pageSize = !comesFromTable ? 4 : 10;
+    const pageNumber = Math.ceil(metadata.totalCount / pageSize);
     const navigationNumbers = generatePageNumbers(pageNumber);
+    let hasNextPage = metadata?.hasNextPage ?? true;
 
     const changePage = (page) => {
         setCurrentPage(page);
@@ -50,24 +58,44 @@ export const GoalsPagination = ({
             }
         };
         const fetchGoals = async () => {
-            const payload = {
-                userId: user.id,
-                completada: completed
-            };
             try {
-                const { data: response, } = await getByState(payload, page, 4, config);
-                if (!payload.completada) {
-                    setActiveGoals(response.data);
-                    setLoading(false);
+                if (!comesFromTable) {
+                    const payload = {
+                        userId: user.id,
+                        completada: isCompleted
+                    };
+                    const { data, status } = await getByState(payload, page, pageSize, config);
+                    if (status === HttpStatusCode.Ok) {
+                        if (!payload.completada) {
+                            setLoading(false);
+                            setActiveGoals(data.data);
+                            if (!!setActiveGoalsMetadata) setActiveGoalsMetadata(data.meta);
+                        } else {
+                            setLoading(false);
+                            setCompletedGoals(data.data);
+                            if (!!setCompletedGoalsMetadata) setCompletedGoalsMetadata(data.meta);
+                        }
+                        if (!data.meta.hasNextPage) {
+                            hasNextPage = false;
+                        }
+                        else {
+                            hasNextPage = true;
+                        }
+                    }
                 } else {
-                    setCompletedGoals(response.data);
-                    setLoading(false);
-                }
-                if (!response.meta.hasNextPage) {
-                    setHasNextPage(false);
-                }
-                else {
-                    setHasNextPage(true);
+                    const payload = { userId: user.id };
+                    const { data, status } = await getAll(payload, page, pageSize, config);
+                    if (status === HttpStatusCode.Ok) {
+                        setLoading(false);
+                        setTableGoals(data.data);
+                        if (!!setTableGoalsMetadata) setTableGoalsMetadata(data.meta);
+                        if (!data.meta.hasNextPage) {
+                            hasNextPage = false;
+                        }
+                        else {
+                            hasNextPage = true;
+                        }
+                    }
                 }
             } catch (error) {
                 setError(error);

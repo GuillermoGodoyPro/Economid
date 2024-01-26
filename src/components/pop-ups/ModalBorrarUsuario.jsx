@@ -3,6 +3,7 @@ import { texts } from "../../constants/myfinances-constants";
 import Alerta from "../Alerta";
 import { deleteUser } from "../../services/myfinances-api/usuario";
 import { useNavigate } from "react-router-dom";
+import { HttpStatusCode } from "axios";
 
 export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, userId }) => {
     const [alerta, setAlerta] = useState({});
@@ -27,7 +28,7 @@ export const BorrarUsuario = ({ animarModal, setAnimarModal, setModal, auth, use
 
         try {
             const { data, status } = await deleteUser(userId, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setAlerta({
                     msg: texts.ON_DELETING_ACCOUNT_SUCCESS,

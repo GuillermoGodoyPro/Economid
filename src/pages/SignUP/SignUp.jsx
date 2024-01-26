@@ -4,6 +4,7 @@ import { useState } from "react";
 import Alerta from "../../components/Alerta";
 import { register } from "../../services/myfinances-api/usuario";
 import { textsReGex } from "../../constants/myfinances-constants";
+import { HttpStatusCode } from "axios";
 
 
 
@@ -47,7 +48,7 @@ const SignUp = () => {
         try {
             /* hago este destructuring, para obtener solo los datos (data) y no toda la respuesta */
             const { status } = await register({ nombre, apellido, email, esAdmin: false, contraseña });
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setAlerta({
                     msg: "Usuario creado con éxito. Redirigiendo al inicio de sesión...",

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { texts } from "../../constants/myfinances-constants";
 import Alerta from "../Alerta";
 import { deleteTransaction } from "../../services/myfinances-api/transacciones";
+import { HttpStatusCode } from "axios";
 
 export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, transaccionId, auth, transacciones, setTransacciones }) => {
     const [alerta, setAlerta] = useState({});
@@ -25,7 +26,7 @@ export const BorrarTransaccion = ({ animarModal, setAnimarModal, setModal, trans
 
         try {
             const { data, status } = await deleteTransaction(transaccionId, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setAlerta({
                     msg: texts.ON_DELETING_SUCCESS,

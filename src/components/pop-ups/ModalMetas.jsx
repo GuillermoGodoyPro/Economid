@@ -1,11 +1,22 @@
 import { useState } from "react";
 import Alerta from "../Alerta";
-import { altaMetaFinanciera } from "../../services/myfinances-api/metaFinanciera";
+import { altaMetaFinanciera, getByState } from "../../services/myfinances-api/metaFinanciera";
 import useAuth from "../../context/useAuth";
 import { getUserToken } from "../../services/token/tokenService";
-import { amountReGex, errors, textsReGex } from "../../constants/myfinances-constants";
+import { amountReGex, errors } from "../../constants/myfinances-constants";
+import { HttpStatusCode } from "axios";
 
-const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, activeGoals, tableGoals, setTableGoals }) => {
+const ModalMetas = ({
+    setModal,
+    animarModal,
+    setAnimarModal,
+    setActiveGoals,
+    activeGoals,
+    tableGoals,
+    setTableGoals,
+    setActiveGoalsMetadata,
+    activeGoalsMetadata
+}) => {
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
     const [tituloMeta, setTituloMeta] = useState("");
@@ -65,20 +76,30 @@ const ModalMetas = ({ setModal, animarModal, setAnimarModal, setActiveGoals, act
 
         try {
             const { data, status } = await altaMetaFinanciera(payload, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setAlerta({
                     msg: "Nueva meta creada!",
                     error: false
                 });
-                setTimeout(() => {
+                setTimeout(async () => {
                     setAlerta({});
                     !activeGoals.length ? setActiveGoals([data]) : setActiveGoals([data, ...activeGoals]);
                     if (tableGoals) {
                         !tableGoals.length ? setTableGoals([data]) : setTableGoals([data, ...tableGoals]);
                     }
+
+                    if (!!setActiveGoalsMetadata) {
+                        const payload = {
+                            userId: user.id,
+                            completada: false
+                        };
+                        const page = activeGoalsMetadata?.page ?? 1;
+                        const { data: response, status } = await getByState(payload, page, 4, config);
+                        if (status === HttpStatusCode.Ok) setActiveGoalsMetadata(response.meta);
+                    }
                     ocultarModal();
-                }, 1500);
+                }, 1000);
             }
         } catch (error) {
             if (error.message === errors.badRequests.BAD_REQUEST) {

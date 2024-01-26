@@ -1,9 +1,9 @@
 import { useState } from "react";
 import Alerta from "../Alerta";
-import { agregarMonto } from "../../services/myfinances-api/metaFinanciera";
-import { amountReGex, errors, texts, type } from "../../constants/myfinances-constants";
-import { getAll } from "../../services/myfinances-api/transacciones";
+import { agregarMonto, getByState } from "../../services/myfinances-api/metaFinanciera";
+import { amountReGex, errors, type } from "../../constants/myfinances-constants";
 import { getUserToken } from "../../services/token/tokenService";
+import { HttpStatusCode } from "axios";
 
 export const GoalAmount = ({
     animarModal,
@@ -12,11 +12,16 @@ export const GoalAmount = ({
     goalId,
     auth,
     setActiveGoals,
+    lastGoalIndex,
     setCompletedGoals,
     setTableGoals,
     setBalance,
     balance,
-    setTransacciones
+    setTransacciones,
+    activeGoalsMetadata,
+    completedGoalsMetadata,
+    setActiveGoalsMetadata,
+    setCompletedGoalsMetadata
 }) => {
     const [alerta, setAlerta] = useState({});
     const [amount, setAmount] = useState("");
@@ -69,7 +74,7 @@ export const GoalAmount = ({
 
         try {
             const { data, status } = await agregarMonto(payload, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setAlerta({
                     msg: "Monto agregado!",
@@ -80,12 +85,12 @@ export const GoalAmount = ({
                     setActiveGoals(activeGoals => activeGoals.map((goal) => {
                         return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
                     }));
-                    if (setTableGoals) {
+                    if (!!setTableGoals) {
                         setTableGoals(setTableGoals => setTableGoals.map((goal) => {
                             return goal.id === goalId ? { ...goal, montoActual: data.montoActual } : goal;
                         }));
                     }
-                    if (setBalance) {
+                    if (!!setBalance) {
                         if (!balance.saldo_Total) {
                             setBalance({
                                 ...balance,
@@ -99,7 +104,7 @@ export const GoalAmount = ({
                             });
                         }
                     }
-                    if (setTransacciones) {
+                    if (!!setTransacciones) {
                         const goalTransaction = {
                             detalle: `Reserva - Meta: ${data.titulo}`,
                             monto: parseFloat(amount),
@@ -112,26 +117,62 @@ export const GoalAmount = ({
                         ]);
                     }
                     if (data.completada) {
-                        setTimeout(() => {
-                            setAlerta({
-                                msg: texts.ON_COMPLETED_GOAL,
-                                error: false
-                            });
+                        setTimeout(async () => {
                             setActiveGoals(activeGoals => activeGoals.map((goal) => {
                                 return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                             }));
-                            if (setTableGoals) {
+                            if (!!setTableGoals) {
                                 setTableGoals(setTableGoals => setTableGoals.map((goal) => {
                                     return goal.id === goalId ? { ...goal, completada: data.completada } : goal;
                                 }));
                             }
-                            if (setCompletedGoals) {
+                            if (!!setCompletedGoals) {
                                 setCompletedGoals(completedGoals => [data, ...completedGoals]);
+                                const payload = {
+                                    userId: user.id,
+                                    completada: true
+                                };
+                                let page = completedGoalsMetadata?.page ?? 1;
+                                const resetPageEnabled =
+                                    page !== 1 &&
+                                    (
+                                        !completedGoalsMetadata?.hasNextPage &&
+                                        lastGoalIndex === 0
+                                    );
+                                if (resetPageEnabled) {
+                                    page = page - 1;
+                                }
+                                const { data: response, status } = await getByState(payload, page, 4, config);
+                                if (status === HttpStatusCode.Ok) {
+                                    setCompletedGoalsMetadata(response.meta);
+                                }
                             }
-                        }, 500);
+                            if (!!setActiveGoalsMetadata) {
+                                const payload = {
+                                    userId: user.id,
+                                    completada: false
+                                };
+                                let page = activeGoalsMetadata?.page ?? 1;
+                                const resetPageEnabled =
+                                    page !== 1 &&
+                                    (
+                                        !activeGoalsMetadata?.hasNextPage &&
+                                        lastGoalIndex === 0
+                                    );
+                                if (resetPageEnabled) {
+                                    page = page - 1;
+                                }
+                                const { data: response, status } = await getByState(payload, page, 4, config);
+                                if (status === HttpStatusCode.Ok) {
+                                    setActiveGoals(response.data);
+                                    setActiveGoalsMetadata(response.meta);
+                                }
+                            }
+                        }, 100);
                     }
                     ocultarModal();
                 }, 1500);
+
             }
         } catch (error) {
             if (error.message === errors.serverErrors.NETWORK_ERROR) {

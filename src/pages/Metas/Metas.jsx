@@ -10,6 +10,7 @@ import Alerta from "../../components/Alerta";
 import { texts } from "../../constants/myfinances-constants";
 import { GoalsTable } from "../../components/goals/goals-table";
 import useDark from "../../context/useDark";
+import { HttpStatusCode } from "axios";
 
 const Metas = () => {
     const { auth } = useAuth();
@@ -21,6 +22,7 @@ const Metas = () => {
     const [completedGoals, setCompletedGoals] = useState([]);
     const [completedGoalsMetadata, setCompletedGoalsMetadata] = useState({});
     const [tableGoals, setTableGoals] = useState([]);
+    const [tableGoalsMetadata, setTableGoalsMetadata] = useState({});
     const [loadingActiveGoals, setLoadingActiveGoals] = useState(true);
     const [loadingCompletedGoals, setLoadingCompletedGoals] = useState(true);
     const [loadingTableGoals, setLoadingTableGoals] = useState(true);
@@ -50,7 +52,7 @@ const Metas = () => {
                     completada: false
                 };
                 const { data: activeGoalsResponse, status: activeGoalsStatus } = await getByState(activeGoalsPayload, 1, 4, config);
-                if (activeGoalsStatus === 200) {
+                if (activeGoalsStatus === HttpStatusCode.Ok) {
                     setActiveGoals(activeGoalsResponse.data);
                     setActiveGoalsMetadata(activeGoalsResponse.meta);
                     setLoadingActiveGoals(false);
@@ -78,7 +80,7 @@ const Metas = () => {
                     completada: true
                 };
                 const { data: completedGoalsResponse, status: completedGoalsStatus } = await getByState(completedGoalsPayload, 1, 4, config);
-                if (completedGoalsStatus === 200) {
+                if (completedGoalsStatus === HttpStatusCode.Ok) {
                     setCompletedGoals(completedGoalsResponse.data);
                     setCompletedGoalsMetadata(completedGoalsResponse.meta);
                     setLoadingCompletedGoals(false);
@@ -98,8 +100,9 @@ const Metas = () => {
                     userId: user.id
                 };
                 const { data: goalsResponse, status: goalsStatus } = await getAll(goalsPayload, 1, 10, config);
-                if (goalsStatus === 200) {
+                if (goalsStatus === HttpStatusCode.Ok) {
                     setTableGoals(goalsResponse.data);
+                    setTableGoalsMetadata(goalsResponse.meta);
                     setLoadingTableGoals(false);
                 }
             } catch (error) {
@@ -132,6 +135,8 @@ const Metas = () => {
                         activeGoals={activeGoals}
                         setTableGoals={setTableGoals}
                         tableGoals={tableGoals}
+                        setActiveGoalsMetadata={setActiveGoalsMetadata}
+                        activeGoalsMetadata={activeGoalsMetadata}
                     />
                 }
                 <div className="flex justify-center text-center">
@@ -148,6 +153,9 @@ const Metas = () => {
                     setActiveGoals={setActiveGoals}
                     setCompletedGoals={setCompletedGoals}
                     activeGoalsMetadata={activeGoalsMetadata}
+                    completedGoalsMetadata={completedGoalsMetadata}
+                    setActiveGoalsMetadata={setActiveGoalsMetadata}
+                    setCompletedGoalsMetadata={setCompletedGoalsMetadata}
                     setTableGoals={setTableGoals}
                 />
                 <CompletedGoals
@@ -156,6 +164,7 @@ const Metas = () => {
                     cargando={loadingCompletedGoals}
                     setCargando={setLoadingCompletedGoals}
                     completedGoalsMetadata={completedGoalsMetadata}
+                    setCompletedGoalsMetadata={setCompletedGoalsMetadata}
                     setCompletedGoals={setCompletedGoals}
                     setTableGoals={setTableGoals}
                     setAlerta={setAlerta}
@@ -167,7 +176,13 @@ const Metas = () => {
                     :
                     "bg-gray-600 p-4 rounded-lg shadow-md hover:shadow-violet-400"
                 )}>
-                    <GoalsTable goals={tableGoals} loading={loadingTableGoals} />
+                    <GoalsTable 
+                        tableGoals={tableGoals} 
+                        loading={loadingTableGoals}
+                        setLoading={setLoadingTableGoals}
+                        setTableGoals={setTableGoals}
+                        setTableGoalsMetadata={setTableGoalsMetadata}
+                        tableGoalsMetadata={tableGoalsMetadata} />
                 </div>
             </div>
         </div>

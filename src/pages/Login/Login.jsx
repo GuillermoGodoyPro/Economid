@@ -6,6 +6,7 @@ import jwtDecode from "jwt-decode";
 import { setUserToken } from "../../services/token/tokenService";
 import useAuth from "../../context/useAuth";
 import { login } from "../../services/myfinances-api/usuario";
+import { HttpStatusCode } from "axios";
 
 const Login = () => {
 
@@ -34,7 +35,7 @@ const Login = () => {
         else {
             try {
                 const { data, status } = await login({ email, contraseña });
-                if (status === 200) {
+                if (status === HttpStatusCode.Ok) {
                     setUserToken("token", data.token);
                     setAuth(data.token);
                     setUserToken("user", JSON.stringify(jwtDecode(data.token)));

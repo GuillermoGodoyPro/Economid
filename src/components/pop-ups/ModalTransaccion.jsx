@@ -8,8 +8,9 @@ import ReactDatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { getBalanceByUserId } from "../../services/myfinances-api/balance";
+import { HttpStatusCode } from "axios";
 
-const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransacciones, setBalance, balance, categorias }) => {
+const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransacciones, setBalance, balance, categorias, setMetadata, metadata }) => {
 
     const [alerta, setAlerta] = useState({});
     const { auth } = useAuth();
@@ -21,6 +22,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
     const [tipoTransaccion, setTipoTransaccion] = useState("Ingreso");
     const [categoriaId, setCategoria] = useState(categorias[0].id);
     const user = getUserToken();
+    const isNavigationEnabled = !!setMetadata && metadata.totalCount <= 10;
 
     const config = {
         headers: {
@@ -65,7 +67,7 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
         if (!balance?.id) {
             try {
                 const { data, status } = await getBalanceByUserId(user.id, config);
-                if (status === 200) payload = { ...payload, balance_Id: data.id };
+                if (status === HttpStatusCode.Ok) payload = { ...payload, balance_Id: data.id };
             } catch (error) {
                 setError(error);
             }
@@ -101,6 +103,8 @@ const ModalTransaccion = ({ setModal, animarModal, setAnimarModal, setTransaccio
                                         balance.saldo_Total - parseFloat(monto)
                             });
                     }
+
+                    if (isNavigationEnabled) setMetadata({ ...metadata, totalCount: metadata.totalCount + 1 });
                     ocultarModal();
                 }, 1500);
             }

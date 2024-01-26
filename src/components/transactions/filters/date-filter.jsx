@@ -5,6 +5,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import es from "date-fns/locale/es";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
 import useDark from "../../../context/useDark";
+import { HttpStatusCode } from "axios";
 
 export const DateFilter = ({
     setTransacciones,
@@ -41,7 +42,7 @@ export const DateFilter = ({
         };
         try {
             const { data: response, status } = await filterTransactions(payload, 1, 10, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setCurrentPage(1);
                 setTransacciones(response.data);

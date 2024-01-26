@@ -13,6 +13,7 @@ import Alerta from "../../components/Alerta";
 import { texts } from "../../constants/myfinances-constants";
 import useDark from "../../context/useDark";
 import { getBalanceByUserId } from "../../services/myfinances-api/balance";
+import { HttpStatusCode } from "axios";
 
 
 const Dashboard = () => {
@@ -38,7 +39,7 @@ const Dashboard = () => {
         const fetchBalance = async () => {
             try {
                 const { data, status } = await getBalanceByUserId(user.id, config);
-                if (status === 200) {
+                if (status === HttpStatusCode.Ok) {
                     setBalance(data);
                     setLoading(false);
                 }
@@ -50,7 +51,7 @@ const Dashboard = () => {
         const fetchTransacciones = async () => {
             try {
                 const { data: response, status } = await getAll({ userId: user.id }, 1, 10, config);
-                if (status === 200) {
+                if (status === HttpStatusCode.Ok) {
                     const activeTransactions = response.data.filter((t) => t.estaActiva);
                     setTransacciones(activeTransactions);
                     setLoading(false);
@@ -69,8 +70,8 @@ const Dashboard = () => {
         };
         const fetchGoals = async () => {
             try {
-                const { data, status } = await getAllGoals({userId: user.id}, 1, 5, config);
-                if (status === 200) {
+                const { data, status } = await getAllGoals({userId: user.id}, 1, 10, config);
+                if (status === HttpStatusCode.Ok) {
                     setActiveGoals(data.data);
                     setLoading(false);
                 }

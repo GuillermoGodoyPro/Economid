@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios";
 import useAuth from "../../../context/useAuth";
 import useDark from "../../../context/useDark";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
@@ -38,7 +39,7 @@ export const StateFilter = ({
         };
         try {
             const { data: response, status } = await filterTransactions(payload, 1, 10, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setCurrentPage(1);
                 setTransacciones(response.data);
@@ -79,7 +80,7 @@ export const StateFilter = ({
                         "bg-[#E5E7EB] rounded-md p-1 font-mono text-black"
                         : "bg-gray-600 text-gray-400 font-semibold rounded-md p-1 font-mono text-white"
                     )}
-                    defaultValue={"Filtrar por estado"}
+                    value={state}
                     onChange={e => handleStateChange(e.target.value)}
                 >
                     <option defaultValue={""} value="">Ninguno</option>

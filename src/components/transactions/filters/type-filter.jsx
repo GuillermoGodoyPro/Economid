@@ -1,3 +1,4 @@
+import { HttpStatusCode } from "axios";
 import useAuth from "../../../context/useAuth";
 import useDark from "../../../context/useDark";
 import { filterTransactions } from "../../../services/myfinances-api/transacciones";
@@ -38,7 +39,7 @@ export const TypeFilter = ({
         };
         try {
             const { data: response, status } = await filterTransactions(payload, 1, 10, config);
-            if (status === 200) {
+            if (status === HttpStatusCode.Ok) {
                 setLoading(false);
                 setCurrentPage(1);
                 setTransacciones(response.data);
@@ -85,6 +86,7 @@ export const TypeFilter = ({
                     <option defaultValue={""} value="">Ninguno</option>
                     <option value="Ingreso">Ingreso</option>
                     <option value="Egreso">Egreso</option>
+                    <option value="Reserva">Reserva</option>
                 </select>
             </div>
         </div>
